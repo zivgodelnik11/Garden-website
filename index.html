@@ -6,222 +6,320 @@
 <title>Ziv's Garden</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Assistant:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Varela+Round&family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Noto+Serif+Display:ital,wght@1,400;1,500&family=IM+Fell+English+SC&display=swap" rel="stylesheet">
 <style>
-/* Layout idea: a pressed-flower journal — paper page, plum ink, sage stems; sections read like chapters of a herbarium. */
+/* Layout idea: a Victorian botanical journal — dusk-purple hero where the garden grows up from the soil, then aged parchment plates, ledgers and seed packets in plum and moss. */
 :root{
-  --paper:#f6f1f2;
-  --card:#fffafb;
-  --ink:#2f2433;
-  --muted:#76687a;
-  --plum:#7b3a6c;
-  --rose:#d98aa6;
-  --blush:#efd7df;
-  --sage:#6b8566;
-  --line:#e2d3d9;
-  --shadow:0 1px 2px rgba(60,30,55,.06),0 8px 24px rgba(60,30,55,.07);
-  --display:"Frank Ruhl Libre","David Libre",Georgia,serif;
-  --body:"Assistant","Segoe UI",Arial,sans-serif;
-  --latin:"Cormorant Garamond",Georgia,serif;
+  --paper:#f7f0e2;
+  --card:#fcf8ef;
+  --ink:#2a2030;
+  --muted:#6a5c66;
+  --plum:#56296a;
+  --violet:#8657a3;
+  --lav:#d9c9e6;
+  --sage:#6f8455;
+  --sky:#5a7fa8;
+  --skyl:#dcecf9;
+  --moss:#34472b;
+  --gold:#a98a3f;
+  --line:#ddcfb2;
+  --cream:#f4ead2;
+  --shadow:0 1px 1px rgba(60,40,30,.08),0 10px 24px -8px rgba(60,40,30,.22);
+  --display:"Varela Round","Frank Ruhl Libre",Georgia,sans-serif;
+  --body:"Varela Round","Frank Ruhl Libre",Georgia,sans-serif;
+  --latin:"Noto Serif Display",Georgia,serif;
+  --grain:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .32 0 0 0 0 .24 0 0 0 0 .16 0 0 0 .22 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
   color-scheme:light;
-}
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
-    --paper:#1d171f;--card:#271f2a;--ink:#f1e7ee;--muted:#b4a5b3;--plum:#e39ccb;--rose:#e8a3bb;
-    --blush:#3a2a37;--sage:#9cb896;--line:#3b2f3d;--shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.3);
-    color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
-  --paper:#1d171f;--card:#271f2a;--ink:#f1e7ee;--muted:#b4a5b3;--plum:#e39ccb;--rose:#e8a3bb;
-  --blush:#3a2a37;--sage:#9cb896;--line:#3b2f3d;--shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.3);
-  color-scheme:dark;
 }
 *{box-sizing:border-box}
 html,body{margin:0}
-body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
-h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.15}
+body{background:var(--grain),radial-gradient(1400px 900px at 50% 0%,#fbf6ec,var(--paper) 60%,#efe4cc);background-color:var(--paper);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.65}
+h1,h2,h3{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0;line-height:1.15}
 .latin{font-family:var(--latin);font-style:italic;direction:ltr;unicode-bidi:isolate}
 a{color:var(--plum)}
 button{font:inherit;color:inherit}
-:focus-visible{outline:2px solid var(--plum);outline-offset:3px;border-radius:6px}
-.wrap{max-width:1140px;margin:0 auto;padding:0 20px}
+:focus-visible{outline:2px solid var(--violet);outline-offset:3px;border-radius:3px}
+.wrap{max-width:1160px;margin:0 auto;padding:0 20px}
+#bees{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+main,nav.top,.ledger,footer{position:relative;z-index:1}
 
-/* Hero */
-.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line);background:
-  radial-gradient(1200px 400px at 85% -10%,color-mix(in oklab,var(--rose) 28%,transparent),transparent 70%),
-  radial-gradient(900px 380px at 0% 110%,color-mix(in oklab,var(--sage) 22%,transparent),transparent 70%),var(--paper)}
-#petals{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.hero-inner{position:relative;display:grid;grid-template-columns:1.25fr 1fr;gap:40px;align-items:center;padding:56px 20px 48px}
-.eyebrow{font-size:14px;letter-spacing:.12em;color:var(--sage);font-weight:700}
-.hero h1{font-size:clamp(44px,7vw,84px);font-weight:900;color:var(--plum);margin:8px 0 12px}
-.en-title{font-family:var(--latin);font-style:italic;font-weight:500;font-size:1.12em;letter-spacing:.01em;unicode-bidi:isolate}
-.about{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
-.ab{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 16px;box-shadow:var(--shadow)}
-.ab small{display:block;color:var(--sage);font-weight:700;font-size:13px}
-.wild-box{margin-top:14px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;color:var(--muted)}
-.wild-box b{color:var(--ink);margin-inline-end:4px}
-.wild-box .tag{background:var(--card)}
-.count{margin-inline-start:auto;color:var(--muted);font-size:14px}
-.sbadge{position:absolute;top:10px;inset-inline-end:10px;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--card);border:1px solid var(--line)}
-.st-ground{color:#5b7a4f}.st-fridge{color:#4f74b8}.st-sown{color:#a0742a}.st-est{color:var(--plum)}.st-planned{color:var(--muted)}
-.chip.st-ground[aria-pressed="true"],.chip.st-fridge[aria-pressed="true"],.chip.st-sown[aria-pressed="true"],.chip.st-est[aria-pressed="true"],.chip.st-planned[aria-pressed="true"]{color:var(--paper)}
-.cnote{margin:8px 0 0;font-size:14px;color:var(--muted);line-height:1.45}
-.journal{margin-top:12px;background:var(--blush);border-radius:12px;padding:10px 14px}
-.journal small{display:block;font-weight:700;color:var(--plum);font-size:12.5px}
-.tl-item.next{grid-template-columns:1fr;border-style:dashed;background:color-mix(in oklab,var(--blush) 30%,var(--card))}
-.plan{margin:6px 0 0;padding-inline-start:18px;color:var(--muted)}
-.plan li{margin:3px 0}
-.hero p.lead{font-size:20px;max-width:34ch;color:var(--muted);margin:0 0 24px}
-.stats{display:flex;flex-wrap:wrap;gap:12px}
-.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 16px;box-shadow:var(--shadow)}
-.stat b{display:block;font-family:var(--display);font-size:28px;color:var(--plum);font-variant-numeric:tabular-nums;line-height:1.1}
-.stat span{font-size:14px;color:var(--muted)}
-.hero-photo{aspect-ratio:4/5;border-radius:200px 200px 18px 18px;overflow:hidden;border:6px solid var(--card);box-shadow:var(--shadow);position:relative}
-.hero-photo .ph{height:100%}
+/* ---------- Hero ---------- */
+.hero{position:relative;height:clamp(600px,86vh,780px);overflow:hidden;color:var(--cream);
+  background:#8a6aa8 url("img/3187cfa88b.webp") center bottom/cover no-repeat}
+.hero::after{content:"";position:absolute;inset:0;background:var(--grain);opacity:.18;mix-blend-mode:overlay;pointer-events:none}
+#garden{position:absolute;inset:0;width:100%;height:100%;display:block}
+.clouds{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.cloud{position:absolute;height:auto;}
+.c1{width:min(640px,62vw);top:clamp(70px,13vh,120px);left:12%;opacity:.95;animation:drift1 38s ease-in-out infinite alternate}
+.c2{width:min(360px,36vw);top:clamp(30px,5vh,50px);right:6%;opacity:.8;transform:scaleX(-1);animation:drift2 46s ease-in-out infinite alternate}
+.c3{width:min(260px,28vw);top:clamp(200px,32vh,260px);right:16%;opacity:.6;animation:drift3 52s ease-in-out infinite alternate}
+@keyframes drift1{from{transform:translateX(-30px)}to{transform:translateX(60px)}}
+@keyframes drift2{from{transform:scaleX(-1) translateX(-40px)}to{transform:scaleX(-1) translateX(50px)}}
+@keyframes drift3{from{transform:translateX(30px)}to{transform:translateX(-50px)}}
+.title-img img{display:block;margin:6px auto 0;width:min(720px,84vw);height:auto;}
+.hero-text{position:relative;z-index:2;padding-top:clamp(40px,8vh,80px);text-align:center}
+.eyebrow{display:inline-block;font-family:"IM Fell English SC","IM Fell English",Georgia,serif;font-size:clamp(15px,1.5vw,18px);letter-spacing:.06em;color:#2b4a26;text-shadow:0 0 8px rgba(255,240,210,.9)}
+.eyebrow span{font-size:.75em;margin:0 .4em;color:#6b3a6f}
+.hero h1{font-family:var(--latin);font-style:italic;font-weight:500;font-size:clamp(60px,11vw,138px);line-height:1;margin:10px 0 6px;
+  color:#4b1f52;text-shadow:0 1px 0 rgba(255,240,225,.8),0 0 18px rgba(255,236,220,.85),0 0 42px rgba(255,230,210,.4);direction:ltr}
+.orn{display:block;margin:6px auto 0;width:min(760px,92%);height:auto;filter:drop-shadow(0 2px 6px rgba(60,30,80,.35));transform-origin:50% 10%;animation:sway 7s ease-in-out infinite}
+@keyframes sway{0%,100%{transform:rotate(-.6deg)}50%{transform:rotate(.6deg)}}
+.hero .lead{font-size:clamp(17px,2vw,21px);max-width:40ch;margin:0 auto;color:#efe3c6;text-shadow:0 1px 8px rgba(20,10,25,.6)}
+.regrow{position:absolute;z-index:3;bottom:18px;inset-inline-start:20px;background:rgba(31,20,40,.55);border:1px solid rgba(230,214,166,.5);color:#efe3c6;
+  border-radius:999px;padding:6px 16px;font-size:14px;cursor:pointer;backdrop-filter:blur(4px)}
+.regrow:hover{background:rgba(31,20,40,.8)}
 
-/* Nav */
-nav.top{position:sticky;top:0;z-index:20;background:color-mix(in oklab,var(--paper) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-nav.top .wrap{display:flex;gap:6px;overflow-x:auto;padding-block:10px}
-nav.top a{text-decoration:none;color:var(--ink);padding:6px 14px;border-radius:999px;white-space:nowrap;font-weight:600;font-size:15px}
-nav.top a:hover{background:var(--blush)}
+/* ---------- Ledger (stats) ---------- */
+.ledger{background:var(--grain),linear-gradient(180deg,#dcecf9,#c6def3);color:#2c3e57;border-top:3px double #9dbbdb;border-bottom:3px double #9dbbdb}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);text-align:center}
+.stat{padding:16px 8px;border-inline-start:1px solid rgba(60,85,120,.25)}
+.stat:first-child{border-inline-start:none}
+.stat b{display:block;direction:ltr;font-family:var(--display);font-size:36px;line-height:1.1;color:#4b1f52;font-variant-numeric:tabular-nums}
+.stat span{font-size:14px;color:#2f4560;letter-spacing:.03em}
 
-section{padding:64px 0 24px}
-.sec-head{display:flex;align-items:end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:24px}
-.sec-head h2{font-size:clamp(30px,4vw,44px);color:var(--ink)}
-.sec-head h2 small{display:block;font-family:var(--body);font-size:14px;color:var(--sage);font-weight:700;letter-spacing:.1em;margin-bottom:4px}
-.sec-head p{margin:0;color:var(--muted);max-width:52ch}
+/* ---------- Nav ---------- */
+nav.top{position:sticky;top:0;z-index:20;background:rgba(247,240,226,.93);border-bottom:1px solid var(--line);box-shadow:0 3px 0 -2px var(--line)}
+nav.top .wrap{display:flex;gap:4px;justify-content:center;overflow-x:auto;padding-block:8px}
+nav.top a{text-decoration:none;color:var(--plum);padding:6px 14px;white-space:nowrap;font-size:16px;letter-spacing:.04em;border-radius:2px}
+nav.top a:hover{background:var(--lav)}
 
-/* Placeholder photos */
-.ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;color:var(--muted);font-size:14px;
-  background:repeating-linear-gradient(135deg,color-mix(in oklab,var(--blush) 70%,var(--card)) 0 12px,var(--card) 12px 24px);width:100%;height:100%;padding:12px}
-.ph svg{width:44px;height:44px;opacity:.7}
+/* ---------- Sections ---------- */
+section{padding:72px 0 16px}
+.sec-head{display:flex;flex-direction:column;align-items:center;text-align:center;gap:2px;margin-bottom:30px}
+.sec-head h2{font-size:clamp(34px,4.6vw,52px);color:var(--plum);font-weight:400}
+.sec-head h2 small{display:block;font-family:var(--display);font-size:15px;color:var(--sky);font-weight:500;letter-spacing:.3em;margin-bottom:6px}
+.sec-head h2::after{content:"";display:block;width:min(340px,80vw);aspect-ratio:640/80;margin:0 auto 0;background:url("img/613a2ce9ad.webp") center/contain no-repeat}
+.sec-head p{margin:0;color:var(--muted);max-width:56ch;font-size:17px}
 
-/* Filters */
-.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:22px}
-.chip{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 14px;cursor:pointer;font-size:15px;font-weight:600;transition:background .2s,border-color .2s}
-.chip:hover{border-color:var(--rose)}
-.chip[aria-pressed="true"]{background:var(--plum);border-color:var(--plum);color:var(--paper)}
-.search{flex:1 1 200px;max-width:280px;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 16px;font:inherit;color:var(--ink)}
-.swatches{display:flex;gap:6px;margin-inline-start:auto}
-.sw{width:26px;height:26px;border-radius:50%;border:2px solid var(--card);box-shadow:0 0 0 1px var(--line);cursor:pointer;padding:0}
+/* ---------- Photo placeholders ---------- */
+.ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;color:#7b6a58;font-size:14px;width:100%;height:100%;padding:12px;
+  background:var(--grain),repeating-linear-gradient(135deg,#e4d6b8 0 10px,#ece1c8 10px 20px)}
+.ph svg{width:40px;height:40px;opacity:.65}
+
+/* ---------- About ---------- */
+.about-wrap{display:grid;grid-template-columns:1fr 1.15fr;gap:28px;align-items:center}
+.about{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.ab{background:var(--card);border:1px solid var(--line);padding:12px 16px;box-shadow:inset 0 0 0 4px var(--card),inset 0 0 0 5px var(--line)}
+.ab small{display:block;color:var(--sky);font-size:13px;letter-spacing:.15em;margin-bottom:2px}
+.about-photo{margin:0;background:#fbf7ec;padding:12px 12px 36px;box-shadow:var(--shadow);transform:rotate(-1.5deg);position:relative;min-height:420px;display:flex}
+.about-photo img{width:100%;height:100%;object-fit:cover;display:block;filter:sepia(.12) saturate(.95)}
+.about-photo::after{content:"מיד אחרי הקיץ, לפני שמשהו התחיל לצמוח";position:absolute;bottom:8px;inset-inline:0;text-align:center;font-style:italic;color:var(--muted);font-size:15px}
+.wild-box{margin-top:18px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:center;color:var(--muted)}
+.wild-box b{color:var(--sky);margin-inline-end:4px;font-weight:500}
+
+/* ---------- Filters ---------- */
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;margin-bottom:18px}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 15px;cursor:pointer;font-size:15.5px;transition:background .2s,border-color .2s,color .2s}
+.chip:hover{border-color:var(--violet)}
+.chip[aria-pressed="true"]{background:var(--plum);border-color:var(--plum);color:var(--cream)}
+.search{flex:0 1 240px;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 16px;font:inherit;font-size:16px;color:var(--ink)}
+.swatches{display:flex;gap:6px}
+.sw{width:24px;height:24px;border-radius:50%;border:2px solid var(--card);box-shadow:0 0 0 1px var(--line);cursor:pointer;padding:0}
 .sw[aria-pressed="true"]{box-shadow:0 0 0 2px var(--plum)}
+.count{color:var(--muted);font-size:14px;font-style:italic}
 
-/* Catalog */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;cursor:pointer;text-align:start;padding:0;box-shadow:var(--shadow);transition:transform .25s,box-shadow .25s;display:flex;flex-direction:column}
-.card:hover{transform:translateY(-4px) rotate(-.4deg);box-shadow:0 14px 34px rgba(80,30,70,.14)}
-.card .art{aspect-ratio:4/3;display:grid;place-items:center;background:color-mix(in oklab,var(--blush) 55%,var(--card));position:relative}
-.card .art svg{width:70%;height:85%}
-.badge{position:absolute;top:10px;inset-inline-start:10px;background:var(--card);color:var(--sage);font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;border:1px solid var(--line)}
-.badge.now{color:var(--plum);border-color:var(--rose)}
-.card .body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:4px}
-.card h3{font-size:22px}
-.card .latin{color:var(--muted);font-size:17px}
+/* ---------- Catalog plates ---------- */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:2px;overflow:hidden;cursor:pointer;text-align:start;padding:8px;box-shadow:var(--shadow);transition:transform .3s,box-shadow .3s;display:flex;flex-direction:column}
+.card:nth-child(odd):hover{transform:translateY(-5px) rotate(-.6deg)}
+.card:nth-child(even):hover{transform:translateY(-5px) rotate(.6deg)}
+.card:hover{box-shadow:0 18px 34px -12px rgba(60,30,60,.35)}
+.card .art{aspect-ratio:4/3;display:grid;place-items:center;position:relative;border:1px solid var(--line);
+  background:var(--grain),radial-gradient(ellipse at 50% 45%,#fffbe6 0%,#f6f7df 28%,#e4efd3 60%,#cfe1bd 100%)}
+.card .art{overflow:hidden}
+.mound{position:absolute;z-index:0;left:50%;bottom:5%;width:54%;aspect-ratio:520/113;transform:translateX(-50%);background:url("img/5f5cab29c0.webp") center bottom/contain no-repeat;pointer-events:none}
+.card .art .pimg{position:absolute;z-index:1;left:0;right:0;margin:0 auto;top:5%;bottom:11%;-webkit-mask-image:linear-gradient(to bottom,#000 96%,rgba(0,0,0,.6) 98.5%,transparent 100%);mask-image:linear-gradient(to bottom,#000 96%,rgba(0,0,0,.6) 98.5%,transparent 100%);height:auto;max-height:83%;width:90%;object-fit:contain;object-position:center bottom}
+.card .art .pimg.drop{transform:translateY(9%)}
+.card .art .pimg.wide{top:24%;bottom:auto;height:auto;max-height:none;width:88%;-webkit-mask-image:none;mask-image:none}
+.side-vine{position:absolute;left:0;top:0;width:0;pointer-events:none;z-index:0;overflow:hidden}
+.side-vine .vt{position:absolute;left:62%;transform:translateX(-50%)}
+.side-vine .vb{display:block;width:100%;height:auto;filter:saturate(.92) sepia(.04)}
+.side-vine .vs{position:absolute;height:auto;filter:saturate(.92) sepia(.04)}
+.side-vine .vt:not(.on) .vs{animation-play-state:paused}
+.side-vine .vf{animation:vflower 5s ease-in-out infinite alternate}
+.side-vine .vo{animation:vfruit 4s ease-in-out infinite alternate}
+@keyframes vflower{from{transform:rotate(-7deg)}to{transform:rotate(7deg)}}
+@keyframes vfruit{from{transform:rotate(-10deg)}to{transform:rotate(10deg)}}
+@media (prefers-reduced-motion:reduce){.side-vine .vs{animation:none}}
+.forecast{margin-top:36px;background:var(--card);border:1px solid var(--line);padding:24px 26px;box-shadow:var(--shadow),inset 0 0 0 5px var(--card),inset 0 0 0 6px var(--line)}
+.fc-title{font-size:28px;color:var(--plum)}
+.fc-sub{margin:4px 0 16px;color:var(--muted)}
+.fc-total{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.fc-total b{font-size:54px;line-height:1;color:var(--plum);font-weight:400;direction:ltr}
+.fc-total span{font-size:20px}
+.fc-total small{width:100%;color:var(--muted);font-size:14px}
+.fc-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.fc-grid h4{margin:0 0 10px;font-size:18px;color:var(--sky);font-weight:400}
+.fc-row{display:grid;grid-template-columns:118px 1fr 120px;gap:10px;align-items:center;padding:4px 0;font-size:15px}
+.fc-bar{position:relative;height:12px;background:var(--paper);border-radius:6px;overflow:hidden}
+.fc-bar i{position:absolute;inset-block:0;inset-inline-start:0;border-radius:6px}
+.fc-bar .pl{background:var(--lav);opacity:.7}
+.fc-bar .ex{background:linear-gradient(90deg,var(--violet),var(--plum))}
+.fc-v{color:var(--ink);font-variant-numeric:tabular-nums}
+.fc-v small{color:var(--muted);font-size:12px}
+.fc-notes{margin:18px 0 0;padding-inline-start:18px;color:var(--muted);font-size:14.5px}
+.fc-notes li{margin:4px 0}
+@media (max-width:820px){.fc-grid{grid-template-columns:1fr}.fc-row{grid-template-columns:110px 1fr 100px}}
+.m-art{position:relative}.m-art .pimg{position:relative;z-index:1;display:block;margin:0 auto}.m-art .mound{display:none}
+
+.m-art .pimg{max-height:320px;max-width:100%;object-fit:contain}
+.card .art svg{width:68%;height:84%;filter:saturate(.9) sepia(.08)}
+.plate{position:absolute;bottom:6px;inset-inline-end:10px;font-family:var(--display);font-size:14px;color:var(--muted);direction:ltr}
+.badge{position:absolute;top:8px;inset-inline-start:8px;color:var(--sky);font-size:12.5px;padding:1px 8px;border:1px solid var(--sky);border-radius:2px;background:rgba(247,241,226,.8)}
+.badge.now{color:var(--plum);border:1.5px solid var(--plum);transform:rotate(-4deg);font-weight:700;letter-spacing:.05em}
+.sbadge{position:absolute;top:8px;inset-inline-end:8px;font-size:12.5px;padding:1px 8px;border-radius:2px;background:rgba(247,241,226,.85);border:1px solid currentColor}
+.st-ground{color:#4e6b3a}.st-fridge{color:#3f6a9a}.st-sown{color:#8a6a24}.st-est{color:var(--plum)}.st-planned{color:var(--muted)}
+.chip.st-now{color:var(--plum);border-color:var(--plum)}
+.chip.st-now[aria-pressed="true"]{color:var(--cream)}
+.chip.st-ground[aria-pressed="true"],.chip.st-fridge[aria-pressed="true"],.chip.st-sown[aria-pressed="true"],.chip.st-est[aria-pressed="true"],.chip.st-planned[aria-pressed="true"]{color:var(--cream)}
+.card .body{padding:12px 6px 4px;display:flex;flex-direction:column;gap:2px}
+.card h3{font-size:23px;color:var(--plum)}
+.card .latin{color:var(--muted);font-size:16px}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.tag{font-size:12.5px;background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:2px 8px;color:var(--muted)}
+.tag{font-size:13px;background:transparent;border:1px solid var(--line);border-radius:2px;padding:1px 8px;color:var(--muted)}
+.cnote{margin:8px 0 0;font-size:15px;color:var(--muted);line-height:1.45;font-style:italic}
 .empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:40px}
 
-/* Bloom calendar */
-.cal{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;overflow-x:auto;box-shadow:var(--shadow)}
-.cal-grid{display:grid;grid-template-columns:150px repeat(12,minmax(38px,1fr));min-width:680px;row-gap:6px}
-.cal-grid .m{font-size:13px;text-align:center;color:var(--muted);font-weight:700;padding-bottom:6px;cursor:pointer;border-radius:6px}
-.cal-grid .m.cur{color:var(--plum)}
-.cal-grid .m[aria-pressed="true"]{background:var(--blush);color:var(--plum)}
-.cal-grid .name{font-weight:600;font-size:15px;align-self:center;padding-inline-end:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
+/* ---------- Bloom ledger ---------- */
+.cal{background:var(--card);border:1px solid var(--line);padding:20px;overflow-x:auto;box-shadow:var(--shadow),inset 0 0 0 5px var(--card),inset 0 0 0 6px var(--line)}
+.cal-grid{display:grid;grid-template-columns:220px repeat(12,minmax(38px,1fr));min-width:760px}
+.cal-grid .m{font-size:14px;text-align:center;color:var(--muted);padding:4px 0 8px;cursor:pointer;border:none;background:none;border-bottom:2px solid var(--line)}
+.cal-grid .m.cur{color:var(--plum);font-weight:700}
+.cal-grid .m[aria-pressed="true"]{background:var(--lav);color:var(--plum)}
+.cal-grid .name{font-size:15.5px;align-self:center;padding:3px 0;padding-inline-end:8px;line-height:1.3;cursor:pointer;border-bottom:1px dotted var(--line)}
 .cal-grid .name:hover{color:var(--plum)}
-.cell{height:24px;margin:0;position:relative}
-.cell.on{background:var(--c);opacity:.9}
-.cell.leaf{background:repeating-linear-gradient(90deg,color-mix(in oklab,var(--sage) 45%,transparent) 0 3px,transparent 3px 7px)}
-.cell.start{border-start-start-radius:999px;border-end-start-radius:999px}
-.cell.end{border-start-end-radius:999px;border-end-end-radius:999px}
-.cell.curcol::after{content:"";position:absolute;inset:-4px 0;border-inline:1.5px dashed var(--plum);opacity:.45;pointer-events:none}
+.cell{height:30px;position:relative;border-bottom:1px dotted var(--line)}
+.cell.on::before{content:"";position:absolute;inset:8px 0;background:var(--c)}
+.cell.leaf::before{content:"";position:absolute;inset:12px 0;background:repeating-linear-gradient(90deg,var(--sage) 0 3px,transparent 3px 7px);opacity:.6}
+.cell.start::before{border-start-start-radius:999px;border-end-start-radius:999px}
+.cell.end::before{border-start-end-radius:999px;border-end-end-radius:999px}
+.cell.curcol{background:rgba(134,87,163,.08)}
 .cal-legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;font-size:14px;color:var(--muted)}
 .cal-legend i{display:inline-block;width:22px;height:10px;border-radius:9px;vertical-align:middle;margin-inline-end:6px}
-.now-box{margin-top:16px;padding:14px 16px;border-radius:14px;background:var(--blush);display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.now-box strong{font-family:var(--display);font-size:20px;color:var(--plum)}
+.now-box{margin-top:16px;padding:14px 16px;background:var(--lav);display:flex;gap:8px;flex-wrap:wrap;align-items:center;border:1px dashed var(--violet)}
+.now-box strong{font-size:19px;color:var(--plum)}
+.now-box .tag{background:var(--card)}
 
-/* Timeline */
-.tl{position:relative;padding-inline-start:34px}
-.tl::before{content:"";position:absolute;inset-inline-start:11px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--rose),var(--sage))}
-.tl-item{position:relative;display:grid;grid-template-columns:1fr 220px;gap:20px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 20px;margin-bottom:18px;box-shadow:var(--shadow)}
-.tl-item::before{content:"";position:absolute;inset-inline-start:-30px;top:22px;width:16px;height:16px;border-radius:50%;background:var(--card);border:3px solid var(--plum)}
-.tl-date{font-size:14px;font-weight:700;color:var(--sage);letter-spacing:.05em}
-.tl-item h3{font-size:24px;margin:2px 0 6px}
+/* ---------- Timeline (journal) ---------- */
+.tl{position:relative;padding-inline-start:38px;max-width:900px;margin:0 auto}
+.tl::before{content:"";position:absolute;inset-inline-start:13px;top:8px;bottom:8px;width:2px;background:repeating-linear-gradient(180deg,var(--sky) 0 6px,transparent 6px 10px)}
+.tl-item{position:relative;display:grid;grid-template-columns:1fr 200px;gap:20px;background:var(--card);border:1px solid var(--line);padding:18px 22px;margin-bottom:20px;box-shadow:var(--shadow)}
+.tl-item::before{content:"";position:absolute;inset-inline-start:-33px;top:22px;width:14px;height:14px;border-radius:50% 0;background:var(--sky);transform:rotate(45deg)}
+.tl-date{font-size:14px;color:var(--sky);letter-spacing:.12em}
+.tl-item h3{font-size:25px;margin:2px 0 6px;color:var(--plum)}
 .tl-item p{margin:0;color:var(--muted)}
-.tl-item .ph-wrap{border-radius:12px;overflow:hidden;aspect-ratio:4/3}
-.draft{display:inline-block;font-size:11px;font-weight:700;color:var(--plum);border:1px dashed var(--rose);border-radius:6px;padding:0 6px;margin-inline-start:8px;vertical-align:middle}
+.tl-item .ph-wrap{background:#fbf7ec;padding:8px 8px 20px;box-shadow:var(--shadow);transform:rotate(1.5deg);aspect-ratio:4/3.4}
+.draft{display:inline-block;font-size:12px;color:var(--plum);border:1px solid var(--violet);padding:0 6px;margin-inline-start:8px;vertical-align:middle;transform:rotate(-3deg)}
+#tl.tl{padding:0}#tl.tl::before{display:none}
+.tl-m{max-width:760px;margin:26px auto 6px;font-size:24px;color:var(--plum)}
+.tl-m:first-child{margin-top:0}
+.tl-m.soon{color:var(--sky)}
+.tl2{list-style:none;margin:0 auto;padding:0;max-width:760px;position:relative}
+.tl2::before{content:"";position:absolute;inset-inline-start:158px;top:6px;bottom:6px;width:2px;background:repeating-linear-gradient(180deg,var(--sky) 0 6px,transparent 6px 10px)}
+.tl2 li{display:grid;grid-template-columns:150px 1fr;gap:28px;padding:8px 0;position:relative}
+.tl2 li::before{content:"";position:absolute;inset-inline-start:153px;top:16px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2px solid var(--plum)}
+.tl2 .d{color:var(--plum);font-size:15px;text-align:start;padding-top:2px}
+.tl2 .d em{display:block;font-style:normal;font-size:12px;color:var(--sky)}
+.tl2 .t{color:var(--ink)}
+.tl2 li.soon .t{color:var(--muted)}
+.tl2 li.soon::before{border-style:dashed;border-color:var(--sky)}
+@media (max-width:520px){.tl2 li{grid-template-columns:84px 1fr;gap:22px}.tl2::before{inset-inline-start:92px}.tl2 li::before{inset-inline-start:87px}}
+.tl-item.next{grid-template-columns:1fr;border-style:dashed;background:rgba(217,201,230,.35)}
+.plan{margin:6px 0 0;padding-inline-start:18px;color:var(--muted)}
+.plan li{margin:3px 0}
 
-/* Gallery */
-.gallery{columns:3 260px;column-gap:16px}
-.g-item{break-inside:avoid;margin-bottom:16px;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--card);cursor:zoom-in;display:block;width:100%;padding:0;text-align:start;box-shadow:var(--shadow)}
+/* ---------- Gallery (old prints) ---------- */
+.gallery{columns:3 260px;column-gap:22px}
+.g-item{break-inside:avoid;margin-bottom:22px;background:#fbf7ec;padding:10px 10px 0;border:none;cursor:zoom-in;display:block;width:100%;text-align:center;box-shadow:var(--shadow);transition:transform .3s}
+.g-item:nth-child(3n+1){transform:rotate(-1.2deg)}.g-item:nth-child(3n+2){transform:rotate(.8deg)}
+.g-item:hover{transform:rotate(0) scale(1.02)}
 .g-item .ph{min-height:160px}
-.g-item figcaption{padding:10px 14px;font-size:14px;color:var(--muted)}
+.ticker{overflow:hidden;position:relative;padding:10px 0 18px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.ticker-track{display:flex;gap:22px;width:max-content;animation:tick calc(var(--n)*9s) linear infinite}
+.ticker:hover .ticker-track{animation-play-state:paused}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.t-item{flex:none;background:#fbf7ec;padding:10px 10px 0;border:none;cursor:zoom-in;box-shadow:var(--shadow);direction:rtl;transition:transform .3s}
+.t-item:nth-child(odd){transform:rotate(-1.2deg)}.t-item:nth-child(even){transform:rotate(1deg)}.t-item:hover{transform:scale(1.04)}
+.t-item img{display:block;height:260px;width:auto;filter:sepia(.1) saturate(.95)}
+.t-item span{display:block;max-width:260px;margin:0 auto;padding:8px 4px 12px;font-size:15px;color:var(--muted);font-style:italic;text-align:center}
+@media (max-width:600px){.t-item img{height:200px}}
+.gal-cat{font-size:26px;color:var(--plum);margin:10px 0 18px;padding-bottom:6px;border-bottom:1px dashed var(--line)}
+.gal-cat:not(:first-child){margin-top:40px}
+.g-photo{display:block;width:100%;height:auto;filter:sepia(.1) saturate(.95)}
+.lb-photo{display:block;width:100%;max-height:75vh;object-fit:contain;background:#f4ecdc}
+.g-item figcaption{padding:8px 6px 12px;font-size:15px;color:var(--muted);font-style:italic}
 
-/* Wishlist */
-.wish{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
-.wish div{border:1.5px dashed var(--rose);border-radius:16px;padding:16px;background:color-mix(in oklab,var(--blush) 35%,transparent)}
-.wish h3{font-size:20px}
-.wish .latin{font-size:16px;color:var(--muted)}
-.wish p{margin:6px 0 0;font-size:14.5px;color:var(--muted)}
+/* ---------- Wishlist (seed packets) ---------- */
+.wish{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:18px}
+.packet{position:relative;padding:22px 16px 18px;text-align:center;border:1px solid var(--line);box-shadow:var(--shadow);
+  background:var(--grain),linear-gradient(180deg,var(--pk) 0 104px,var(--card) 104px)}
+.packet::before{content:"";position:absolute;top:0;inset-inline:0;height:10px;background:radial-gradient(circle at 5px 0,transparent 5px,var(--pk) 5.5px) 0 0/10px 10px repeat-x;transform:translateY(-9px)}
+.packet .kind{font-size:12px;letter-spacing:.3em;color:var(--cream)}
+.packet h3{font-size:24px;color:var(--cream);margin:6px 0 30px;line-height:1.2}
+.packet .latin{font-size:17px;color:var(--plum)}
+.packet p{margin:6px 0 0;font-size:15px;color:var(--muted)}
 
-footer{margin-top:64px;padding:32px 0 48px;border-top:1px solid var(--line);color:var(--muted);font-size:15px}
+footer{margin-top:72px;padding:40px 0 48px;background:var(--grain),linear-gradient(180deg,#dcecf9,#c6def3);color:#2f4560;text-align:center;font-size:15px;border-top:3px double #9dbbdb}
+footer .sig{font-family:var(--latin);font-style:italic;font-size:30px;color:#4b1f52;display:block;margin-bottom:6px}
 
-/* Modal */
-dialog{border:none;border-radius:22px;padding:0;max-width:760px;width:calc(100% - 32px);background:var(--card);color:var(--ink);box-shadow:0 30px 80px rgba(30,10,30,.35)}
-dialog::backdrop{background:rgba(30,15,30,.55);backdrop-filter:blur(3px)}
-.m-grid{display:grid;grid-template-columns:260px 1fr}
-.m-art{background:color-mix(in oklab,var(--blush) 60%,var(--card));display:grid;place-items:center;padding:20px}
+/* ---------- Dialogs ---------- */
+dialog{border:none;border-radius:2px;padding:0;max-width:780px;width:calc(100% - 32px);background:var(--card);color:var(--ink);box-shadow:0 30px 80px rgba(30,10,30,.45),inset 0 0 0 6px var(--card),inset 0 0 0 7px var(--line)}
+dialog::backdrop{background:rgba(31,20,40,.6)}
+.m-grid{display:grid;grid-template-columns:270px 1fr}
+.m-art{background:var(--grain),radial-gradient(ellipse at 50% 45%,#fffbe6 0%,#f6f7df 28%,#e4efd3 60%,#cfe1bd 100%);display:grid;place-items:center;padding:24px;border-inline-end:1px solid var(--line)}
 .m-art svg{width:100%;height:auto;max-height:300px}
-.m-body{padding:24px 26px 26px}
-.m-body h3{font-size:32px;color:var(--plum)}
-.m-body .latin{font-size:20px;color:var(--muted)}
+.m-body{padding:26px 28px 28px}
+.m-body h3{font-size:34px;color:var(--plum)}
+.m-body .latin{font-size:21px;color:var(--muted)}
 .facts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0}
-.fact{background:var(--paper);border-radius:12px;padding:8px 12px}
-.fact small{display:block;color:var(--muted);font-size:12.5px}
-.fact b{font-weight:600}
-.fun{border-inline-start:3px solid var(--rose);padding-inline-start:12px;margin-top:12px}
-.x{position:absolute;top:10px;inset-inline-end:10px;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:20px;line-height:1}
+.fact{border:1px solid var(--line);padding:6px 12px}
+.fact small{display:block;color:var(--sky);font-size:12.5px;letter-spacing:.1em}
+.fact b{font-weight:500}
+.journal{margin-top:12px;background:var(--lav);padding:10px 14px;border-inline-start:3px solid var(--violet)}
+.journal small{display:block;color:var(--plum);font-size:12.5px;letter-spacing:.15em}
+.fun{border-inline-start:3px solid var(--sky);padding-inline-start:12px;margin-top:12px}
+.x{position:absolute;top:12px;inset-inline-end:12px;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:20px;line-height:1;z-index:2}
 .lb{max-width:900px}
 .lb .ph{aspect-ratio:3/2;height:auto;font-size:16px}
 .lb-cap{padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px}
 .lb-nav{display:flex;gap:8px}
 .lb-nav button{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:6px 14px;cursor:pointer}
 
-@media (max-width:820px){
-  .hero-inner{grid-template-columns:1fr;padding-top:36px}
-  .hero-photo{max-width:320px;aspect-ratio:1;border-radius:160px 160px 18px 18px}
+@media (max-width:860px){
+  .stats{grid-template-columns:repeat(3,1fr)}
+  .stat:nth-child(4){border-inline-start:none}
+  .about-wrap{grid-template-columns:1fr}
+  .about-photo{min-height:220px}
   .tl-item{grid-template-columns:1fr}
   .m-grid{grid-template-columns:1fr}
-  .m-art svg{max-height:180px}
-  .swatches{margin-inline-start:0}
+  .m-art{border-inline-end:none;border-bottom:1px solid var(--line)}
+  .m-art svg{max-height:170px}
 }
+@media (max-width:480px){.about{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.stat{border-inline-start:none}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
 
+<canvas id="bees" aria-hidden="true"></canvas>
 <header class="hero">
-  <canvas id="petals" aria-hidden="true"></canvas>
-  <div class="wrap hero-inner">
-    <div>
-      <div class="eyebrow">גינת קוטג' · חוף הכרמל</div>
-      <h1><span dir="ltr" class="en-title">Ziv's Garden</span></h1>
-      <p class="lead">פרחים גבוהים בסגול וורוד, מטפסים שמשתלטים על כל גדר, וזרעים שנאספים בסוף כל עונה.</p>
-      <div class="stats" id="stats"></div>
-    </div>
-    <div class="hero-photo"><div class="ph" data-ph="תמונה ראשית של הגינה"></div></div>
-  </div>
+  <canvas id="garden" aria-hidden="true"></canvas>
+  <div class="clouds" aria-hidden="true"><img class="cloud c1" alt="" src="img/c8c3d43b19.webp"><img class="cloud c2" alt="" src="img/c8c3d43b19.webp"><img class="cloud c3" alt="" src="img/c8c3d43b19.webp"></div>
+  <div class="wrap hero-text">
+    <div class="eyebrow" dir="ltr">Garden Journal <span aria-hidden="true">✿</span> Carmel Coast</div>
+    <h1 class="title-img"><img src="img/01a6437335.webp" alt="Ziv's Garden"></h1>
+      </div>
+  <button class="regrow" id="regrow" type="button">לגדל מחדש</button>
 </header>
+<div class="ledger"><div class="wrap stats" id="stats"></div></div>
 
 <nav class="top" aria-label="ניווט">
   <div class="wrap">
     <a href="#about-garden">על הגינה</a>
     <a href="#catalog">קטלוג הצמחים</a>
-    <a href="#bloom">לוח פריחה</a>
     <a href="#timeline">ההתפתחות</a>
     <a href="#gallery">גלריה</a>
-    <a href="#wishlist">רשימת חלומות</a>
+    <a href="#bloom">לוח פריחה</a>
   </div>
 </nav>
 
@@ -232,7 +330,7 @@ dialog::backdrop{background:rgba(30,15,30,.55);backdrop-filter:blur(3px)}
       <h2><small>פרק א'</small>על הגינה</h2>
       <p>גינת קוטג' עם פרחים גבוהים ודרמטיים, הרבה בצלים, וגוונים של סגול וורוד.</p>
     </div>
-    <div class="about" id="about"></div>
+    <div class="about-wrap"><div class="about" id="about"></div><figure class="about-photo"><img src="img/a15900876f.webp" alt="הגינה מיד אחרי הקיץ: גדר קנים עם לפופית, סולם עץ ומשטח בטון באמצע"></figure></div>
     <div class="wild-box"><b>צמחי בר שקיבלו אישור להישאר:</b> <span id="wild"></span></div>
   </section>
 
@@ -250,9 +348,26 @@ dialog::backdrop{background:rgba(30,15,30,.55);backdrop-filter:blur(3px)}
     <div class="grid" id="grid"></div>
   </section>
 
+
+  <section id="timeline">
+    <div class="sec-head">
+      <h2><small>פרק ג'</small>איך הגינה גדלה</h2>
+      <p>מה קרה בגינה מאז שתילת הבצלים הראשונים.</p>
+    </div>
+    <div class="tl" id="tl"></div>
+  </section>
+
+  <section id="gallery">
+    <div class="sec-head">
+      <h2><small>פרק ד'</small>גלריה</h2>
+      <p>רגעים מהגינה. לחצו על תמונה להגדלה.</p>
+    </div>
+    <div id="gal"></div>
+  </section>
+
   <section id="bloom">
     <div class="sec-head">
-      <h2><small>פרק ג'</small>מה פורח מתי</h2>
+      <h2><small>פרק ה'</small>מה פורח מתי</h2>
       <p>לוח השנה של הגינה. לחצו על חודש כדי לראות מה פורח בו.</p>
     </div>
     <div class="cal">
@@ -264,82 +379,73 @@ dialog::backdrop{background:rgba(30,15,30,.55);backdrop-filter:blur(3px)}
       </div>
       <div class="now-box" id="nowbox"></div>
     </div>
+    <div class="forecast">
+      <h3 class="fc-title">צפי לאביב</h3>
+      <p class="fc-sub">הערכה ריאלית לשנה הראשונה, אחרי איבודים לחלזונות, ריקבון ונבטים שלא שרדו.</p>
+      <div class="fc-total"><b>~190</b><span>צמחים פורחים באביב</span><small>בלי החמציץ, הפרגים שזרעו את עצמם והצמחים הקיימים</small></div>
+      <div class="fc-grid">
+        <div><h4>פקעות ובצלים</h4><div id="fcBulbs"></div></div>
+        <div><h4>מזרעים</h4><div id="fcSeeds"></div></div>
+      </div>
+      <ul class="fc-notes">
+        <li>הספירה היא של צמחים, לא של פרחים. נרקיס אחד נותן אשכול של 5–10 פרחים, ואפון ריחני או קצח פורחים שוב ושוב, כך שבפועל יהיו הרבה יותר פרחים.</li>
+        <li>תורמוס ההרים הוא צמח חד-שנתי, כך שהוא אמור לפרוח כבר באביב הזה, ואם ישאירו לו תרמילים להבשיל הוא יזרע את עצמו לשנה הבאה.</li>
+      </ul>
+    </div>
   </section>
 
-  <section id="timeline">
-    <div class="sec-head">
-      <h2><small>פרק ד'</small>איך הגינה גדלה</h2>
-      <p>יומן ההתפתחות של הגינה, מהבצלים הראשונים של העונה ועד מה שמתוכנן להמשך.</p>
-    </div>
-    <div class="tl" id="tl"></div>
-  </section>
-
-  <section id="gallery">
-    <div class="sec-head">
-      <h2><small>פרק ה'</small>גלריה</h2>
-      <p>רגעים מהגינה. לחצו על תמונה להגדלה.</p>
-    </div>
-    <div class="gallery" id="gal"></div>
-  </section>
-
-  <section id="wishlist">
-    <div class="sec-head">
-      <h2><small>פרק ו'</small>רשימת חלומות</h2>
-      <p>הצמחים שעוד לא בגינה, אבל כבר יש להם מקום בלב.</p>
-    </div>
-    <div class="wish" id="wish"></div>
-  </section>
 
 </main>
 
-<footer>
-  <div class="wrap">האתר בבנייה: תמונות, תאריכים וסיפורים נוספים יתווספו בהמשך. · גינת קוטג' על חוף הכרמל</div>
-</footer>
+<footer><div class="wrap"><span class="sig">Ziv's Garden</span>גינת קוטג' על חוף הכרמל · האתר גדל יחד עם הגינה</div></footer>
 
 <dialog id="plantDlg" aria-labelledby="pTitle"><div style="position:relative"><button class="x" data-close aria-label="סגירה">×</button><div class="m-grid"><div class="m-art" id="pArt"></div><div class="m-body" id="pBody"></div></div></div></dialog>
 <dialog id="lbDlg" class="lb" aria-label="תצוגת תמונה"><div style="position:relative"><button class="x" data-close aria-label="סגירה">×</button><div id="lbImg"></div><div class="lb-cap"><span id="lbCap"></span><div class="lb-nav"><button id="lbPrev">→ הקודמת</button><button id="lbNext">הבאה ←</button></div></div></div></dialog>
 
+<script id="garden-images">
+window.GARDEN_IMAGES={"daffodil": [{"src": "img/6e065525e3.webp", "ax": 0.442, "file": "img/daffodil-1.webp"}], "butterfly": {"left": "img/0800c676cc.webp", "right": "img/47a09d4653.webp", "body": "img/dfa38db0b5.webp", "cx": 180, "w": 360, "h": 252, "bw": 12}, "bee": {"body": "img/6de158341f.webp", "wing": "img/eaf17bb017.webp", "bw": 300, "bh": 171, "ww": 260, "wh": 92, "ax": 0.535, "ay": 0.13, "wbx": 0.02, "wby": 0.63}, "hyacinth": [{"src": "img/26ed9fd414.webp", "ax": 0.456, "file": "img/hyacinth-1.webp"}, {"src": "img/501aa00d75.webp", "ax": 0.456, "file": "img/hyacinth-1-alt.webp"}], "tulip": [{"src": "img/9fc91cad5b.webp", "ax": 0.452, "file": "img/tulip-purple.webp"}, {"src": "img/c3cfa23dc2.webp", "ax": 0.457, "file": "img/tulip-pink.webp"}], "lupine": [{"src": "img/682ceb4391.webp", "ax": 0.44, "file": "img/lupine-1.webp"}, {"src": "img/b77173e971.webp", "ax": 0.44, "file": "img/lupine-1-alt.webp"}, {"src": "img/682ceb4391.webp", "ax": 0.44, "file": "img/lupine-2.webp"}, {"src": "img/40b246df4a.webp", "ax": 0.44, "file": "img/lupine-2-alt.webp"}], "foxglove": [{"src": "img/7f53a19d77.webp", "ax": 0.527, "file": "img/foxglove-1.webp"}, {"src": "img/b567f59473.webp", "ax": 0.527, "file": "img/foxglove-1-alt.webp"}], "grass": {"src": "img/1fe62b3be4.webp", "w": 1400, "h": 351}, "extra": {"wisteria": "img/a7ba5550f5.webp", "amaryllis": "img/a030993ce4.webp", "scilla": "img/261e5e2897.webp", "anemone": "img/86d603df9f.webp", "dutch-iris": "img/a6172aae75.webp", "chinese-narcissus": "img/4bd1c96587.webp", "ixia": "img/ef1b37aecd.webp", "yellow-daffodil": "img/6e82a45c34.webp", "sweet-pea": "img/cc8fdc3e24.webp", "muscari": "img/b2dc68aa74.webp", "artichoke": "img/3d6897d4d6.webp", "nigella": "img/563b405b72.webp", "statice": "img/94523f8052.webp", "larkspur": "img/d767b62a86.webp", "stock": "img/da8d314fab.webp", "morning-glory": "img/29adf3e305.webp", "thunbergia": "img/fca403f5b0.webp", "passionflower": "img/62c17bdded.webp", "angelonia": "img/baa423bdd1.webp", "echium": "img/7512b239f6.webp", "tomato": "img/7925e44fef.webp", "agapanthus-like": "img/5c3d1682f1.webp", "chamomile": "img/ea96d92137.webp", "iceland-poppy": "img/81a40f1908.webp", "poppy": "img/806a283cb7.webp", "arisarum": "img/e32c6dbce3.webp", "fumaria": "img/bae11d445b.webp", "oxalis": "img/f0ac4eaaa2.webp", "cyperus": "img/423b71d4bb.webp", "monstera": "img/92b280c2fc.webp", "chili": "img/d84b3725e3.webp", "tradescantia": "img/220b9bf877.webp", "pentas": "img/5eaadb966d.webp", "delonix": "img/665d5d6f02.webp", "pothos": "img/18087e8516.webp", "nasturtium": "img/5f82bc5a08.webp", "zinnia": "img/99d580dbc1.webp", "morning-glory-blue": "img/b48e085e34.webp"}, "anemone": [{"src": "img/b24cc0ddd0.webp", "ax": 0.516, "file": "img/anemone-1.webp"}], "ixia": [{"src": "img/559bf22162.webp", "ax": 0.374, "file": "img/ixia-1.webp"}], "amaryllis": [{"src": "img/ce4af8edfb.webp", "ax": 0.436, "file": "img/amaryllis-1.webp"}], "delphinium": [{"src": "img/3f8da5a85b.webp", "ax": 0.53, "file": "img/delphinium-1.webp"}], "icepoppy": [{"src": "img/328d81c528.webp", "ax": 0.465, "file": "img/icepoppy-1.webp"}], "iris": [{"src": "img/520607f9eb.webp", "ax": 0.478, "file": "img/iris-1.webp"}], "muscari": [{"src": "img/a0fc314d9f.webp", "ax": 0.447, "file": "img/muscari-1.webp"}], "nigella": [{"src": "img/efa89682ba.webp", "ax": 0.446, "file": "img/nigella-1.webp"}], "tree": {"src": "img/18f23c9a68.webp", "w": 700, "h": 525}, "heron": {"src": "img/24a811dba1.webp", "w": 260, "h": 173}};
+</script>
 <script>
 /* ======== נתוני הגינה — כאן מעדכנים ======== */
 const MONTHS=["ינו׳","פבר׳","מרץ","אפר׳","מאי","יוני","יולי","אוג׳","ספט׳","אוק׳","נוב׳","דצמ׳"];
 const MONTHS_FULL=["ינואר","פברואר","מרץ","אפריל","מאי","יוני","יולי","אוגוסט","ספטמבר","אוקטובר","נובמבר","דצמבר"];
-const CATS={bulb:"בצלים ופקעות",seed:"נזרעו מזרע",climber:"מטפסים",perennial:"רב-שנתיים",foliage:"עלווה",herb:"תבלינים",veg:"ירקות"};
+const CATS={tree:"עצים",wild:"צמחי בר",bulb:"בצלים ופקעות",seed:"נזרעו מזרע",climber:"מטפסים",perennial:"רב-שנתיים",foliage:"עלווה",herb:"תבלינים",veg:"ירקות"};
 const STATUS={ground:"באדמה",fridge:"במקרר",sown:"נזרע",est:"ותיק בגינה",planned:"מתוכנן"};
 const COLORS={purple:"#8e5bb5",pink:"#e48ab0",blue:"#6d8fd6",white:"#f3efe6",yellow:"#f2c94c",orange:"#ec8a3c",red:"#d4553f",green:"#6b8566"};
 
 const PLANTS=[
  /* ---- בצלים באדמה ---- */
  {id:"chinese-narcissus",he:"נרקיס סיני",lat:"Narcissus tazetta 'Chinensis'",cat:"bulb",status:"ground",count:25,colors:["white","yellow"],art:"tazetta",c:"#fff8e1",
-  bloom:[12,1,2],planted:"סביב 9 באוקטובר 2026",source:"בצלים שנקנו",where:"פזורים בגינה, גם ליד גדר הקנים",
+  bloom:[12,1,2],planted:"סביב 9 באוקטובר 2026",source:"נקנו ב־9 באוקטובר 2026",where:"פזורים בגינה, גם ליד גדר הקנים",
   note:"כבר יצאו גושי עלים גדולים. הראשונים שיפרחו, באמצע עד סוף דצמבר.",
   fun:"קרוב של הנרקיס המצוי שפורח בר בארץ בחורף. בניגוד לצבעונים, הוא לא צריך קירור כדי לפרוח."},
- {id:"amaryllis",he:"אמריליס ורוד",lat:"Hippeastrum",cat:"bulb",status:"ground",count:"1–2",colors:["pink"],art:"lily",c:"#e98aa8",
-  bloom:[4,5],planted:"אמצע אוקטובר 2026",source:"נקנה (מופיע בקבלה)",where:"חצי צל עם שמש צהריים, ליד הצמח דמוי האגפנתוס",
+ {id:"amaryllis",he:"אמריליס ורוד",lat:"Hippeastrum",cat:"bulb",status:"ground",count:2,colors:["pink"],art:"lily",c:"#e98aa8",
+  bloom:[4,5],planted:"אמצע אוקטובר 2026",source:"נקנה ב־9 באוקטובר 2026",where:"חצי צל עם שמש צהריים, ליד הצמח דמוי האגפנתוס",
   note:"מוציא עלים חדשים. יש נקודות אדומות קטנות שכדאי לעקוב אחריהן.",
   fun:"מה שנמכר כ'אמריליס' הוא בכלל Hippeastrum מדרום אמריקה. האמריליס האמיתי הוא סוג אחר, מדרום אפריקה."},
  {id:"scilla",he:"בן-חצב יקינתוני",lat:"Scilla hyacinthoides",cat:"bulb",status:"ground",count:1,colors:["blue","purple"],art:"spike",c:"#8a8fd8",
-  bloom:[3,4],planted:"סוף אוקטובר–תחילת נובמבר 2026",source:"בצל שנקנה",where:"",
+  bloom:[3,4],planted:"סוף אוקטובר–תחילת נובמבר 2026",source:"נקנה ב־9 באוקטובר 2026",where:"",
   note:"השושנת כבר בחוץ.",
   fun:"מוציא עמוד פרחים גבוה עם עשרות כוכבים קטנים בכחול-לילך."},
  {id:"anemone",he:"כלנית",lat:"Anemone coronaria",cat:"bulb",status:"ground",count:10,colors:["red","pink","purple","white"],art:"anemone",c:"#d64a5b",
-  bloom:[1,2,3],planted:"סוף אוקטובר–תחילת נובמבר 2026",source:"פקעות שנקנו",where:"",
+  bloom:[1,2,3],planted:"סוף אוקטובר–תחילת נובמבר 2026",source:"נקנו ב־9 באוקטובר 2026, תערובת צבעים",where:"",
   note:"העלים הראשונים יצאו בערך שלושה שבועות אחרי השתילה.",
   fun:"הכלנית נבחרה ב-2013 לפרח הלאומי של ישראל."},
  {id:"dutch-iris",he:"אירוס הולנדי",lat:"Iris × hollandica",cat:"bulb",status:"ground",count:10,colors:["blue","purple"],art:"iris",c:"#5f6fc9",
-  bloom:[3,4],planted:"סוף אוקטובר–תחילת נובמבר 2026",source:"בצלים שנקנו",where:"",
+  bloom:[3,4],planted:"סוף אוקטובר–תחילת נובמבר 2026",source:"נקנו ב־9 באוקטובר 2026",where:"",
   note:"עוד לא יצאו. לבדוק שוב באמצע דצמבר.",
   fun:"הכלאה שפותחה בהולנד ממיני אירוס ספרדיים. אחד מפרחי הקטיף האהובים בעולם."},
  {id:"ixia",he:"איקסיה",lat:"Ixia",cat:"bulb",status:"ground",count:25,colors:["pink","white","yellow"],art:"star6",c:"#f09ab8",
-  bloom:[3,4,5],planted:"סוף אוקטובר–תחילת נובמבר 2026",source:"פקעות שנקנו",where:"",
+  bloom:[3,4,5],planted:"סוף אוקטובר–תחילת נובמבר 2026",source:"נקנו ב־9 באוקטובר 2026",where:"",
   note:"איטית. לתת לה זמן עד תחילת ינואר.",
   fun:"מדרום אפריקה. הפרחים נפתחים רק בשמש ונסגרים בימים מעוננים ובלילה."},
  /* ---- במקרר ---- */
- {id:"tulip",he:"צבעוני",lat:"Tulipa",cat:"bulb",status:"fridge",count:12,colors:["pink","red","purple"],art:"tulip",c:"#e46a8e",
-  bloom:[2,3],planted:"במקרר מ-9 באוקטובר 2026",source:"נקנו",where:"עציצים, שתילה סביב 6–9 בדצמבר",
+ {id:"tulip",he:"צבעוני",lat:"Tulipa",cat:"bulb",status:"fridge",count:12,colors:["red","white","pink","purple"],art:"tulip",c:"#e46a8e",
+  bloom:[2,3],planted:"במקרר מ-9 באוקטובר 2026",source:"נקנו ב־9 באוקטובר 2026: חבילה אדום-לבן וחבילת תערובת",where:"עציצים, שתילה סביב 6–9 בדצמבר",
   note:"",
   fun:"בהולנד של 1637, בשיא 'מאניית הצבעונים', בצל אחד נמכר במחיר של בית. בארץ צריך לקרר אותו כדי שיפרח."},
- {id:"hyacinth",he:"יקינתון",lat:"Hyacinthus orientalis",cat:"bulb",status:"fridge",count:3,colors:["blue","pink","white"],art:"spike",c:"#7d7fd6",
-  bloom:[2,3],planted:"במקרר מ-9 באוקטובר 2026",source:"נקנו",where:"עציצים, שתילה סביב 6–9 בדצמבר",
+ {id:"hyacinth",he:"יקינתון",lat:"Hyacinthus orientalis",cat:"bulb",status:"fridge",count:3,colors:["blue"],art:"spike",c:"#7d7fd6",
+  bloom:[2,3],planted:"במקרר מ-9 באוקטובר 2026",source:"נקנו ב־9 באוקטובר 2026, חבילה כחולה",where:"עציצים, שתילה סביב 6–9 בדצמבר",
   note:"",
   fun:"מגיע במקור מטורקיה ומהלבנון. ריחני מאוד, ועדיף לעבוד עם הבצלים עם כפפות כי הם מגרים את העור."},
  {id:"muscari",he:"כדן",lat:"Muscari",cat:"bulb",status:"fridge",count:10,colors:["blue"],art:"grape",c:"#4f63c4",
@@ -350,17 +456,17 @@ const PLANTS=[
   bloom:[2,3],planted:"במקרר מ-23 באוקטובר 2026",source:"נקנו, גודל 20–22",where:"באדמה, שתילה בין 20 בדצמבר ל-3 בינואר",
   note:"",
   fun:"הגודל 20–22 הוא היקף הבצל בסנטימטרים. בצל גדול יותר נותן יותר פרחים."},
- {id:"white-daffodil",he:"נרקיס חצוצרה לבן-כתום",lat:"Narcissus",cat:"bulb",status:"fridge",count:1,colors:["white","orange"],art:"daffodil",c:"#fbf6ea",trumpet:"#ec8a3c",
+ {id:"white-daffodil",he:"נרקיס חצוצרה לבן-כתום",lat:"Narcissus",cat:"bulb",status:"fridge",count:6,colors:["white","orange"],art:"daffodil",c:"#fbf6ea",trumpet:"#ec8a3c",
   bloom:[2,3],planted:"במקרר מ-8 בנובמבר 2026",source:"יודפת",where:"באדמה, שתילה בין 20 בדצמבר ל-3 בינואר",
   note:"",
   fun:"החצוצרה שבמרכז נקראת קורונה, והצבע שלה יכול להיות שונה לגמרי מעלי הכותרת."},
  /* ---- נזרעו ---- */
- {id:"lupine",he:"תורמוס",lat:"Lupinus",cat:"seed",status:"sown",count:"~40 זרעים",colors:["blue","purple","pink"],art:"spike",c:"#6d8fd6",
+ {id:"lupine",he:"תורמוס ההרים",lat:"Lupinus pilosus",cat:"seed",status:"sown",count:"~45 זרעים",colors:["blue","purple"],art:"spike",c:"#6d8fd6",
   bloom:[2,3,4],planted:"אמצע נובמבר 2026, לפני הגשם",source:"זרעים",where:"זרע אחד בכל נקודה, פזור בגינה",
   note:"16 כבר נבטו. אחד צמוד לנרקיס.",
-  fun:"בן משפחת הקטניות: מקבע חנקן מהאוויר ומשפר את האדמה לצמחים שיגדלו אחריו."},
- {id:"sweet-pea",he:"טופח ריחני",lat:"Lathyrus odoratus",cat:"seed",status:"sown",count:"~30 זרעים",colors:["pink","purple","white"],art:"pea",c:"#d983c0",
-  bloom:[3,4,5],planted:"אמצע נובמבר 2026",source:"זרעים (חבילה אחת שמורה לגיבוי)",where:"ליד סולם העץ והגדר",
+  fun:"תורמוס בר ישראלי, חד-שנתי, שפורח באביב בכחול-סגול עם כתם לבן שמאדים עם הזמן. בן משפחת הקטניות: מקבע חנקן מהאוויר ומשפר את האדמה לצמחים שיגדלו אחריו."},
+ {id:"sweet-pea",he:"טופח ריחני",lat:"Lathyrus odoratus",cat:"seed",status:"sown",count:"3 חבילות זרעים",colors:["pink","purple","white"],art:"pea",c:"#d983c0",
+  bloom:[3,4,5],planted:"אמצע נובמבר 2026",source:"3 חבילות זרעים (אחת מהן שמורה לגיבוי)",where:"ליד סולם העץ והגדר",
   note:"",
   fun:"ככל שקוטפים יותר פרחים, הוא פורח יותר. הזרעים לא אכילים, בניגוד לאפונה רגילה."},
  {id:"artichoke",he:"ארטישוק",lat:"Cynara scolymus",cat:"seed",status:"sown",colors:["purple"],art:"artichoke",c:"#9a5fc4",
@@ -371,20 +477,20 @@ const PLANTS=[
   bloom:[3,4,5,6],planted:"אמצע נובמבר 2026",source:"זרעים",where:"",
   note:"",
   fun:"ה'פרח' הצבעוני הוא בעצם גביע נייר ששומר על הצבע גם אחרי ייבוש. גדל בר גם בחוף הכרמל."},
- {id:"nigella",he:"ניגלה",lat:"Nigella damascena",cat:"seed",status:"sown",colors:["blue","white","pink"],art:"nigella",c:"#7fa2dd",
+ {id:"nigella",he:"ניגלה / קצח",lat:"Nigella damascena",cat:"seed",status:"sown",colors:["blue","white","pink"],art:"nigella",c:"#7fa2dd",
   bloom:[3,4,5],planted:"אמצע נובמבר 2026",source:"זרעים, כולל זרעים שנאספו בעבר",where:"כתמי זריעה כהים",
   note:"",
   fun:"בלועזית Love-in-a-mist, בגלל העלווה הדקה שעוטפת את הפרח כמו ערפל. קרובה של הקצח."},
- {id:"larkspur",he:"דורבנית חד-שנתית",lat:"Consolida ajacis",cat:"seed",status:"sown",colors:["blue","purple","pink"],art:"spike",c:"#5b6fd0",
+ {id:"larkspur",he:"דלפיניום / דורבן הפרש",lat:"Delphinium",cat:"seed",status:"sown",colors:["blue","purple","pink"],art:"spike",c:"#5b6fd0",
   bloom:[3,4,5],planted:"אמצע נובמבר 2026",source:"זרעים, קוררו יותר משלושה שבועות לפני הזריעה",where:"כתמי זריעה כהים",
   note:"",
-  fun:"הזרעים צריכים קור כדי לנבוט, ולכן הקירור במקרר. כל חלקי הצמח רעילים."},
+  fun:"הזרעים צריכים תקופת קור כדי לנבוט, ולכן הקירור במקרר. שרביטי הפרחים יכולים להגיע לגובה של יותר ממטר. כל חלקי הצמח רעילים."},
  {id:"stock",he:"מנתור",lat:"Matthiola incana",cat:"seed",status:"sown",colors:["pink","purple","white"],art:"spike",c:"#c77fb8",
   bloom:[2,3,4],planted:"סוף אוקטובר 2026",source:"זרעים",where:"",
   note:"נזרע עם מעט מים. אם לא יופיע כלום, לזרוע מחדש.",
   fun:"גדל בר לאורך חופי הים התיכון. הריח המתקתק שלו מתחזק לקראת ערב."},
  /* ---- מטפסים ---- */
- {id:"morning-glory",he:"לפופית",lat:"Ipomoea cairica",cat:"climber",status:"est",colors:["purple"],art:"trumpet",c:"#9a6fd0",
+ {id:"morning-glory",he:"לפופית כפנית",lat:"Ipomoea cairica",cat:"climber",status:"est",colors:["purple"],art:"trumpet",c:"#9a6fd0",
   bloom:[3,4,5,6,7,8,9,10,11,12],where:"על גדר הקנים",
   note:"מפילה פרחים סגולים על הערוגות.",
   fun:"כל פרח פתוח יום אחד בלבד. בחוף כמעט לא מפסיקה לפרוח."},
@@ -396,39 +502,87 @@ const PLANTS=[
   bloom:[4,5,6],where:"",
   note:"נכנסת לתרדמה. ייתכן שיש קרדית אדומה (spider mites).",
   fun:"פורחת מאוחר יותר מהויסטריה הסינית, על צמיחה חדשה, ולפעמים שוב בקיץ. גם פחות אגרסיבית ממנה."},
- {id:"thunbergia",he:"תונברגיה",lat:"Thunbergia alata",cat:"climber",status:"est",colors:["orange","yellow"],art:"thunbergia",c:"#f0a03c",
+ {id:"thunbergia",he:"סוזי שחורת עין",lat:"Thunbergia alata",cat:"climber",status:"est",colors:["red"],art:"thunbergia",c:"#c8362f",
   bloom:[4,5,6,7,8,9,10,11],where:"על הגדר",
   note:"",
-  fun:"בלועזית Black-eyed Susan vine. נקראת על שם קרל פטר תונברג, תלמידו של לינאוס."},
- {id:"jasmine",he:"יסמין מטפס",lat:"Jasminum",cat:"climber",status:"est",colors:["white"],art:"star",c:"#f3efe6",
-  bloom:[3,4,5,6,7,8,9],where:"",
-  note:"",
-  fun:"הריח מתחזק בערב ובלילה, כדי למשוך עשים מאביקים."},
+  fun:"השם המדעי, תונברגיה, הוא על שם קרל פטר תונברג, תלמידו של לינאוס. ה'עין השחורה' היא המרכז הכהה של הפרח."},
  /* ---- רב-שנתיים ---- */
  {id:"angelonia",he:"אנג'לוניה",lat:"Angelonia",cat:"perennial",status:"est",colors:["purple","pink"],art:"spike",c:"#9d6fd0",
   bloom:[4,5,6,7,8,9,10,11],source:"נקנתה לפני הרבה זמן",where:"ליד הגדר",
   note:"עדיין פורחת.",
   fun:"מכונה 'לוע ארי של קיץ': ממשיכה לפרוח גם בחום הכבד."},
- {id:"echium",he:"עכנאי",lat:"Echium",cat:"perennial",status:"est",colors:["blue","purple"],art:"spike",c:"#5f7fd6",
+ {id:"echium",he:"עכנאי מדיירה",lat:"Echium candicans · Pride of Madeira",cat:"perennial",status:"est",colors:["blue","purple"],art:"spike",c:"#5f7fd6",
   bloom:[3,4,5],where:"בעציץ",
   note:"מתקשה. יסתדר טוב יותר באדמה, במקום שמשי.",
-  fun:"מגנט לדבורים. בעונת הפריחה הוא כמעט מזמזם."},
- {id:"agapanthus-like",he:"צמח דמוי אגפנתוס",lat:"?",cat:"perennial",status:"est",colors:["green"],art:"agapanthus",c:"#7f9ae0",
-  bloom:[],leaf:[1,2,3,4,5,6,7,8,9,10,11,12],where:"ליד האמריליס",
-  note:"עוד לא זוהה בוודאות.",
-  fun:""},
- {id:"alocasia",he:"אלוקסיה",lat:"Alocasia",cat:"foliage",status:"est",colors:["green"],art:"elephant",c:"#4f7a52",
-  bloom:[],leaf:[3,4,5,6,7,8,9,10,11],where:"",
+  fun:"בלועזית Pride of Madeira, 'הגאווה של מדיירה', על שם האי הפורטוגלי שממנו הוא מגיע. מגנט לדבורים: בעונת הפריחה הוא כמעט מזמזם."},
+ {id:"agapanthus-like",he:"אגפנתוס",lat:"Agapanthus",cat:"perennial",status:"est",colors:["purple","blue"],art:"agapanthus",c:"#7f6fd0",
+  bloom:[5,6,7,8],where:"ליד האמריליס",
   note:"",
-  fun:"כשיש לה עודף מים היא 'בוכה': טיפות נוטפות מקצות העלים. זה נקרא גוטציה."},
- {id:"equisetum",he:"שבטבט",lat:"Equisetum",cat:"foliage",status:"est",colors:["green"],art:"reed",c:"#5c7d4f",
+  fun:"השם בא מיוונית: agape (אהבה) ו־anthos (פרח), כלומר 'פרח האהבה'. מקורו בדרום אפריקה, והוא מסתדר מצוין בקיץ היבש של חוף הכרמל."},
+ {id:"chamomile",he:"בבונג",lat:"Matricaria chamomilla",cat:"seed",status:"planned",colors:["white","yellow"],art:"star",c:"#fffbe6",
+  bloom:[2,3,4,5],planted:"זריעה עם הגשמים הקרירים הבאים",where:"",
+  note:"",
+  fun:"גדל בר בכל רחבי הארץ ופורח בשדות בסוף החורף. מהפרחים המיובשים מכינים את תה הקמומיל."},
+ {id:"iceland-poppy",he:"פרג איסלנדי",lat:"Papaver nudicaule",cat:"seed",status:"planned",colors:["pink"],art:"anemone",c:"#f2a0b8",
+  bloom:[2,3,4],planted:"זריעה עם הגשמים הקרירים הבאים",where:"",
+  note:"בוורוד.",
+  fun:"עלי הכותרת דקים ומקומטים כמו נייר משי. למרות השם, מקורו בהרים הקרים של צפון אסיה, לא באיסלנד."},
+ {id:"poppy",he:"פרג הכרמל",lat:"Papaver carmeli",cat:"seed",status:"planned",colors:["red"],art:"anemone",c:"#d8402f",
+  bloom:[2,3,4],planted:"זריעה עם הגשמים הקרירים הבאים",where:"",
+  note:"בשנה שעברה כבר היו פרגים בגינה, וייתכן שחלקם זרעו את עצמם.",
+  fun:"צמח בר חד-שנתי ישראלי שגדל בבתות ובגריגות. לפרח אדום יש בבסיס כל עלה כותרת כתם כהה, שלעתים קרובות מוקף בשוליים לבנים."},
+ {id:"arisarum",he:"לופית",lat:"Arisarum vulgare",cat:"wild",status:"est",colors:["purple","green"],art:"lily",c:"#6b4a5e",
+  bloom:[12,1,2,3],where:"",
+  note:"צמח בר שצומח בגינה מעצמו.",
+  fun:"הפרח נראה כמו כובע של נזיר: מעטפת מפוספסת בחום-סגול שמסתירה בפנים את המכבד. בלועזית הוא נקרא Friar's cowl, ברדס הנזיר."},
+ {id:"fumaria",he:"עשנן",lat:"Fumaria",cat:"wild",status:"est",colors:["pink","purple"],art:"spike",c:"#c77fb8",
+  bloom:[12,1,2,3,4],where:"",
+  note:"צמח בר שקיבל אישור להישאר.",
+  fun:"השם בא מהמילה הלטינית fumus, עשן: העלווה האפרפרה והדקה נראית מרחוק כמו ענן עשן נמוך."},
+ {id:"oxalis",he:"חמציץ נטוי",lat:"Oxalis pes-caprae",cat:"wild",status:"est",colors:["yellow"],art:"star",c:"#f6d14a",
+  bloom:[12,1,2,3,4],where:"שמור הרחק מהבצלים",
+  note:"אוהב אותו, אבל מקפיד שלא יתקרב לבצלים.",
+  fun:"מקורו בדרום אפריקה, אבל הוא כבר מזמן חלק מנוף החורף בארץ. העלים והגבעולים חמצמצים, ומכאן השם. הפרחים נסגרים בלילה ובימים מעוננים."},
+ {id:"pentas",he:"פנטס אדום",lat:"Pentas lanceolata",cat:"perennial",status:"est",colors:["red"],art:"star",c:"#d9283a",
+  bloom:[4,5,6,7,8,9,10,11],where:"",
+  note:"פורח עכשיו.",
+  fun:"בלועזית Egyptian star cluster: כל פרח הוא כוכב קטן בעל חמישה עלי כותרת, והם מתקבצים לזר שטוח. מגנט לפרפרים ולדבורים."},
+ {id:"chili",he:"פלפל חריף",lat:"Capsicum annuum",cat:"veg",status:"est",colors:["red"],art:"tomato",c:"#d4401f",
+  bloom:[6,7,8,9,10,11],where:"בעציץ",
+  note:"עוד יש עליו פלפל אדום.",
+  fun:"החריפות באה מחומר שנקרא קפסאיצין, שמרוכז בעיקר בקרומים הלבנים שבתוך הפרי ולא בזרעים עצמם."},
+ {id:"cyperus",he:"גומא",lat:"Cyperus alternifolius",cat:"foliage",status:"est",colors:["green"],art:"reed",c:"#5f8a45",
   bloom:[],leaf:[1,2,3,4,5,6,7,8,9,10,11,12],where:"",
   note:"",
-  fun:"מאובן חי: לקרובים שלו לפני 300 מיליון שנה היו גבעולים בגודל של עצים."},
- {id:"herbs",he:"תבלינים ים-תיכוניים",lat:"Salvia, Lavandula…",cat:"herb",status:"est",colors:["purple","blue"],art:"herb",c:"#8c7bc4",
-  bloom:[1,2,3,4,5,6],where:"",
+  fun:"בלועזית Umbrella papyrus: העלים יוצאים מקצה הגבעול כמו חישורים של מטרייה. קרוב של הפפירוס שממנו הכינו המצרים נייר."},
+ {id:"monstera",he:"מונסטרה",lat:"Monstera deliciosa",cat:"foliage",status:"est",colors:["green"],art:"elephant",c:"#3f7a45",
+  bloom:[],leaf:[1,2,3,4,5,6,7,8,9,10,11,12],where:"ליד גדר הקנים",
   note:"",
-  fun:"מתאימים לגינה שלא מושקית כל יום: נבנו בדיוק לקיץ הים-תיכוני היבש."},
+  fun:"החורים והחריצים בעלים נוצרים רק כשהצמח מתבגר. אחד ההסברים: הם עוזרים לעלים הגדולים לעמוד ברוח ולתת לאור לעבור לעלים שמתחת."},
+ {id:"tradescantia",he:"טרדסקנטיה זברינה (יהודי נודד)",lat:"Tradescantia zebrina",cat:"foliage",status:"est",colors:["purple","green"],art:"herb",c:"#8a5a8a",
+  bloom:[],leaf:[1,2,3,4,5,6,7,8,9,10,11,12],where:"מכסה את הקרקע ליד המונסטרה",
+  note:"",
+  fun:"עלים כסופים-ירוקים עם פסים, ומתחת סגולים. כל ענף שנשבר נקלט מחדש באדמה בקלות, ולכן היא מתפשטת ויוצרת שטיח."},
+ {id:"delonix",he:"צאלון נאה",lat:"Delonix regia",cat:"tree",status:"est",colors:["red","orange"],art:"star",c:"#d8431f",
+  bloom:[5,6,7,8],where:"עץ ענקי בגינה",
+  note:"",
+  fun:"בלועזית Flame tree, עץ הלהבה: בתחילת הקיץ הנוף כולו מתכסה בפרחים אדומים-כתומים. מקורו במדגסקר, והתרמילים החומים והארוכים שלו נשארים תלויים על העץ גם בחורף."},
+ {id:"pothos",he:"פוטוס",lat:"Epipremnum aureum",cat:"foliage",status:"est",colors:["green","yellow"],art:"elephant",c:"#4f8a3f",
+  bloom:[],leaf:[1,2,3,4,5,6,7,8,9,10,11,12],where:"",
+  note:"יש הרבה בגינה.",
+  fun:"מטפס שמגיע מאיי שלמה באוקיינוס השקט. כשהוא מטפס על עץ העלים שלו גדלים מאוד ואפילו מתחרצים, כמו של מונסטרה, אבל בעציץ הם נשארים קטנים בצורת לב."},
+ {id:"nasturtium",he:"כובע הנזיר",lat:"Tropaeolum majus",cat:"flower",status:"est",colors:["orange","yellow","red"],art:"star",c:"#ef7a2a",
+  bloom:[2,3,4,5,6],where:"ערוגת האביב ליד משטח הבטון",
+  note:"",
+  fun:"בלועזית Nasturtium. כל הצמח אכיל: לפרחים ולעלים יש טעם חריף-פלפלי, כמו של רוקט, והם נהדרים בסלט."},
+ {id:"zinnia",he:"ציניה",lat:"Zinnia elegans",cat:"flower",status:"est",colors:["pink","purple"],art:"star",c:"#e2549a",
+  bloom:[5,6,7,8,9,10],where:"ליד גדר הקנים",
+  note:"",
+  fun:"פרח קיץ שאוהב חום ושמש מלאה. ככל שקוטפים יותר פרחים, הוא פורח יותר. ב־2016 ציניה הייתה הפרח הראשון שפרח בחלל, בתחנת החלל הבינלאומית."},
+ {id:"morning-glory-blue",he:"לפופית תכולה",lat:"Ipomoea tricolor",cat:"climber",status:"est",colors:["blue"],art:"trumpet",c:"#6fa8e0",
+  bloom:[6,7,8,9,10,11],where:"",
+  note:"פורחת רק בבוקר המוקדם.",
+  fun:"בלועזית Morning glory, 'תפארת הבוקר': כל פרח נפתח עם הזריחה ונסגר עד הצהריים, וחי יום אחד בלבד. הזן התכול המפורסם נקרא Heavenly Blue."},
  {id:"tomato",he:"עגבניות שרי",lat:"Solanum lycopersicum",cat:"veg",status:"planned",colors:["red"],art:"tomato",c:"#d4553f",
   bloom:[5,6,7,8,9,10],planted:"זריעה במגש בפברואר",where:"",
   note:"בשנה שעברה היו בעיות של אקריות בעגבניות.",
@@ -436,35 +590,24 @@ const PLANTS=[
 ];
 
 const ABOUT=[
- ["מיקום","מושב מגן מיכאל, חוף הכרמל"],
- ["השקיה","בצינור, בביקורים, פעם-פעמיים בשבוע. אף אחד לא גר שם."],
+ ["מיקום","חוף הכרמל"],
+ ["השקיה","בצינור, בביקורים, פעם-פעמיים בשבוע, ומי גשמים בחורף"],
  ["אדמה","כהה, אבנית ומתנקזת מהר"],
- ["חורף","רטוב מאוד, והרבה חלזונות"],
+ ["סיכונים","חלזונות, הרבה גשם ואדמה רטובה בחורף, מחסור באור בחלק מהגינה, ואקריות"],
  ["אור","חלק מהגינה מקבל רק שמש צהריים"],
  ["מבנה","גדר קנים עם רשת ירוקה, משטח בטון באמצע וסולם עץ לטופח הריחני"]
 ];
-const WILD=["חמציץ (שמור הרחק מהבצלים)","עשנן","מטפס דמוי מלפפון בר","כנראה חלמית","כף-אווז","כנראה פרגים שזרעו את עצמם"];
+const WILD=["עשנן","מטפס דמוי מלפפון בר","כנראה חלמית","כף-אווז","כנראה פרגים שזרעו את עצמם"];
 const PLANNED=[
- ["עם הגשמים הקרירים הבאים","בבונג, פרג איסלנדי"],
+ ["עם הגשמים הקרירים הבאים","בבונג, פרג איסלנדי ורוד ופרג הכרמל"],
  ["בקרוב","פשתה, פעמונית (Campanula medium) במגש"],
  ["פברואר","עגבניות שרי במגש"],
  ["מרץ–אפריל","קוסמוס, אסטר, מלפפון, קישוא"]
 ];
 
-const TIMELINE=[
- {date:"שנה שעברה",title:"פרגים ואקריות",text:"היו בגינה פרגים, וגם מאבק באקריות על העגבניות."},
- {date:"9 באוקטובר 2026",title:"עונת הבצלים נפתחת",text:"25 נרקיסים סיניים נשתלו בגינה. 12 צבעונים ו-3 יקינתונים נכנסו למקרר לקירור."},
- {date:"אמצע אוקטובר 2026",title:"אמריליס ורוד וכדנים",text:"האמריליס נשתל בחצי צל. 10 כדנים הצטרפו לצבעונים במקרר."},
- {date:"23 באוקטובר 2026",title:"נרקיסים צהובים למקרר",text:"5 נרקיסי חצוצרה צהובים כפולים, בגודל 20–22."},
- {date:"סוף אוקטובר–תחילת נובמבר",title:"גל השתילה הגדול",text:"10 כלניות, 10 אירוסים הולנדיים, 25 איקסיות ובן-חצב יקינתוני אחד נכנסו לאדמה. גם המנתור נזרע."},
- {date:"8 בנובמבר 2026",title:"נרקיס מיודפת",text:"נרקיס חצוצרה לבן-כתום מיודפת הצטרף למקרר."},
- {date:"אמצע נובמבר 2026",title:"זריעה לפני הגשם",text:"כ-40 זרעי תורמוס, כ-30 טופח ריחני ליד הסולם, ארטישוק, עדעד כחול, ניגלה ודורבנית. 16 תורמוסים כבר נבטו."},
- {date:"6–9 בדצמבר",title:"הבצלים יוצאים מהמקרר",text:"צבעונים ויקינתונים לעציצים, כדנים לאדמה.",soon:true},
- {date:"אמצע–סוף דצמבר",title:"הפריחה הראשונה",text:"הנרקיסים הסיניים אמורים לפתוח את עונת הפריחה.",soon:true},
- {date:"20 בדצמבר–3 בינואר",title:"שתילת נרקיסי החצוצרה",text:"הצהובים והלבן-כתום יוצאים מהמקרר לאדמה.",soon:true}
-];
+const TIMELINE=[{"m": "אוקטובר", "soon": false, "items": [{"date": "9 באוקטובר", "text": "שתילת 25 הנרקיסים הסיניים. הצבעונים (12) והיקינתונים (3) נכנסו למקרר."}, {"date": "בערך 14 באוקטובר", "text": "הכדנים (10) נכנסו למקרר."}, {"date": "אמצע אוקטובר", "text": "שתילת האמריליס הוורוד בפינה המוצלת-חלקית, ליד האגפנתוס."}, {"date": "23 באוקטובר", "text": "הנרקיסים הכפולים הצהובים (5) נכנסו למקרר."}, {"date": "סוף אוקטובר", "text": "זריעת מנתור, עם מעט מים."}, {"date": "סוף אוקטובר–תחילת נובמבר", "text": "שתילת הכלניות (10), האירוסים (10), האיקסיות (25) ובן-החצב היקינתוני."}]}, {"m": "נובמבר", "soon": false, "items": [{"date": "8 בנובמבר", "text": "הנרקיס הלבן-כתום מיודפת נכנס למקרר."}, {"date": "אמצע נובמבר, לפני הגשם", "text": "זריעת תורמוס ההרים (כ-45 זרעים), האפון הריחני (כ-30, ליד הסולם), הארטישוק, העדעד, הקצח ודורבן הפרש."}, {"date": "בערך אמצע נובמבר", "text": "הנרקיסים יצאו עם כמה גושי עלים לכל בצל. שושנת בן-החצב הופיעה, ועלי הכלניות הראשונים יצאו כשלושה שבועות אחרי השתילה."}, {"date": "18–20 בנובמבר", "text": "התורמוסים הראשונים נבטו."}, {"date": "20 בנובמבר", "text": "גושי הנרקיסים הגיעו לגובה של כ-30 ס\"מ. זוהה כף-אווז בין העשבים."}, {"date": "21 בנובמבר", "text": "באמריליס יוצא עלה חדש, ויש כתמים אדומים קטנים לעקוב אחריהם. בכתמים שנזרעו יש הרבה נבטים זעירים. האנג'לוניה עדיין פורחת. נספרו 16 נבטי תורמוס. הופיעו גבעולי הפרחים הראשונים של הנרקיסים, לפחות שניים."}]}, {"m": "מה צפוי בהמשך", "soon": true, "items": [{"date": "תחילת דצמבר", "text": "תמונה מקרוב של הנבטים כדי למיין פרחים מעשבים. זריעת קמומיל ופרג איסלנדי עם הגשם הקר הבא."}, {"date": "6–9 בדצמבר", "text": "שתילת הצבעונים, היקינתונים והכדנים."}, {"date": "אמצע דצמבר", "text": "פריחת הנרקיסים. אם האירוסים עוד לא יצאו, זה הזמן לבדוק."}, {"date": "20 בדצמבר–3 בינואר", "text": "שתילת שני סוגי הנרקיס מהמקרר."}, {"date": "תחילת ינואר", "text": "בדיקת האיקסיות, אם עוד לא יצאו."}]}];
 
-const GALLERY=["הגינה ממבט רחב","גדר הקנים והלפופית","נרקיסים סיניים","נבטי תורמוס ראשונים","הטופח הריחני על הסולם","פרח השעונית מקרוב","בצלים במקרר","אנג'לוניה ליד הגדר","עלה אלוקסיה"];
+const GALLERY_PLACEHOLDERS=[];
 
 const WISHLIST=[
  {he:"קלמטיס",lat:"Clematis",text:"צמח החלומות. מטפס עם פרחים ענקיים."},
@@ -479,7 +622,53 @@ const WISHLIST=[
 /* ======== איורים בוטניים ======== */
 function petals(n,cx,cy,rx,ry,dist,fill,rot=0,op=1){let s="";for(let i=0;i<n;i++){const a=rot+i*360/n;s+=`<ellipse cx="${cx}" cy="${cy-dist}" rx="${rx}" ry="${ry}" fill="${fill}" opacity="${op}" transform="rotate(${a} ${cx} ${cy})"/>`;}return s}
 const STEM="#6b8566",LEAF="#86a37c";
+const GI=window.GARDEN_IMAGES||{};
+const PLANT_IMG={
+  "morning-glory-blue":GI.extra&&GI.extra["morning-glory-blue"],
+  "zinnia":GI.extra&&GI.extra["zinnia"],
+  "nasturtium":GI.extra&&GI.extra["nasturtium"],
+  "pothos":GI.extra&&GI.extra["pothos"],
+  "delonix":GI.extra&&GI.extra["delonix"],
+  "pentas":GI.extra&&GI.extra["pentas"],
+  "tradescantia":GI.extra&&GI.extra["tradescantia"],
+  "chili":GI.extra&&GI.extra["chili"],
+  "monstera":GI.extra&&GI.extra["monstera"],
+  "cyperus":GI.extra&&GI.extra["cyperus"],
+  "oxalis":GI.extra&&GI.extra["oxalis"],
+  "fumaria":GI.extra&&GI.extra["fumaria"],
+  "arisarum":GI.extra&&GI.extra["arisarum"],
+  "poppy":GI.extra&&GI.extra["poppy"],
+  "iceland-poppy":GI.extra&&GI.extra["iceland-poppy"],
+  "chamomile":GI.extra&&GI.extra["chamomile"],
+  "agapanthus-like":GI.extra&&GI.extra["agapanthus-like"],
+  "tomato":GI.extra&&GI.extra["tomato"],
+  "echium":GI.extra&&GI.extra["echium"],
+  "angelonia":GI.extra&&GI.extra["angelonia"],
+  "passionflower":GI.extra&&GI.extra["passionflower"],
+  "thunbergia":GI.extra&&GI.extra["thunbergia"],
+  "morning-glory":GI.extra&&GI.extra["morning-glory"],
+  "stock":GI.extra&&GI.extra["stock"],
+  "larkspur":GI.extra&&GI.extra["larkspur"],
+  "statice":GI.extra&&GI.extra["statice"],
+  "nigella":GI.extra&&GI.extra["nigella"],
+  "artichoke":GI.extra&&GI.extra["artichoke"],
+  "muscari":GI.extra&&GI.extra["muscari"],
+  "sweet-pea":GI.extra&&GI.extra["sweet-pea"],
+  "yellow-daffodil":GI.extra&&GI.extra["yellow-daffodil"],
+  "ixia":GI.extra&&GI.extra["ixia"],
+  "chinese-narcissus":GI.extra&&GI.extra["chinese-narcissus"],
+  "dutch-iris":GI.extra&&GI.extra["dutch-iris"],
+  "anemone":GI.extra&&GI.extra["anemone"],
+  "scilla":GI.extra&&GI.extra["scilla"],
+  "amaryllis":GI.extra&&GI.extra["amaryllis"],
+  "tulip":GI.tulip&&GI.tulip[0].src,
+  "hyacinth":GI.hyacinth&&GI.hyacinth[0].src,
+  "lupine":GI.lupine&&GI.lupine[0].src,
+  "white-daffodil":GI.daffodil&&GI.daffodil[0].src,
+  "wisteria":GI.extra&&GI.extra.wisteria
+};
 function art(p){
+  if(PLANT_IMG[p.id])return `<img loading="lazy" class="pimg${p.id==="wisteria"?" wide":""}${p.id==="tradescantia"||p.id==="pothos"?" drop":""}" src="${PLANT_IMG[p.id]}" alt="איור של ${p.he}">${p.id==="wisteria"?"":'<span class="mound" aria-hidden="true"></span>'}`;
   const c=p.c;let g="";
   switch(p.art){
     case "trumpet":
@@ -566,7 +755,7 @@ document.getElementById("stats").innerHTML=[
   [PLANTS.length,"צמחים בקטלוג"],
   [inGround+"+","בצלים ופקעות באדמה"],
   [inFridge,"בצלים מחכים במקרר"],
-  ["16/40","תורמוסים נבטו"],
+  ["16/45","תורמוסים נבטו"],
   [bloomingNow.length,`פורחים ב${MONTHS_FULL[NOW-1]}`]
 ].map(([n,t])=>`<div class="stat"><b>${n}</b><span>${t}</span></div>`).join("");
 
@@ -580,7 +769,7 @@ const catsEl=document.getElementById("cats");
 catsEl.innerHTML=[["all","הכל"],...Object.entries(CATS)].map(([k,v])=>`<button class="chip" data-cat="${k}" aria-pressed="${k==="all"}">${v}</button>`).join("");
 catsEl.addEventListener("click",e=>{const b=e.target.closest("[data-cat]");if(!b)return;fCat=b.dataset.cat;catsEl.querySelectorAll(".chip").forEach(x=>x.setAttribute("aria-pressed",x===b));renderGrid()});
 const stEl=document.getElementById("statuses");
-stEl.innerHTML=[["all","כל המצבים"],...Object.entries(STATUS)].map(([k,v])=>`<button class="chip st-${k}" data-st="${k}" aria-pressed="${k==="all"}">${v}</button>`).join("");
+stEl.innerHTML=[["all","כל המצבים"],["now","פורח עכשיו"],...Object.entries(STATUS)].map(([k,v])=>`<button class="chip st-${k}" data-st="${k}" aria-pressed="${k==="all"}">${v}</button>`).join("");
 stEl.addEventListener("click",e=>{const b=e.target.closest("[data-st]");if(!b)return;fStatus=b.dataset.st;stEl.querySelectorAll(".chip").forEach(x=>x.setAttribute("aria-pressed",x===b));renderGrid()});
 const colEl=document.getElementById("colors");
 const COLOR_NAMES={purple:"סגול",pink:"ורוד",blue:"כחול",white:"לבן",yellow:"צהוב",orange:"כתום",red:"אדום",green:"ירוק"};
@@ -590,11 +779,11 @@ document.getElementById("q").addEventListener("input",e=>{fQ=e.target.value.trim
 
 function bloomRange(p){return p.bloom.length?`פריחה: ${MONTHS[p.bloom[0]-1]}–${MONTHS[p.bloom[p.bloom.length-1]-1]}`:"צמח עלווה"}
 function renderGrid(){
-  const list=PLANTS.filter(p=>(fCat==="all"||p.cat===fCat)&&(fStatus==="all"||p.status===fStatus)&&(!fColor||p.colors.includes(fColor))&&(!fQ||(p.he+p.lat).toLowerCase().includes(fQ))&&(!fMonth||p.bloom.includes(fMonth)));
+  const list=PLANTS.filter(p=>(fCat==="all"||p.cat===fCat)&&(fStatus==="all"||(fStatus==="now"?p.bloom.includes(NOW):p.status===fStatus))&&(!fColor||p.colors.includes(fColor))&&(!fQ||(p.he+p.lat).toLowerCase().includes(fQ))&&(!fMonth||p.bloom.includes(fMonth)));
   document.getElementById("count").textContent=`${list.length} מתוך ${PLANTS.length} צמחים`;
   document.getElementById("grid").innerHTML=list.length?list.map(p=>{
     const now=p.bloom.includes(NOW);
-    return `<button class="card" data-id="${p.id}"><div class="art">${now?`<span class="badge now">פורח עכשיו</span>`:`<span class="badge">${CATS[p.cat]}</span>`}<span class="sbadge st-${p.status}">${STATUS[p.status]}</span>${art(p)}</div>
+    return `<button class="card" data-id="${p.id}"><div class="art">${now?`<span class="badge now">פורח עכשיו</span>`:`<span class="badge">${CATS[p.cat]}</span>`}<span class="sbadge st-${p.status}">${STATUS[p.status]}</span>${art(p)}<span class="plate">No. ${String(PLANTS.indexOf(p)+1).padStart(2,"0")}</span></div>
     <div class="body"><h3>${p.he}</h3><span class="latin">${p.lat}</span><div class="tags">${p.count?`<span class="tag">× ${p.count}</span>`:""}<span class="tag">${bloomRange(p)}</span></div>${p.note?`<p class="cnote">${p.note}</p>`:""}</div></button>`}).join("")
     :`<div class="empty">לא נמצאו צמחים שמתאימים לסינון.</div>`;
 }
@@ -618,13 +807,15 @@ document.querySelectorAll("[data-close]").forEach(b=>b.addEventListener("click",
 document.querySelectorAll("dialog").forEach(d=>d.addEventListener("click",e=>{if(e.target===d)d.close()}));
 
 /* ======== לוח פריחה ======== */
+function calColor(p){if(p.trumpet)return p.trumpet;const n=parseInt(p.c.slice(1),16),r=n>>16,g=n>>8&255,b=n&255;
+  if(.2126*r+.7152*g+.0722*b>215)return p.colors.includes("yellow")?"#e2b93b":p.colors.includes("pink")?"#e0a3bd":"#c9b3d6";return p.c}
 function renderCal(){
   let h=`<div></div>`+MONTHS.map((m,i)=>`<button class="m${i+1===NOW?" cur":""}" data-m="${i+1}" aria-pressed="${fMonth===i+1}" style="border:none;background:none">${m}</button>`).join("");
   [...PLANTS].sort((a,b)=>{const f=x=>x.bloom.length?((x.bloom.includes(12)&&x.bloom.includes(1))?0:x.bloom[0]):99;return f(a)-f(b)}).forEach(p=>{
     h+=`<div class="name" data-id="${p.id}">${p.he}</div>`;
     const set=p.bloom.length?p.bloom:(p.leaf||[]);const leaf=!p.bloom.length;
     for(let m=1;m<=12;m++){const on=set.includes(m);let cls="cell";if(on){cls+=leaf?" leaf":" on";if(!set.includes(m-1))cls+=" start";if(!set.includes(m+1))cls+=" end"}if(m===NOW)cls+=" curcol";
-      h+=`<div class="${cls}" style="--c:${p.c==="#f3efe6"?"#e3c9d3":p.c}" title="${p.he} · ${MONTHS_FULL[m-1]}"></div>`}
+      h+=`<div class="${cls}" style="--c:${calColor(p)}" title="${p.he} · ${MONTHS_FULL[m-1]}"></div>`}
   });
   document.getElementById("cal").innerHTML=h;
   const m=fMonth||NOW,list=PLANTS.filter(p=>p.bloom.includes(m));
@@ -637,34 +828,436 @@ document.getElementById("cal").addEventListener("click",e=>{
 });
 
 /* ======== ציר זמן ======== */
-document.getElementById("tl").innerHTML=TIMELINE.map(t=>`<article class="tl-item"><div><div class="tl-date">${t.date}${t.soon?`<span class="draft">בקרוב</span>`:""}</div><h3>${t.title}</h3><p>${t.text}</p></div><div class="ph-wrap">${ph(t.title)}</div></article>`).join("")+`<article class="tl-item next"><div><div class="tl-date">מה הלאה</div><h3>זריעות מתוכננות</h3><ul class="plan">${PLANNED.map(([w,t])=>`<li><b>${w}:</b> ${t}</li>`).join("")}</ul></div></article>`;
+document.getElementById("tl").innerHTML=TIMELINE.map(g=>`<h3 class="tl-m${g.soon?" soon":""}">${g.m}</h3><ol class="tl2">${g.items.map(t=>`<li class="${g.soon?"soon":""}"><span class="d">${t.date}</span><span class="t">${t.text}</span></li>`).join("")}</ol>`).join("");
 
 /* ======== גלריה ======== */
 const H=[220,300,180,260,340,200,280,240,190];
-document.getElementById("gal").innerHTML=GALLERY.map((g,i)=>`<button class="g-item" data-i="${i}"><div style="height:${H[i%H.length]}px">${ph(g)}</div><figcaption>${g}</figcaption></button>`).join("");
+const GALLERY_PHOTOS=[{"c": "פינת העציצים ליד העמוד הכחול", "src": "img/7534d5bef0.webp", "cat": "garden"}, {"c": "גדר הקנים בחורף, והלופיות מתחתיה", "src": "img/a53eee867b.webp", "cat": "garden"}, {"c": "פטריות שצצו אחרי הגשם", "src": "img/8d87e435d2.webp", "cat": "garden"}, {"c": "יום עבודה באביב, והחמנייה הראשונה", "src": "img/95b8a4963f.webp", "cat": "garden"}, {"c": "לוף מנומר בין החמציצים", "src": "img/d506453f06.webp", "cat": "garden"}, {"c": "ערוגת אביב: פעמוניות, נוריות, כובע הנזיר ופרג", "src": "img/7d5235a066.webp", "cat": "garden"}, {"c": "נוריות צהובות כפולות", "src": "img/8d52588aff.webp", "cat": "garden"}, {"c": "פרזיה מנומרת", "src": "img/bbcf7fbb18.webp", "cat": "garden"}, {"c": "פרגים וחמציצים בפינת הגינה", "src": "img/02a66dfbba.webp", "cat": "garden"}, {"c": "ויסטריה אמריקאית פורחת בכד", "src": "img/5b0813c621.webp", "cat": "garden"}, {"c": "שתילה בצל המונסטרה", "src": "img/e1af293940.webp", "cat": "garden"}, {"c": "אשכול של ויסטריה אמריקאית", "src": "img/059643e7af.webp", "cat": "garden"}, {"c": "גדר הקנים בקיץ, מכוסה מטפסים", "src": "img/b3732adca2.webp", "cat": "garden"}, {"c": "ציניות ליד הגדר", "src": "img/adc4f610b9.webp", "cat": "garden"}, {"c": "עגבניות שרי מבשילות", "src": "img/3724d0f516.webp", "cat": "garden"}, {"c": "שולחן השתילה: יסמין ואצבעונית", "src": "img/b495d54999.webp", "cat": "garden"}, {"c": "נביטת התורמוס", "src": "img/180d6069f2.webp", "cat": "growth"}, {"c": "אמריליס שגדל", "src": "img/db8149d764.webp", "cat": "growth"}, {"c": "עמוד פריחה ראשון של נרקיס מתחיל להיווצר", "src": "img/ec34e01038.webp", "cat": "growth"}, {"c": "נרקיסים סיניים גדלים ליד גדר הקנים", "src": "img/2fa052fe29.webp", "cat": "growth"}, {"c": "בן-חצב שמתחיל לגדול", "src": "img/d9dff0735b.webp", "cat": "growth"}, {"c": "כלנית שמתחילה לגדול", "src": "img/59141841d6.webp", "cat": "growth"}];
+const GAL_CATS=[["growth","דיווחי גדילה ופריחה"],["garden","רגעים מהגינה"]];
+const GALLERY=[...GALLERY_PHOTOS.filter(p=>p.cat==="growth"),...GALLERY_PHOTOS.filter(p=>p.cat!=="growth"),...GALLERY_PLACEHOLDERS.map(c=>({c,cat:"garden"}))];
+const gview=(g,h)=>g.src?`<img loading="lazy" class="g-photo" src="${g.src}" alt="${g.c}">`:`<div style="height:${h}px">${ph(g.c)}</div>`;
+document.getElementById("gal").innerHTML=GAL_CATS.map(([k,t])=>{const items=GALLERY.map((g,i)=>[g,i]).filter(([g])=>(g.cat||"garden")===k);if(!items.length)return"";
+  if(k==="growth"){const one=items.map(([g,i])=>`<button class="t-item" data-i="${i}"><img loading="lazy" src="${g.src}" alt="${g.c}"><span>${g.c}</span></button>`).join("");
+    return `<h3 class="gal-cat">${t}</h3><div class="ticker" dir="ltr"><div class="ticker-track" style="--n:${items.length}">${one}${one}</div></div>`}
+  return `<h3 class="gal-cat">${t}</h3><div class="gallery">${items.map(([g,i])=>`<button class="g-item" data-i="${i}">${gview(g,H[i%H.length])}<figcaption>${g.c}</figcaption></button>`).join("")}</div>`}).join("");
 const lb=document.getElementById("lbDlg");let li=0;
-function showLb(i){li=(i+GALLERY.length)%GALLERY.length;document.getElementById("lbImg").innerHTML=ph(GALLERY[li]);document.getElementById("lbCap").textContent=`${GALLERY[li]} · ${li+1}/${GALLERY.length}`}
-document.getElementById("gal").addEventListener("click",e=>{const b=e.target.closest(".g-item");if(b){showLb(+b.dataset.i);lb.showModal()}});
+function showLb(i){li=(i+GALLERY.length)%GALLERY.length;const g=GALLERY[li];document.getElementById("lbImg").innerHTML=g.src?`<img class="lb-photo" src="${g.src}" alt="${g.c}">`:ph(g.c);document.getElementById("lbCap").textContent=`${g.c} · ${li+1}/${GALLERY.length}`}
+document.getElementById("gal").addEventListener("click",e=>{const b=e.target.closest(".g-item,.t-item");if(b){showLb(+b.dataset.i);lb.showModal()}});
 document.getElementById("lbPrev").onclick=()=>showLb(li-1);document.getElementById("lbNext").onclick=()=>showLb(li+1);
 lb.addEventListener("keydown",e=>{if(e.key==="ArrowRight")showLb(li-1);if(e.key==="ArrowLeft")showLb(li+1)});
 
 /* ======== רשימת חלומות ======== */
-document.getElementById("wish").innerHTML=WISHLIST.map(w=>`<div><h3>${w.he}</h3><div class="latin">${w.lat}</div><p>${w.text}</p></div>`).join("");
+if(document.getElementById("wish"))document.getElementById("wish").innerHTML=WISHLIST.map((w,i)=>`<div class="packet" style="--pk:${["#7a9ec6","#8657a3","#56296a","#5a7fa8"][i%4]}"><div class="kind">זרעים · חלום</div><h3>${w.he}</h3><div class="latin">${w.lat}</div><p>${w.text}</p></div>`).join("");
 
 renderGrid();renderCal();
 
-/* ======== עלי כותרת מרחפים ======== */
+/* ======== הגינה צומחת + דבורים ======== */
 (function(){
-  const cv=document.getElementById("petals"),ctx=cv.getContext("2d");
-  const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const cols=["#e48ab0","#b48ad6","#f3c3d3","#9d7fd0","#f7dbe4"];let W,Hh,P=[];
-  function size(){const r=cv.getBoundingClientRect(),d=devicePixelRatio||1;W=r.width;Hh=r.height;cv.width=W*d;cv.height=Hh*d;ctx.setTransform(d,0,0,d,0,0)}
-  size();addEventListener("resize",size);
-  for(let i=0;i<26;i++)P.push({x:Math.random()*W,y:Math.random()*Hh,s:4+Math.random()*7,vy:.25+Math.random()*.5,vx:-.3+Math.random()*.6,a:Math.random()*6.28,va:-.02+Math.random()*.04,c:cols[i%cols.length],w:Math.random()*6.28});
-  function draw(){ctx.clearRect(0,0,W,Hh);for(const p of P){ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.a);ctx.globalAlpha=.55;ctx.fillStyle=p.c;ctx.beginPath();ctx.ellipse(0,0,p.s,p.s*.55,0,0,6.28);ctx.fill();ctx.restore();
-    if(!reduce){p.w+=.02;p.y+=p.vy;p.x+=p.vx+Math.sin(p.w)*.4;p.a+=p.va;if(p.y>Hh+10){p.y=-10;p.x=Math.random()*W}}}
-    if(!reduce)requestAnimationFrame(draw)}
-  draw();
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const rnd=(a,b)=>a+Math.random()*(b-a);
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const ease=x=>1-Math.pow(1-clamp(x),3);
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+function mix(hex,amt){const n=parseInt(hex.slice(1),16);let r=n>>16,g=n>>8&255,b=n&255;const t=amt<0?0:255,p=Math.abs(amt);
+  r=Math.round(r+(t-r)*p);g=Math.round(g+(t-g)*p);b=Math.round(b+(t-b)*p);return`rgb(${r},${g},${b})`}
+function mixA(hex,amt,a){return mix(hex,amt).replace("rgb","rgba").replace(")",","+a+")")}
+
+/* ---------- sprites ---------- */
+const SS=4;
+function sprite(w,h,ax,ay,fn){const c=document.createElement("canvas");c.width=w*SS;c.height=h*SS;const g=c.getContext("2d");g.scale(SS,SS);g.lineCap="round";g.lineJoin="round";fn(g);c.w=w;c.h=h;c.ax=ax;c.ay=ay;return c}
+function put(ctx,sp,x,y,scale,rot=0,flip=1){ctx.save();ctx.translate(x,y);ctx.rotate(rot);ctx.scale(scale*flip,scale);ctx.drawImage(sp,-sp.ax,-sp.ay,sp.w,sp.h);ctx.restore()}
+
+function bell(col){return sprite(46,30,2,14,g=>{
+  const body=new Path2D();body.moveTo(2,11.5);body.bezierCurveTo(12,9.5,22,4.5,33,2.8);body.quadraticCurveTo(39,1.6,41.5,4.2);body.quadraticCurveTo(39.5,6,38.5,8.5);
+  body.lineTo(39.5,21);body.quadraticCurveTo(44.5,27.5,37,27.6);body.bezierCurveTo(27,25.5,13,19.8,2,16.8);body.closePath();
+  const gr=g.createLinearGradient(0,0,42,0);gr.addColorStop(0,mix(col,-.45));gr.addColorStop(.18,mix(col,-.15));gr.addColorStop(.65,col);gr.addColorStop(1,mix(col,.22));
+  g.fillStyle=gr;g.fill(body);
+  const v=g.createLinearGradient(0,2,0,27);v.addColorStop(0,"rgba(255,255,255,.35)");v.addColorStop(.35,"rgba(255,255,255,.04)");v.addColorStop(.75,"rgba(40,0,30,.05)");v.addColorStop(1,"rgba(40,0,30,.32)");
+  g.fillStyle=v;g.fill(body);
+  g.strokeStyle="rgba(255,255,255,.22)";g.lineWidth=.5;g.beginPath();g.moveTo(8,11);g.bezierCurveTo(16,9,24,6,32,4.5);g.stroke();
+  const m=g.createRadialGradient(36,16,.5,36,15.5,10);m.addColorStop(0,"#fff6f9");m.addColorStop(.55,"#f6d9e7");m.addColorStop(1,mix(col,.05));
+  g.beginPath();g.ellipse(36,15.4,4.4,10,.06,0,6.283);g.fillStyle=m;g.fill();
+  g.beginPath();g.ellipse(34.4,15.6,1.6,7,.06,0,6.283);g.fillStyle=mixA(col,-.2,.35);g.fill();
+  for(let i=0;i<11;i++){const x=34.5+Math.random()*4.2,y=12+Math.random()*12.5,r=.42+Math.random()*.35;
+    g.beginPath();g.arc(x,y,r+.45,0,6.283);g.fillStyle="rgba(255,255,255,.9)";g.fill();g.beginPath();g.arc(x,y,r,0,6.283);g.fillStyle="#5a1440";g.fill()}
+  g.strokeStyle=mixA(col,-.5,.45);g.lineWidth=.45;g.stroke(body);
+})}
+function lupFloret(col){return sprite(22,18,11,10,g=>{
+  for(const s of[-1,1]){const p=new Path2D();p.ellipse(11+s*4.4,11.6,5.4,4.3,s*.35,0,6.283);
+    const gr=g.createLinearGradient(0,7,0,16);gr.addColorStop(0,mix(col,.05));gr.addColorStop(1,mix(col,-.38));g.fillStyle=gr;g.fill(p);g.strokeStyle=mixA(col,-.5,.4);g.lineWidth=.35;g.stroke(p)}
+  const b=new Path2D();b.moveTo(11,12);b.bezierCurveTo(3,11,3.5,1.2,11,1.2);b.bezierCurveTo(18.5,1.2,19,11,11,12);
+  const gb=g.createRadialGradient(11,5,1,11,6,8);gb.addColorStop(0,mix(col,.35));gb.addColorStop(1,mix(col,-.12));g.fillStyle=gb;g.fill(b);
+  g.beginPath();g.ellipse(11,6.4,2.7,2.3,0,0,6.283);const w=g.createRadialGradient(11,6.2,.2,11,6.4,2.8);w.addColorStop(0,"#fffdf3");w.addColorStop(1,"rgba(255,250,235,.15)");g.fillStyle=w;g.fill();
+  g.strokeStyle=mixA(col,-.5,.4);g.lineWidth=.35;g.stroke(b);
+  g.strokeStyle=mixA(col,-.45,.35);g.beginPath();g.moveTo(11,2.5);g.lineTo(11,4);g.stroke();
+})}
+function lupSide(col){return sprite(20,16,2,9,g=>{
+  const k=new Path2D();k.moveTo(3,9);k.bezierCurveTo(7,13.5,14,14.5,18.5,10.5);k.bezierCurveTo(15,11,9,10,3,7.5);k.closePath();
+  const gk=g.createLinearGradient(0,8,0,14);gk.addColorStop(0,mix(col,.1));gk.addColorStop(1,mix(col,-.4));g.fillStyle=gk;g.fill(k);g.strokeStyle=mixA(col,-.5,.45);g.lineWidth=.35;g.stroke(k);
+  const w=new Path2D();w.moveTo(4,8.5);w.bezierCurveTo(8,6.5,14,7,16.5,9.6);w.bezierCurveTo(12,11.5,7,11,4,8.5);const gw=g.createLinearGradient(0,6,0,11);gw.addColorStop(0,mix(col,.25));gw.addColorStop(1,mix(col,-.15));g.fillStyle=gw;g.fill(w);g.stroke(w);
+  const b=new Path2D();b.moveTo(3.5,8.5);b.bezierCurveTo(2,4,4,.8,7.2,.8);b.bezierCurveTo(9.5,.8,9.8,4.5,7,8.2);b.closePath();
+  const gb=g.createLinearGradient(3,0,9,0);gb.addColorStop(0,mix(col,-.2));gb.addColorStop(1,mix(col,.3));g.fillStyle=gb;g.fill(b);g.stroke(b);
+  g.beginPath();g.ellipse(6.6,4.2,1.2,1.9,.2,0,6.283);g.fillStyle="rgba(255,252,238,.75)";g.fill();
+})}
+function lupBud(col){return sprite(10,12,5,7,g=>{const gr=g.createLinearGradient(0,1,0,12);gr.addColorStop(0,mix(col,.4));gr.addColorStop(1,"#7f9a62");
+  g.beginPath();g.ellipse(5,6.5,3.2,4.8,0,0,6.283);g.fillStyle=gr;g.fill();g.strokeStyle="rgba(60,70,40,.35)";g.lineWidth=.3;g.stroke()})}
+function hyaFloret(col){return sprite(20,20,10,10,g=>{
+  for(let k=0;k<6;k++){g.save();g.translate(10,10);g.rotate(k*1.047+.2);
+    const p=new Path2D();p.moveTo(0,0);p.bezierCurveTo(2.6,-1.6,6.2,-2.4,8.6,-.6);p.quadraticCurveTo(9.4,.6,8,.9);p.bezierCurveTo(5.6,1.8,2.6,1.6,0,0);
+    const gr=g.createLinearGradient(0,0,9,0);gr.addColorStop(0,mix(col,-.4));gr.addColorStop(.6,col);gr.addColorStop(1,mix(col,.38));
+    g.fillStyle=gr;g.fill(p);g.strokeStyle=mixA(col,-.5,.35);g.lineWidth=.3;g.stroke(p);
+    g.strokeStyle="rgba(255,255,255,.3)";g.beginPath();g.moveTo(2,-.2);g.lineTo(7,-.6);g.stroke();g.restore()}
+  g.beginPath();g.arc(10,10,1.7,0,6.283);g.fillStyle=mix(col,-.55);g.fill();
+  g.fillStyle="#f3e7a0";for(let k=0;k<3;k++){g.beginPath();g.arc(10+Math.cos(k*2.1)*.8,10+Math.sin(k*2.1)*.8,.35,0,6.283);g.fill()}
+})}
+function tulipSp(col){return sprite(40,50,20,47,g=>{
+  const petal=(tx,ty,l,r,shadeAmt)=>{const p=new Path2D();p.moveTo(20,46);p.bezierCurveTo(20-l,42,tx-l*.55,ty+14,tx,ty);p.bezierCurveTo(tx+r*.55,ty+14,20+r,42,20,46);
+    const gr=g.createLinearGradient(0,46,0,ty);gr.addColorStop(0,"#5f7a3a");gr.addColorStop(.12,mix(col,-.35+shadeAmt));gr.addColorStop(.6,mix(col,shadeAmt));gr.addColorStop(1,mix(col,.25+shadeAmt));
+    g.fillStyle=gr;g.fill(p);
+    const hl=g.createLinearGradient(tx-l*.5,0,tx+r*.5,0);hl.addColorStop(0,"rgba(30,0,20,.18)");hl.addColorStop(.45,"rgba(255,255,255,.16)");hl.addColorStop(1,"rgba(30,0,20,.22)");g.fillStyle=hl;g.fill(p);
+    g.strokeStyle=mixA(col,-.55,.45);g.lineWidth=.45;g.stroke(p);
+    g.strokeStyle="rgba(255,255,255,.18)";g.lineWidth=.35;for(let i=-1;i<=1;i++){g.beginPath();g.moveTo(20+i*2,42);g.quadraticCurveTo(tx+i*2,ty+18,tx+i*1.2,ty+5);g.stroke()}};
+  petal(8,8,13,7,-.22);petal(32,8,7,13,-.22);petal(20,3,12,12,0);petal(11.5,10,10,9,.05);petal(28.5,10,9,10,.05);
+})}
+function daffSp(){return sprite(48,44,20,22,g=>{
+  for(let k=0;k<6;k++){g.save();g.translate(20,22);g.rotate(k*1.047+.25);
+    const p=new Path2D();p.moveTo(0,0);p.bezierCurveTo(5,-3.5,13,-4,17.5,0);p.bezierCurveTo(13,4,5,3.5,0,0);
+    const gr=g.createLinearGradient(0,0,18,0);gr.addColorStop(0,"#e9e6b8");gr.addColorStop(.25,"#fbf8ea");gr.addColorStop(1,"#ffffff");
+    g.fillStyle=gr;g.fill(p);g.strokeStyle="rgba(150,150,110,.45)";g.lineWidth=.35;g.stroke(p);
+    g.strokeStyle="rgba(200,200,170,.4)";g.lineWidth=.3;g.beginPath();g.moveTo(2,0);g.lineTo(15,0);g.stroke();g.restore()}
+  const t=new Path2D();t.moveTo(16,17.5);t.lineTo(29,15);t.lineTo(31,30);t.lineTo(17.5,26.5);t.closePath();
+  const tg=g.createLinearGradient(0,15,0,30);tg.addColorStop(0,"#ffb347");tg.addColorStop(1,"#d9661a");g.fillStyle=tg;g.fill(t);
+  g.beginPath();g.ellipse(30.5,22.5,4.8,8.2,.12,0,6.283);const rg=g.createRadialGradient(31,22.5,.5,30.5,22.5,8.5);rg.addColorStop(0,"#b44a0c");rg.addColorStop(.55,"#e9771f");rg.addColorStop(1,"#ffad48");g.fillStyle=rg;g.fill();
+  g.strokeStyle="#ffc56e";g.lineWidth=.6;g.beginPath();for(let k=0;k<=24;k++){const a=k/24*6.283,r=1+.12*Math.sin(k*3.1);const x=30.5+Math.cos(a)*4.8*r,y=22.5+Math.sin(a)*8.2*r;k?g.lineTo(x,y):g.moveTo(x,y)}g.closePath();g.stroke();
+  g.fillStyle="#f6d36a";for(let k=0;k<3;k++){g.beginPath();g.arc(31+k*.6,21+k*1.2,.5,0,6.283);g.fill()}
+})}
+function leafSp(c1,w,h){return sprite(w,h,w/2,h,g=>{
+  const p=new Path2D();p.moveTo(w/2,h);p.bezierCurveTo(-w*.1,h*.62,w*.18,h*.18,w/2,0);p.bezierCurveTo(w*.82,h*.18,w*1.1,h*.62,w/2,h);
+  const gr=g.createLinearGradient(0,0,w,0);gr.addColorStop(0,mix(c1,-.3));gr.addColorStop(.48,mix(c1,.12));gr.addColorStop(.52,mix(c1,.02));gr.addColorStop(1,mix(c1,-.38));
+  g.fillStyle=gr;g.fill(p);const v=g.createLinearGradient(0,h,0,0);v.addColorStop(0,"rgba(20,30,10,.3)");v.addColorStop(.5,"rgba(0,0,0,0)");v.addColorStop(1,"rgba(255,255,220,.12)");g.fillStyle=v;g.fill(p);
+  g.strokeStyle="rgba(225,235,190,.45)";g.lineWidth=.6;g.beginPath();g.moveTo(w/2,h);g.quadraticCurveTo(w/2+.5,h*.5,w/2,h*.04);g.stroke();
+  g.strokeStyle="rgba(225,235,190,.18)";g.lineWidth=.35;for(let i=1;i<7;i++){const y=h*(.12+i*.12);g.beginPath();g.moveTo(w/2,y);g.quadraticCurveTo(w*.3,y-h*.03,w*.16,y-h*.08);g.moveTo(w/2,y);g.quadraticCurveTo(w*.7,y-h*.03,w*.84,y-h*.08);g.stroke()}
+  g.strokeStyle=mixA(c1,-.5,.5);g.lineWidth=.4;g.stroke(p);
+})}
+function palmSp(c1){return sprite(64,42,32,41,g=>{
+  g.strokeStyle=mix(c1,-.2);g.lineWidth=1.3;g.beginPath();g.moveTo(32,41);g.lineTo(32,25);g.stroke();
+  for(let i=0;i<9;i++){const a=-Math.PI+.2+i*(Math.PI-.4)/8;g.save();g.translate(32,25);g.rotate(a);g.scale(1,.55+.45*Math.abs(Math.sin(a)));
+    const p=new Path2D();p.ellipse(13,0,13,3.1,0,0,6.283);const gr=g.createLinearGradient(0,-3,0,3);gr.addColorStop(0,mix(c1,.15));gr.addColorStop(1,mix(c1,-.35));
+    g.fillStyle=gr;g.fill(p);g.strokeStyle="rgba(225,235,190,.35)";g.lineWidth=.4;g.beginPath();g.moveTo(1,0);g.lineTo(24,0);g.stroke();g.strokeStyle=mixA(c1,-.5,.4);g.stroke(p);g.restore()}
+})}
+
+/* ---------- bee sprites ---------- */
+const BEE_BODY=sprite(42,26,21,13,g=>{
+  g.strokeStyle="#2b1c12";g.lineWidth=.75;
+  for(const [x,d] of[[18.5,1],[22,0],[25.5,-1]]){g.beginPath();g.moveTo(x,16);g.lineTo(x-2-d,20.5);g.lineTo(x-4.2-d*1.5,23.5);g.stroke()}
+  g.beginPath();g.ellipse(15.3,21.2,1.9,1.4,.3,0,6.283);g.fillStyle="#f0a02c";g.fill();
+  const ab=new Path2D();ab.ellipse(12.5,13,11,7.4,-.05,0,6.283);
+  const ag=g.createRadialGradient(11,9.5,1,12.5,13,12);ag.addColorStop(0,"#ffe08a");ag.addColorStop(.55,"#eab03a");ag.addColorStop(1,"#946016");
+  g.fillStyle=ag;g.fill(ab);g.save();g.clip(ab);
+  for(const x of[4.5,9.3,14.2]){const b=g.createLinearGradient(x-2.4,0,x+2.4,0);b.addColorStop(0,"rgba(42,26,15,0)");b.addColorStop(.3,"rgba(42,26,15,.92)");b.addColorStop(.7,"rgba(42,26,15,.92)");b.addColorStop(1,"rgba(42,26,15,0)");g.fillStyle=b;g.fillRect(x-2.4,0,4.8,26)}
+  const sh=g.createLinearGradient(0,6,0,21);sh.addColorStop(0,"rgba(255,255,255,.22)");sh.addColorStop(.4,"rgba(255,255,255,0)");sh.addColorStop(1,"rgba(40,20,0,.35)");g.fillStyle=sh;g.fillRect(0,0,30,26);g.restore();
+  g.lineWidth=.3;for(let i=0;i<120;i++){const a=Math.random()*6.283,x=12.5+Math.cos(a)*11,y=13+Math.sin(a)*7.4,l=.6+Math.random()*1.1;
+    g.strokeStyle=`rgba(${Math.random()<.5?"255,222,140":"120,80,30"},${.35+Math.random()*.35})`;g.beginPath();g.moveTo(x,y);g.lineTo(x+Math.cos(a)*l,y+Math.sin(a)*l);g.stroke()}
+  const th=g.createRadialGradient(25,10,.5,25.5,12,6.8);th.addColorStop(0,"#e2b25e");th.addColorStop(.6,"#a7742c");th.addColorStop(1,"#4c3317");
+  g.beginPath();g.arc(25.5,12,6.4,0,6.283);g.fillStyle=th;g.fill();
+  for(let i=0;i<150;i++){const a=Math.random()*6.283,r=Math.random()*6.6,x=25.5+Math.cos(a)*r,y=12+Math.sin(a)*r,l=.5+Math.random()*1.1;
+    g.strokeStyle=`rgba(${Math.random()<.6?"240,200,110":"70,45,20"},${.3+Math.random()*.4})`;g.beginPath();g.moveTo(x,y);g.lineTo(x+Math.cos(a)*l,y+Math.sin(a)*l);g.stroke()}
+  g.beginPath();g.ellipse(33,12.6,4.3,4.8,0,0,6.283);g.fillStyle="#2a1c13";g.fill();
+  const ey=g.createRadialGradient(33.4,10.6,.2,33.6,11.4,3);ey.addColorStop(0,"#5b4a3c");ey.addColorStop(1,"#0f0a07");g.beginPath();g.ellipse(33.8,11.4,2.4,3,.2,0,6.283);g.fillStyle=ey;g.fill();
+  g.beginPath();g.ellipse(34.4,10.2,.8,.5,.4,0,6.283);g.fillStyle="rgba(255,255,255,.75)";g.fill();
+  g.strokeStyle="#2b1c12";g.lineWidth=.6;g.beginPath();g.moveTo(34.5,8.4);g.lineTo(36.6,4.2);g.lineTo(40,3.8);g.moveTo(33.4,8.2);g.lineTo(34.8,3.6);g.lineTo(37.8,2.6);g.stroke();
+  g.strokeStyle="#2b1c12";g.lineWidth=.5;g.beginPath();g.moveTo(1.6,13.2);g.lineTo(-.4,13.6);g.stroke();
+});
+const BEE_WING=sprite(28,16,3,14,g=>{
+  const f=new Path2D();f.moveTo(3,14);f.bezierCurveTo(4,6,14,.5,24,1.2);f.bezierCurveTo(28,2.5,25,7,19,9.5);f.bezierCurveTo(13,12,7,14,3,14);
+  const gr=g.createLinearGradient(3,14,26,2);gr.addColorStop(0,"rgba(235,240,255,.55)");gr.addColorStop(.5,"rgba(225,235,255,.3)");gr.addColorStop(.8,"rgba(255,215,240,.32)");gr.addColorStop(1,"rgba(200,240,255,.35)");
+  g.fillStyle=gr;g.fill(f);g.strokeStyle="rgba(70,60,50,.55)";g.lineWidth=.35;g.stroke(f);
+  g.lineWidth=.28;g.strokeStyle="rgba(70,60,50,.4)";g.beginPath();g.moveTo(3,14);g.bezierCurveTo(8,8,15,4,24,2);g.moveTo(5,13);g.bezierCurveTo(10,10,16,8,21,7.5);g.moveTo(12,7.5);g.lineTo(13.5,11.2);g.moveTo(17,5);g.lineTo(18,9.6);g.stroke();
+  g.beginPath();g.ellipse(13,6.5,5,1.2,-.4,0,6.283);g.fillStyle="rgba(255,255,255,.35)";g.fill();
+});
+const BED=(window.GARDEN_IMAGES||{}).bee,BEI=BED?{B:Object.assign(new Image(),{src:BED.body}),W:Object.assign(new Image(),{src:BED.wing})}:null;
+function drawBeeImg(ctx,b,time,len){
+  const dir=b.vx<0?-1:1,bw=len*1.2,bh=bw*BED.bh/BED.bw,ww=len*.85,wh=ww*BED.wh/BED.ww,f=Math.sin(time*40+b.ph);
+  ctx.save();ctx.translate(b.x,b.y+Math.sin(time*5+b.ph)*1.6);ctx.scale(dir,1);ctx.rotate(clamp(b.vy*.18*dir,-.45,.45));
+  const Ax=-bw/2+BED.ax*bw,Ay=-bh/2+BED.ay*bh;
+  const wing=(th,sy,al)=>{ctx.save();ctx.translate(Ax,Ay);ctx.rotate(th);ctx.scale(-1,sy);ctx.globalAlpha=al;ctx.drawImage(BEI.W,-BED.wbx*ww,-BED.wby*wh,ww,wh);ctx.restore()};
+  wing(.3+.55*f,.7+.3*Math.abs(f),.55);
+  ctx.drawImage(BEI.B,-bw/2,-bh/2,bw,bh);
+  wing(.45+.55*f,.75+.25*Math.abs(f),.8);
+  ctx.restore();
+}
+function drawBee(ctx,b,time,len){
+  if(BEI&&BEI.B.complete&&BEI.B.naturalWidth&&BEI.W.complete)return drawBeeImg(ctx,b,time,len);
+  const dir=b.vx<0?-1:1,s=len/42,flap=Math.sin(time*42+b.ph);
+  ctx.save();ctx.translate(b.x,b.y+Math.sin(time*5+b.ph)*1.6);ctx.scale(dir,1);ctx.rotate(clamp(b.vy*.18*dir,-.45,.45));ctx.scale(s,s);
+  ctx.save();ctx.translate(2,-3);ctx.rotate(-.35+flap*.5);ctx.scale(.85,.7+.3*flap);ctx.globalAlpha=.8;ctx.drawImage(BEE_WING,-BEE_WING.ax,-BEE_WING.ay,BEE_WING.w,BEE_WING.h);ctx.restore();
+  ctx.drawImage(BEE_BODY,-BEE_BODY.ax,-BEE_BODY.ay,BEE_BODY.w,BEE_BODY.h);
+  ctx.save();ctx.translate(4,-4);ctx.rotate(-.15+flap*.55);ctx.scale(1,.75+.25*flap);ctx.drawImage(BEE_WING,-BEE_WING.ax,-BEE_WING.ay,BEE_WING.w,BEE_WING.h);ctx.restore();
+  ctx.restore();
+}
+function makeBees(n,W,H,minS,maxS){return Array.from({length:n},()=>({x:rnd(0,W),y:rnd(0,H),vx:rnd(-1,1),vy:rnd(-.5,.5),tx:rnd(0,W),ty:rnd(0,H),ph:rnd(0,6.28),len:rnd(minS,maxS),rest:0}))}
+function stepBee(b,W,H,pull){
+  if(b.rest>0){b.rest--;b.vx*=.85;b.vy*=.85;b.x+=b.vx;b.y+=b.vy;return}
+  let tx=b.tx,ty=b.ty;if(pull){tx=tx*.4+pull.x*.6;ty=ty*.4+pull.y*.6}
+  b.vx+=(tx-b.x)*.0006+rnd(-.05,.05);b.vy+=(ty-b.y)*.0006+rnd(-.05,.05);
+  const sp=Math.hypot(b.vx,b.vy),mx=1.1;if(sp>mx){b.vx*=mx/sp;b.vy*=mx/sp}
+  b.vx*=.985;b.vy*=.985;b.x+=b.vx;b.y+=b.vy;
+  if(Math.hypot(tx-b.x,ty-b.y)<24){b.tx=b.target?b.target():rnd(20,W-20);b.ty=b.targetY?b.targetY():rnd(20,H-20);if(Math.random()<.4)b.rest=50+Math.random()*70}
+  if(b.x<-60)b.x=W+50;if(b.x>W+60)b.x=-50;if(b.y<-60)b.y=H+40;if(b.y>H+60)b.y=-40;
+}
+
+/* ---------- butterflies ---------- */
+const BF_WING=sprite(32,34,1,15,g=>{
+  const fw=new Path2D();fw.moveTo(1,13);fw.bezierCurveTo(6,4,18,-.5,28,1.5);fw.bezierCurveTo(31,3,30,9,27,13);fw.bezierCurveTo(21,15.5,10,15.5,1,15);fw.closePath();
+  const hw=new Path2D();hw.moveTo(1,15.5);hw.bezierCurveTo(10,15,22,16.5,24,21);hw.bezierCurveTo(25,27,18,33,11,32);hw.bezierCurveTo(5,30,2,24,1,18);hw.closePath();
+  for(const p of[hw,fw]){
+    const gr=g.createRadialGradient(3,15,1,6,15,26);gr.addColorStop(0,"#14306e");gr.addColorStop(.3,"#2f6fd6");gr.addColorStop(.62,"#5fa6f5");gr.addColorStop(.85,"#9fd2ff");gr.addColorStop(1,"#c9e8ff");
+    g.fillStyle=gr;g.fill(p);
+    g.save();g.clip(p);g.strokeStyle="#151826";g.lineWidth=3.4;g.stroke(p);
+    g.strokeStyle="rgba(20,30,60,.35)";g.lineWidth=.35;for(let i=0;i<7;i++){const a=-.9+i*.3;g.beginPath();g.moveTo(1,15);g.lineTo(1+Math.cos(a)*30,15+Math.sin(a)*30);g.stroke()}
+    const sh=g.createLinearGradient(0,0,30,30);sh.addColorStop(0,"rgba(255,255,255,0)");sh.addColorStop(.45,"rgba(255,255,255,.28)");sh.addColorStop(.6,"rgba(255,255,255,0)");g.fillStyle=sh;g.fill(p);g.restore();
+  }
+  g.fillStyle="rgba(255,255,255,.9)";for(const [x,y,r] of[[27.2,4,.7],[28.2,7.5,.6],[26.5,11,.6],[21,30,.6],[16,31.2,.55],[23,25,.55]]){g.beginPath();g.arc(x,y,r,0,6.283);g.fill()}
+  g.fillStyle="#ffb347";g.beginPath();g.arc(19.5,28.3,.8,0,6.283);g.fill();
+});
+const BFD=(window.GARDEN_IMAGES||{}).butterfly,BFI=BFD?{L:Object.assign(new Image(),{src:BFD.left}),R:Object.assign(new Image(),{src:BFD.right}),B:Object.assign(new Image(),{src:BFD.body})}:null;
+function drawButterflyImg(ctx,b,time){
+  const k=b.len*1.35/BFD.w,flap=.14+.86*Math.abs(Math.cos(time*6+b.ph)),h=BFD.h*k,c=BFD.cx*k;
+  ctx.save();ctx.translate(b.x,b.y+Math.sin(time*3+b.ph)*3);ctx.rotate(Math.atan2(b.vy,b.vx)+Math.PI/2+Math.sin(time*2+b.ph)*.15);
+  ctx.save();ctx.scale(flap,1);ctx.drawImage(BFI.R,0,-h*.5,(BFD.w-BFD.cx)*k,h);ctx.drawImage(BFI.L,-c,-h*.5,c,h);ctx.restore();
+  ctx.drawImage(BFI.B,-BFD.bw*k,-h*.5,BFD.bw*2*k,h);ctx.restore();
+}
+function drawButterfly(ctx,b,time){
+  if(BFI&&BFI.R.complete&&BFI.R.naturalWidth)return drawButterflyImg(ctx,b,time);
+  const s=b.len/60,flap=.18+.82*Math.abs(Math.cos(time*11+b.ph));
+  ctx.save();ctx.translate(b.x,b.y+Math.sin(time*3+b.ph)*3);ctx.rotate(Math.atan2(b.vy,b.vx)+Math.PI/2+Math.sin(time*2+b.ph)*.15);ctx.scale(s,s);
+  for(const d of[-1,1]){ctx.save();ctx.scale(d*flap,1);ctx.drawImage(BF_WING,-BF_WING.ax,-BF_WING.ay,BF_WING.w,BF_WING.h);ctx.restore()}
+  ctx.fillStyle="#1a1b26";ctx.beginPath();ctx.ellipse(0,15,1.6,4,0,0,6.283);ctx.fill();ctx.beginPath();ctx.ellipse(0,23,1.2,7,0,0,6.283);ctx.fill();
+  ctx.beginPath();ctx.arc(0,10.2,1.6,0,6.283);ctx.fill();
+  ctx.strokeStyle="#1a1b26";ctx.lineWidth=.5;ctx.beginPath();ctx.moveTo(-.5,9);ctx.quadraticCurveTo(-3,3,-4.5,0);ctx.moveTo(.5,9);ctx.quadraticCurveTo(3,3,4.5,0);ctx.stroke();
+  ctx.beginPath();ctx.arc(-4.5,0,.9,0,6.283);ctx.arc(4.5,0,.9,0,6.283);ctx.fill();
+  ctx.restore();
+}
+function stepButterfly(b,W,H){
+  b.t=(b.t||0)+1;if(b.t%90===0){b.tx=rnd(30,W-30);b.ty=rnd(H*.1,H*.85)}
+  b.vx+=(b.tx-b.x)*.00025+rnd(-.07,.07);b.vy+=(b.ty-b.y)*.00025+rnd(-.07,.07);
+  const sp=Math.hypot(b.vx,b.vy),mx=.8;if(sp>mx){b.vx*=mx/sp;b.vy*=mx/sp}
+  b.vx*=.97;b.vy*=.97;b.x+=b.vx;b.y+=b.vy;
+  if(b.x<-60)b.x=W+50;if(b.x>W+60)b.x=-50;if(b.y<-60)b.y=H+40;if(b.y>H+60)b.y=-40;
+}
+/* ---------- flower sprite banks ---------- */
+const PAL={
+  foxglove:["#b45a9b","#c46fae","#9c4a8a","#d48bbd","#a35596"],
+  lupine:["#6e5bb3","#8657a3","#5d6ec0","#a06cc4","#c77bb5"],
+  tulip:["#7e2f86","#b9488f","#5e2a6e","#d26f9f","#9a4fb0"],
+  hyacinth:["#7b6bd0","#9a7ad6","#b18be0","#6a4fa8","#d48ac0"],
+  daffodil:["#ffffff"]};
+const mk=(t,c)=>t==="daffodil"?daffSp():t==="foxglove"?bell(c):t==="lupine"?lupFloret(c):t==="hyacinth"?hyaFloret(c):tulipSp(c);
+const hex=c=>{const m=c.match(/\d+/g).map(Number);return"#"+m.map(v=>v.toString(16).padStart(2,"0")).join("")};
+const BANK={};for(const t in PAL)BANK[t]=PAL[t].map(c=>({c,f:mk(t,c),f2:t!=="tulip"&&t!=="daffodil"?mk(t,hex(mix(c,.22))):null,fd:t!=="tulip"&&t!=="daffodil"?mk(t,hex(mix(c,-.28))):null,bud:lupBud(c),side:t==="lupine"?lupSide(c):null,sideD:t==="lupine"?lupSide(hex(mix(c,-.28))):null}));
+const GREENS=["#5d7d43","#4f6e3a","#6a8a4c"];
+const LEAVES=GREENS.map(c=>({c,lance:leafSp(c,18,100),strap:leafSp(c,12,100),broad:leafSp(c,26,90),palm:palmSp(c)}));
+
+/* ---------- illustrated plants (images) ---------- */
+const IMGBANK={};
+for(const [t,list] of Object.entries(window.GARDEN_IMAGES||{}))if(Array.isArray(list))IMGBANK[t]=list.map(o=>{const im=new Image();im.src=o.src;im.ax=o.ax;return im});
+const IMG_H={nigella:1,muscari:1,iris:1,delphinium:1,icepoppy:1,amaryllis:1,ixia:1,anemone:1,daffodil:1.05,foxglove:1,lupine:1,tulip:1.05,hyacinth:1.1};
+function fadedImg(im){
+  if(im._fade)return im._fade;const c=document.createElement("canvas");c.width=im.naturalWidth;c.height=im.naturalHeight;const g=c.getContext("2d");
+  g.drawImage(im,0,0);g.globalCompositeOperation="destination-out";const y0=c.height*.9;
+  const gr=g.createLinearGradient(0,y0,0,c.height);gr.addColorStop(0,"rgba(0,0,0,0)");gr.addColorStop(.6,"rgba(0,0,0,.5)");gr.addColorStop(1,"rgba(0,0,0,1)");
+  g.fillStyle=gr;g.fillRect(0,y0,c.width,c.height-y0);im._fade=c;return c;
+}
+function drawImagePlant(g,p,el,gr,sw){
+  const im=p.img;if(!im.complete||!im.naturalWidth)return;
+  const H0=p.h*(IMG_H[p.type]||1.2),W0=H0*im.naturalWidth/im.naturalHeight;
+  if(!p._bmp){const c=document.createElement("canvas");c.width=Math.max(1,Math.round(W0*DPR));c.height=Math.max(1,Math.round(H0*DPR));c.getContext("2d").drawImage(fadedImg(im),0,0,c.width,c.height);p._bmp=c}
+  const k=(.55+.45*gr),h=H0*k,w=W0*k;
+  g.save();g.translate(p.x,p.base+2);g.transform(1,0,-(sw+p.lean)*.9,1,0,0);
+  if(gr<1){g.beginPath();g.rect(-w,-h*gr-2,w*2,h*gr+4);g.clip()}
+  g.scale(p.flip,1);g.drawImage(p._bmp,-im.ax*w,-h,w,h);g.restore();
+}
+/* ---------- hero garden ---------- */
+const cv=document.getElementById("garden"),ctx=cv.getContext("2d");
+let DPR=1,W,H,plants=[],bees=[],flies=[],grass=[],start=performance.now(),mouse=null,sky=null,layers=[];
+const HMUL={foxglove:[.44,.54],lupine:[.32,.40],tulip:[.20,.25],hyacinth:[.15,.18],daffodil:[.19,.24],anemone:[.13,.17],ixia:[.2,.26],delphinium:[.4,.5],icepoppy:[.16,.2],iris:[.26,.32],muscari:[.08,.11],nigella:[.12,.16]};
+function off(w,h,r){const c=document.createElement("canvas");c.width=Math.max(1,Math.round(w*r));c.height=Math.max(1,Math.round(h*r));const g=c.getContext("2d");g.setTransform(r,0,0,r,0,0);return{c,g,r}}
+function buildSky(){const d=Math.min(devicePixelRatio||1,2);const o=off(W,H,d),g=o.g;
+  const sx=W*.74,sy=H*.79;
+  let gl=g.createRadialGradient(sx,sy,10,sx,sy,Math.max(W,H)*.55);gl.addColorStop(0,"rgba(255,226,160,.75)");gl.addColorStop(.25,"rgba(255,190,150,.35)");gl.addColorStop(1,"rgba(255,170,160,0)");g.fillStyle=gl;g.fillRect(0,0,W,H);
+  for(let i=0;i<9;i++){const cx=rnd(0,W),cy=H*rnd(.34,.68),rw=rnd(140,380),rh=rnd(8,22);g.save();g.translate(cx,cy);g.scale(1,rh/rw);
+    const c=g.createRadialGradient(0,0,0,0,0,rw);const warm=cy>H*.55;c.addColorStop(0,warm?"rgba(255,206,170,.55)":"rgba(240,170,200,.45)");c.addColorStop(1,"rgba(240,170,200,0)");g.fillStyle=c;g.beginPath();g.arc(0,0,rw,0,6.283);g.fill();g.restore();
+    g.save();g.translate(cx+rw*.1,cy+rh*.5);g.scale(1,(rh*.35)/rw);const e=g.createRadialGradient(0,0,0,0,0,rw*.8);e.addColorStop(0,"rgba(255,236,190,.5)");e.addColorStop(1,"rgba(255,236,190,0)");g.fillStyle=e;g.beginPath();g.arc(0,0,rw*.8,0,6.283);g.fill();g.restore()}
+  sky=o.c;
+}
+function drawSun(el){
+  const k=ease((el-.1)/7),sx=W*.56,sy=H*(.68-k*.2),R=Math.max(30,Math.min(54,W*.042));
+  let gl=ctx.createRadialGradient(sx,sy,10,sx,sy,Math.max(W,H)*(.35+.25*k));gl.addColorStop(0,`rgba(255,226,160,${.35+.4*k})`);gl.addColorStop(.3,`rgba(255,190,150,${.12+.25*k})`);gl.addColorStop(1,"rgba(255,170,160,0)");
+  ctx.fillStyle=gl;ctx.fillRect(0,0,W,H);
+  const sd=ctx.createRadialGradient(sx-R*.15,sy-R*.2,2,sx,sy,R);sd.addColorStop(0,"#fffdf0");sd.addColorStop(.55,"#ffe9b0");sd.addColorStop(.85,"#ffd48e");sd.addColorStop(1,"rgba(255,206,140,0)");
+  ctx.save();ctx.beginPath();ctx.rect(0,0,W,H*.612);ctx.clip();ctx.fillStyle=sd;ctx.beginPath();ctx.arc(sx,sy,R,0,6.283);ctx.fill();ctx.restore();
+}
+function build(keepGrown){
+  const r=cv.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,1.5);W=r.width;H=r.height;
+  cv.width=Math.round(W*d);cv.height=Math.round(H*d);ctx.setTransform(d,0,0,d,0,0);
+  layers=[null,null,null];DPR=d;
+  buildSky();plants=[];clumps=null;
+  const L=[{n:Math.round(W/80),s:.55,base:H*.85,mix:["foxglove","iris","lupine","foxglove","iris"]},{n:Math.round(W/92),s:.78,base:H*.925,mix:["lupine","iris","tulip","daffodil","hyacinth","anemone","ixia","icepoppy","muscari","muscari","nigella"]},{n:Math.round(W/125),s:1.02,base:H+8,mix:["tulip","daffodil","hyacinth","anemone","ixia","icepoppy","muscari","nigella","tulip","daffodil","muscari","nigella","anemone","icepoppy","nigella","muscari","nigella"]}];
+  const k=Math.min(1.25,Math.max(.75,W/1100));
+  L.forEach((l,li)=>{for(let i=0;i<l.n;i++){
+    const type=(li===0&&IMGBANK.delphinium&&[Math.floor(l.n/6),Math.floor(l.n/2),Math.floor(l.n*5/6)].includes(i))?"delphinium":pick(l.mix);
+    const h=H*rnd(...HMUL[type])*(li===2?1:l.s*1.15);
+    const bk=BANK[type]?pick(BANK[type]):BANK.tulip[0];
+    plants.push({type,layer:li,x:(i+(li===0?rnd(.4,.6):rnd(.15,.85)))/l.n*(W+40)-20,base:l.base+rnd(-6,8),h,s:l.s*k,fl:bk,lv:pick(LEAVES),
+      delay:keepGrown?-99:rnd(0,1.4)+li*.35,dur:rnd(1.8,2.8),ph:rnd(0,6.28),lean:rnd(-.05,.05),side:Math.random()<.5?1:-1,seed:Math.random(),img:IMGBANK[type]?pick(IMGBANK[type]):null,flip:Math.random()<.5?1:-1,j:Array.from({length:120},()=>Math.random())});
+  }});
+  if(IMGBANK.amaryllis){const h=H*rnd(.3,.34)*.78*1.15;plants.push({type:"amaryllis",layer:1,x:rnd(.25,.75)*W,base:H*.925+rnd(-4,6),h,s:.78*k,fl:BANK.tulip[0],lv:pick(LEAVES),delay:keepGrown?-99:rnd(.3,1.2)+.35,dur:rnd(2,2.8),ph:rnd(0,6.28),lean:rnd(-.03,.03),side:1,seed:Math.random(),j:Array.from({length:120},()=>Math.random()),img:pick(IMGBANK.amaryllis),flip:Math.random()<.5?1:-1})}
+  plants.sort((a,b)=>a.layer-b.layer||b.h-a.h);
+  grass=[];for(let x=-10;x<W+10;x+=rnd(2.5,5))grass.push({x,h:rnd(6,22)*Math.min(1.2,Math.max(.8,W/1100)),lean:rnd(-.35,.35),ph:rnd(0,6.28),c:pick(["#4f6d39","#5a7a40","#445f31","#66864a","#3f5a2f"]),w:rnd(1.4,2.6)});
+  if(!bees.length){bees=makeBees(5,W,H*.8,22,28);
+    bees.forEach(b=>{b.target=()=>{const p=pick(plants.filter(p=>p.layer===2&&p.type!=="tulip"));return p?p.x:rnd(0,W)};b.targetY=()=>rnd(H*.5,H*.85)})}
+  if(!flies.length)flies=makeBees(3,W,H*.7,29,37);
+}
+function stemPt(p,f,g,sw){return{x:p.x+(sw+p.lean)*p.h*f*f,y:p.base-p.h*g*f}}
+function hill(g,y,c1,c2,amp,seed){g.beginPath();g.moveTo(0,H);g.lineTo(0,y);for(let x=0;x<=W+40;x+=30)g.lineTo(x,y+Math.sin(x*.006+seed)*amp+Math.sin(x*.017+seed*2)*amp*.4);g.lineTo(W,H);g.closePath();
+  const gr=g.createLinearGradient(0,y-amp,0,H);gr.addColorStop(0,c1);gr.addColorStop(1,c2);g.fillStyle=gr;g.fill()}
+function drawPlant(g,p,el){
+  const gr=ease((el-p.delay)/p.dur);if(gr<=0)return;
+  const sw=Math.sin(el*.9+p.ph+p.x*.004)*.045*(1+.6*Math.sin(el*.23))+(mouse?clamp((mouse.x-p.x)/600,-1,1)*-.04*clamp(1-Math.abs(mouse.x-p.x)/300):0);
+  if(p.img){drawImagePlant(g,p,el,gr,sw);return}
+  const s=p.s,lk=ease(gr*1.6),lv=p.lv;
+  if(p.type==="foxglove"){for(let i=0;i<6;i++){const a=(i/5-.5)*2.1;put(g,lv.lance,p.x,p.base,.5*s*lk*(1-.25*Math.abs(a)),a+sw*.5)}}
+  else if(p.type==="tulip"){put(g,lv.broad,p.x,p.base,.62*s*lk,-.3+sw);put(g,lv.broad,p.x,p.base,.55*s*lk,.35+sw)}
+  else if(p.type==="hyacinth"){for(let i=0;i<5;i++)put(g,lv.strap,p.x,p.base,.42*s*lk,(i/4-.5)*1.3+sw*.6)}
+  else if(p.type==="daffodil"){for(let i=0;i<4;i++)put(g,lv.strap,p.x,p.base,(.5-i*.04)*s*lk,(i/3-.5)*.8+sw*.6)}
+  const a=stemPt(p,0,gr,sw),m=stemPt(p,.5,gr,sw),b=stemPt(p,1,gr,sw),cx=m.x*2-(a.x+b.x)/2,cy=m.y*2-(a.y+b.y)/2;
+  const wdt=(p.type==="tulip"?2.6:p.type==="hyacinth"?3.2:2.4)*s;
+  g.lineCap="round";g.strokeStyle=mix(lv.c,-.35);g.lineWidth=wdt;g.beginPath();g.moveTo(a.x,a.y);g.quadraticCurveTo(cx,cy,b.x,b.y);g.stroke();
+  g.strokeStyle=mix(lv.c,.18);g.lineWidth=wdt*.38;g.beginPath();g.moveTo(a.x-wdt*.2,a.y);g.quadraticCurveTo(cx-wdt*.2,cy,b.x-wdt*.2,b.y);g.stroke();
+  if(p.type==="lupine"){for(const [f,sd] of[[.06,-1],[.16,1],[.27,-1]]){const q=stemPt(p,f,gr,sw);put(g,lv.palm,q.x,q.y+2,.55*s*lk,sd*.35+sw)}}
+  const fl=p.fl;
+  if(p.type==="foxglove"){
+    const N=22;for(let i=0;i<N;i++){const f=.36+i*(.52/N),v=clamp((gr-f)*5);if(v<=0)continue;const pt=stemPt(p,f,gr,sw),J=p.j[i],side=(J<.72?1:-1)*p.side;
+      const sc=(.74-f*.38)*s*v,sp=J<.4?fl.f2:J>.85?fl.fd:fl.f;
+      put(g,sp,pt.x+side*(1+J*2)*s,pt.y+(J-.5)*3*s,sc,side*(.85+J*.45+Math.sin(el*1.3+p.ph+i)*.05),side)}
+    for(let i=0;i<6;i++){const f=.88+i*.02,v=clamp((gr-f)*6);if(v<=0)continue;const pt=stemPt(p,f,gr,sw),sd=i%2?1:-1;put(g,fl.bud,pt.x+sd*2.2*s*(1-i/7),pt.y,(.75-i*.08)*s*v,sd*.4)}
+  }else if(p.type==="lupine"){
+    const N=44,list=[];for(let i=0;i<N;i++){const t=i/N,f=.44+t*.56,v=clamp((gr-f)*5);if(v<=0)continue;const pt=stemPt(p,f,gr,sw),ang=i*2.39996+p.ph,
+      R=(1.05-t*.6)*4.6*s,dx=Math.cos(ang)*R,dep=Math.sin(ang),sc=(1.05-t*.55)*.72*s*v*(.9+p.j[i]*.2);
+      list.push({x:pt.x+dx,y:pt.y+(p.j[i+50]-.5)*2*s,dep,sc,bud:t>.76,rot:(p.j[i]-.5)*.3,k:p.j[i+70],c:Math.cos(ang)})}
+    list.sort((a,b)=>a.dep-b.dep);
+    for(const o of list){if(o.bud){put(g,fl.bud,o.x,o.y,o.sc*.9,o.rot);continue}const back=o.dep<-.3;if(Math.abs(o.c)>.45){const sd=o.c>0?1:-1;put(g,back?fl.sideD:fl.side,o.x-sd*3*o.sc,o.y,o.sc*1.05,sd*(.15+o.rot*.5),sd)}else put(g,back?fl.fd:o.k<.35?fl.f2:fl.f,o.x,o.y,o.sc*(back?.85:.95),o.rot)}
+  }else if(p.type==="hyacinth"){
+    const N=22,list=[];for(let i=0;i<N;i++){const t=i/N,f=.48+t*.5,v=clamp((gr-f)*5);if(v<=0)continue;const pt=stemPt(p,f,gr,sw),ang=i*2.39996+p.ph,R=6*s*(1-t*.3),dep=Math.sin(ang);
+      list.push({x:pt.x+Math.cos(ang)*R,y:pt.y,dep,sc:(1-t*.35)*.62*s*v,rot:p.j[i]*6})}
+    list.sort((a,b)=>a.dep-b.dep);for(const o of list)put(g,o.dep<-.3?fl.fd:fl.f,o.x,o.y,o.sc,o.rot)
+  }else if(p.type==="daffodil"){const v=clamp((gr-.85)*6);if(v>0){const fl2=p.side;
+    g.fillStyle="#b9a873";g.beginPath();g.ellipse(b.x+fl2*2*s,b.y+2*s,1.6*s,4*s,fl2*.6,0,6.283);g.fill();
+    put(g,fl.f,b.x+fl2*8*s*v,b.y+5*s,1.3*s*v,fl2*.25+sw*1.4,fl2)}
+  }else{const v=clamp((gr-.85)*6);if(v>0)put(g,fl.f,b.x,b.y+2,.95*s*v,sw*1.6)}
+}
+const GRD=(window.GARDEN_IMAGES||{}).grass,GRI=GRD?Object.assign(new Image(),{src:GRD.src}):null;
+let clumps=null;
+function makeClumps(){
+  clumps=[];if(!GRI||!GRI.complete||!GRI.naturalWidth)return;
+  for(const [li,base,sc,dens] of [[0,H*.85,.55,120],[1,H*.925,.8,100],[2,H+2,1,110]]){
+  const n=Math.max(5,Math.round(W/dens));
+  for(let i=0;i<n;i++){
+    const sw=GRD.w*rnd(.14,.3),sx=rnd(0,GRD.w-sw),hh=H*rnd(.08,.14)*sc,dw=hh*sw/GRD.h;
+    const c=document.createElement("canvas"),r=2;c.width=Math.ceil(dw*r);c.height=Math.ceil(hh*r);const g=c.getContext("2d");
+    g.drawImage(GRI,sx,0,sw,GRD.h,0,0,c.width,c.height);g.globalCompositeOperation="destination-in";
+    const gr=g.createLinearGradient(0,0,c.width,0);gr.addColorStop(0,"rgba(0,0,0,0)");gr.addColorStop(.3,"rgba(0,0,0,1)");gr.addColorStop(.7,"rgba(0,0,0,1)");gr.addColorStop(1,"rgba(0,0,0,0)");g.fillStyle=gr;g.fillRect(0,0,c.width,c.height);
+    g.globalCompositeOperation="destination-out";const vg=g.createLinearGradient(0,c.height*.92,0,c.height);vg.addColorStop(0,"rgba(0,0,0,0)");vg.addColorStop(1,"rgba(0,0,0,.6)");g.fillStyle=vg;g.fillRect(0,c.height*.92,c.width,c.height*.08);
+    clumps.push({li,base:base+rnd(-4,6),c,x:(i+rnd(.1,.9))/n*W-dw/2,w:dw,h:hh,ph:rnd(0,6.28),flip:Math.random()<.5,a:rnd(.75,.95)});
+  }}
+}
+function drawClumps(g,li,el){
+  if(!GRI||!GRI.complete||!GRI.naturalWidth)return false;
+  if(!clumps||!clumps.length)makeClumps();
+  for(const k of clumps){if(k.li!==li)continue;const sh=Math.sin(el*.9+k.ph)*.06;g.save();g.globalAlpha=k.a;g.translate(k.x,k.base);g.transform(1,0,-sh,1,0,0);
+    if(k.flip){g.translate(k.w,0);g.scale(-1,1)}g.drawImage(k.c,0,-k.h,k.w,k.h);g.restore()}
+  return true;
+}
+function drawGrassImg(h,alpha,off,ph,el){return drawClumps(ctx,2,el)}
+const TRD=(window.GARDEN_IMAGES||{}).tree,TRI=TRD?Object.assign(new Image(),{src:TRD.src}):null;
+let TRC=null;
+function treeCanvas(){
+  if(TRC)return TRC;const c=document.createElement("canvas");c.width=TRI.naturalWidth;c.height=TRI.naturalHeight;const g=c.getContext("2d");
+  g.drawImage(TRI,0,0);g.globalCompositeOperation="destination-out";
+  const y0=c.height*.95,gr=g.createLinearGradient(0,y0,0,c.height);gr.addColorStop(0,"rgba(0,0,0,0)");gr.addColorStop(.6,"rgba(0,0,0,.5)");gr.addColorStop(1,"rgba(0,0,0,1)");
+  g.fillStyle=gr;g.fillRect(0,y0,c.width,c.height-y0);TRC=c;return c;
+}
+function drawTree(el){
+  if(!TRI||!TRI.complete||!TRI.naturalWidth)return;
+  const g=ease((el-.2)/3),h=H*.3*(.6+.4*g),w=h*TRD.w/TRD.h,x=W*.09,y=H*.7,sw=Math.sin(el*.5)*.012;
+  ctx.save();ctx.globalAlpha=.9*Math.min(1,g*1.5);ctx.translate(x,y);ctx.transform(1,0,-sw,1,0,0);ctx.drawImage(treeCanvas(),-w/2,-h,w,h);
+  ctx.globalCompositeOperation="source-atop";ctx.fillStyle="rgba(238,176,170,.22)";ctx.fillRect(-w/2,-h,w,h);ctx.restore();
+}
+const HRD=(window.GARDEN_IMAGES||{}).heron,HRI=HRD?Object.assign(new Image(),{src:HRD.src}):null;
+const herons=[{d:0,y:.07,s:1,sp:1},{d:.32,y:.13,s:.8,sp:.9},{d:.6,y:.04,s:.65,sp:.8}];
+function drawHerons(el){
+  if(!HRI||!HRI.complete||!HRI.naturalWidth)return;
+  const span=W*.55,x0=W+60;
+  for(const h of herons){
+    const t=((el*.012*h.sp+h.d)%1),x=x0-t*span,y=H*h.y+Math.sin(el*.35+h.d*9)*6,w=Math.min(64,W*.05)*h.s,hh=w*HRD.h/HRD.w;
+    const fade=Math.min(1,t*6)*Math.min(1,(1-t)*5);
+    ctx.save();ctx.globalAlpha=.6*fade;ctx.translate(x,y);ctx.scale(1,1+Math.sin(el*1.4+h.d*7)*.06);ctx.drawImage(HRI,-w/2,-hh/2,w,hh);ctx.restore();
+  }
+}
+function drawGarden(el){
+  ctx.clearRect(0,0,W,H);drawSun(el);drawHerons(el);drawTree(el);
+  for(let li=0;li<3;li++){
+    const L=layers[li],g=L?L.g:ctx;
+    if(L)g.clearRect(0,0,W,H);
+    for(const p of plants)if(p.layer===li)drawPlant(g,p,el);
+    if(li<2)drawClumps(g,li,el);
+    if(L){ctx.drawImage(L.c,0,0,W,H);const hz=ctx.createLinearGradient(0,H*.35,0,H);hz.addColorStop(0,"rgba(238,176,170,0)");hz.addColorStop(.6,li===0?"rgba(230,190,170,.22)":"rgba(230,190,170,.1)");hz.addColorStop(1,li===0?"rgba(230,190,170,.14)":"rgba(230,190,170,.05)");ctx.fillStyle=hz;ctx.fillRect(0,H*.35,W,H)}
+  }
+  const gr=ctx.createLinearGradient(0,H-60,0,H);gr.addColorStop(0,"rgba(52,71,43,0)");gr.addColorStop(1,"rgba(52,71,43,.95)");ctx.fillStyle=gr;ctx.fillRect(0,H-60,W,60);
+  if(!drawGrassImg(H*.075,.9,0,0,el)){
+  for(const g of grass){const sw=Math.sin(el*1.2+g.ph+g.x*.01)*.12+g.lean,tx=g.x+sw*g.h,ty=H-g.h;
+    ctx.globalAlpha=.85;ctx.fillStyle=g.c;ctx.beginPath();ctx.moveTo(g.x-g.w,H+1);ctx.quadraticCurveTo(g.x+sw*g.h*.3,H-g.h*.5,tx,ty);ctx.quadraticCurveTo(g.x+sw*g.h*.3+g.w*.4,H-g.h*.5,g.x+g.w,H+1);ctx.fill()}ctx.globalAlpha=1;
+  }
+  for(const b of bees){if(!reduce)stepBee(b,W,H,mouse);drawBee(ctx,b,el,b.len)}
+  for(const f of flies){if(!reduce)stepButterfly(f,W,H);drawButterfly(ctx,f,el)}
+}
+build(false);
+let resizeT;addEventListener("resize",()=>{clearTimeout(resizeT);resizeT=setTimeout(()=>{build((performance.now()-start)/1000>5);if(reduce)drawGarden(99)},150)});
+cv.parentElement.addEventListener("pointermove",e=>{const r=cv.getBoundingClientRect();mouse={x:e.clientX-r.left,y:e.clientY-r.top}});
+cv.parentElement.addEventListener("pointerleave",()=>mouse=null);
+const rg=document.getElementById("regrow");
+if(rg)rg.addEventListener("click",()=>{start=performance.now();plants.forEach(p=>p.delay=rnd(0,1.4)+p.layer*.35);if(reduce)drawGarden(99)});
+
+/* ---------- background bees across the page (one small canvas each, moved by transform) ---------- */
+document.getElementById("bees").remove();
+let BW=innerWidth,BH=innerHeight;addEventListener("resize",()=>{BW=innerWidth;BH=innerHeight});
+const sprites=[];
+function mkSprite(b,kind){const sz=Math.ceil(b.len*(kind==="b"?2.6:2.2)),d=Math.min(devicePixelRatio||1,2),c=document.createElement("canvas");c.width=c.height=Math.ceil(sz*d);
+  Object.assign(c.style,{position:"fixed",left:"0",top:"0",width:sz+"px",height:sz+"px",pointerEvents:"none",zIndex:"0",willChange:"transform"});c.setAttribute("aria-hidden","true");document.body.appendChild(c);
+  const g=c.getContext("2d");g.setTransform(d,0,0,d,0,0);sprites.push({b,kind,c,g,sz})}
+makeBees(3,BW,BH,18,22).forEach(b=>mkSprite(b,"b"));
+makeBees(2,BW,BH,24,31).forEach(b=>mkSprite(b,"f"));
+function drawPageBees(time){for(const s of sprites){const b=s.b;if(!reduce)(s.kind==="b"?stepBee:stepButterfly)(b,BW,BH,null);
+  s.g.clearRect(0,0,s.sz,s.sz);const x=b.x,y=b.y;b.x=s.sz/2;b.y=s.sz/2;if(s.kind==="b")drawBee(s.g,b,time,b.len);else drawButterfly(s.g,b,time);b.x=x;b.y=y;
+  s.c.style.transform=`translate(${(x-s.sz/2).toFixed(1)}px,${(y-s.sz/2).toFixed(1)}px)`}}
+
+if(reduce){drawGarden(99);drawPageBees(0);return}
+let heroVisible=true;new IntersectionObserver(es=>{heroVisible=es[0].isIntersecting}).observe(cv);
+let shown=null;function showSprites(v){if(shown===v)return;shown=v;for(const s of sprites)s.c.style.display=v?"block":"none"}
+let fr=0;function loop(now){showSprites(!heroVisible);const t=(now-start)/1000;fr++;if(heroVisible&&(t<6||fr%2))drawGarden(t);if(!heroVisible||(fr&1))drawPageBees(now/1000);requestAnimationFrame(loop)}
+requestAnimationFrame(loop);
+})();
+
+
+
+
+/* ======== צפי פריחה ======== */
+(function(){
+  const B=[["נרקיס סיני",25,21],["איקסיה",25,20],["צבעוני",12,10],["אירוס הולנדי",10,8],["כדן",10,8],["כלנית",10,6],["נרקיס לבן-כתום",6,5],["נרקיס כפול צהוב",5,3],["יקינתון",3,2],["אמריליס",2,1],["בן-חצב יקינתוני",1,1]];
+  const S=[["אפון ריחני",17],["קצח",15],["קמומיל",15],["פשתה",15],["תורמוס",12,"מתוך 16 שנבטו עד עכשיו"],["דורבן הפרש",12],["עדעד",10],["מנתור",8],["פרג איסלנדי",8],["פעמונית",3,"רק בשנה הבאה"]];
+  const mx=25;
+  document.getElementById("fcBulbs").innerHTML=B.map(([n,p,e])=>`<div class="fc-row"><span class="fc-n">${n}</span><span class="fc-bar"><i class="pl" style="width:${p/mx*100}%"></i><i class="ex" style="width:${e/mx*100}%"></i></span><span class="fc-v">כ־${e} <small>מתוך ${p}</small></span></div>`).join("");
+  document.getElementById("fcSeeds").innerHTML=S.map(([n,e,note])=>`<div class="fc-row"><span class="fc-n">${n}</span><span class="fc-bar"><i class="ex" style="width:${e/mx*100}%"></i></span><span class="fc-v">כ־${e}${note?` <small>${note}</small>`:""}</span></div>`).join("");
 })();
 </script>
 </body>
