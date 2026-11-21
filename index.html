@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ziv's Garden</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Assistant:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: a pressed-flower journal — paper page, plum ink, sage stems; sections read like chapters of a herbarium. */
+:root{
+  --paper:#f6f1f2;
+  --card:#fffafb;
+  --ink:#2f2433;
+  --muted:#76687a;
+  --plum:#7b3a6c;
+  --rose:#d98aa6;
+  --blush:#efd7df;
+  --sage:#6b8566;
+  --line:#e2d3d9;
+  --shadow:0 1px 2px rgba(60,30,55,.06),0 8px 24px rgba(60,30,55,.07);
+  --display:"Frank Ruhl Libre","David Libre",Georgia,serif;
+  --body:"Assistant","Segoe UI",Arial,sans-serif;
+  --latin:"Cormorant Garamond",Georgia,serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#1d171f;--card:#271f2a;--ink:#f1e7ee;--muted:#b4a5b3;--plum:#e39ccb;--rose:#e8a3bb;
+    --blush:#3a2a37;--sage:#9cb896;--line:#3b2f3d;--shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.3);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#1d171f;--card:#271f2a;--ink:#f1e7ee;--muted:#b4a5b3;--plum:#e39ccb;--rose:#e8a3bb;
+  --blush:#3a2a37;--sage:#9cb896;--line:#3b2f3d;--shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.3);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.15}
+.latin{font-family:var(--latin);font-style:italic;direction:ltr;unicode-bidi:isolate}
+a{color:var(--plum)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--plum);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1140px;margin:0 auto;padding:0 20px}
+
+/* Hero */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line);background:
+  radial-gradient(1200px 400px at 85% -10%,color-mix(in oklab,var(--rose) 28%,transparent),transparent 70%),
+  radial-gradient(900px 380px at 0% 110%,color-mix(in oklab,var(--sage) 22%,transparent),transparent 70%),var(--paper)}
+#petals{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero-inner{position:relative;display:grid;grid-template-columns:1.25fr 1fr;gap:40px;align-items:center;padding:56px 20px 48px}
+.eyebrow{font-size:14px;letter-spacing:.12em;color:var(--sage);font-weight:700}
+.hero h1{font-size:clamp(44px,7vw,84px);font-weight:900;color:var(--plum);margin:8px 0 12px}
+.en-title{font-family:var(--latin);font-style:italic;font-weight:500;font-size:1.12em;letter-spacing:.01em;unicode-bidi:isolate}
+.about{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.ab{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 16px;box-shadow:var(--shadow)}
+.ab small{display:block;color:var(--sage);font-weight:700;font-size:13px}
+.wild-box{margin-top:14px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;color:var(--muted)}
+.wild-box b{color:var(--ink);margin-inline-end:4px}
+.wild-box .tag{background:var(--card)}
+.count{margin-inline-start:auto;color:var(--muted);font-size:14px}
+.sbadge{position:absolute;top:10px;inset-inline-end:10px;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--card);border:1px solid var(--line)}
+.st-ground{color:#5b7a4f}.st-fridge{color:#4f74b8}.st-sown{color:#a0742a}.st-est{color:var(--plum)}.st-planned{color:var(--muted)}
+.chip.st-ground[aria-pressed="true"],.chip.st-fridge[aria-pressed="true"],.chip.st-sown[aria-pressed="true"],.chip.st-est[aria-pressed="true"],.chip.st-planned[aria-pressed="true"]{color:var(--paper)}
+.cnote{margin:8px 0 0;font-size:14px;color:var(--muted);line-height:1.45}
+.journal{margin-top:12px;background:var(--blush);border-radius:12px;padding:10px 14px}
+.journal small{display:block;font-weight:700;color:var(--plum);font-size:12.5px}
+.tl-item.next{grid-template-columns:1fr;border-style:dashed;background:color-mix(in oklab,var(--blush) 30%,var(--card))}
+.plan{margin:6px 0 0;padding-inline-start:18px;color:var(--muted)}
+.plan li{margin:3px 0}
+.hero p.lead{font-size:20px;max-width:34ch;color:var(--muted);margin:0 0 24px}
+.stats{display:flex;flex-wrap:wrap;gap:12px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 16px;box-shadow:var(--shadow)}
+.stat b{display:block;font-family:var(--display);font-size:28px;color:var(--plum);font-variant-numeric:tabular-nums;line-height:1.1}
+.stat span{font-size:14px;color:var(--muted)}
+.hero-photo{aspect-ratio:4/5;border-radius:200px 200px 18px 18px;overflow:hidden;border:6px solid var(--card);box-shadow:var(--shadow);position:relative}
+.hero-photo .ph{height:100%}
+
+/* Nav */
+nav.top{position:sticky;top:0;z-index:20;background:color-mix(in oklab,var(--paper) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav.top .wrap{display:flex;gap:6px;overflow-x:auto;padding-block:10px}
+nav.top a{text-decoration:none;color:var(--ink);padding:6px 14px;border-radius:999px;white-space:nowrap;font-weight:600;font-size:15px}
+nav.top a:hover{background:var(--blush)}
+
+section{padding:64px 0 24px}
+.sec-head{display:flex;align-items:end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:24px}
+.sec-head h2{font-size:clamp(30px,4vw,44px);color:var(--ink)}
+.sec-head h2 small{display:block;font-family:var(--body);font-size:14px;color:var(--sage);font-weight:700;letter-spacing:.1em;margin-bottom:4px}
+.sec-head p{margin:0;color:var(--muted);max-width:52ch}
+
+/* Placeholder photos */
+.ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;color:var(--muted);font-size:14px;
+  background:repeating-linear-gradient(135deg,color-mix(in oklab,var(--blush) 70%,var(--card)) 0 12px,var(--card) 12px 24px);width:100%;height:100%;padding:12px}
+.ph svg{width:44px;height:44px;opacity:.7}
+
+/* Filters */
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:22px}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 14px;cursor:pointer;font-size:15px;font-weight:600;transition:background .2s,border-color .2s}
+.chip:hover{border-color:var(--rose)}
+.chip[aria-pressed="true"]{background:var(--plum);border-color:var(--plum);color:var(--paper)}
+.search{flex:1 1 200px;max-width:280px;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 16px;font:inherit;color:var(--ink)}
+.swatches{display:flex;gap:6px;margin-inline-start:auto}
+.sw{width:26px;height:26px;border-radius:50%;border:2px solid var(--card);box-shadow:0 0 0 1px var(--line);cursor:pointer;padding:0}
+.sw[aria-pressed="true"]{box-shadow:0 0 0 2px var(--plum)}
+
+/* Catalog */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;cursor:pointer;text-align:start;padding:0;box-shadow:var(--shadow);transition:transform .25s,box-shadow .25s;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-4px) rotate(-.4deg);box-shadow:0 14px 34px rgba(80,30,70,.14)}
+.card .art{aspect-ratio:4/3;display:grid;place-items:center;background:color-mix(in oklab,var(--blush) 55%,var(--card));position:relative}
+.card .art svg{width:70%;height:85%}
+.badge{position:absolute;top:10px;inset-inline-start:10px;background:var(--card);color:var(--sage);font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;border:1px solid var(--line)}
+.badge.now{color:var(--plum);border-color:var(--rose)}
+.card .body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:4px}
+.card h3{font-size:22px}
+.card .latin{color:var(--muted);font-size:17px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.tag{font-size:12.5px;background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:2px 8px;color:var(--muted)}
+.empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:40px}
+
+/* Bloom calendar */
+.cal{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;overflow-x:auto;box-shadow:var(--shadow)}
+.cal-grid{display:grid;grid-template-columns:150px repeat(12,minmax(38px,1fr));min-width:680px;row-gap:6px}
+.cal-grid .m{font-size:13px;text-align:center;color:var(--muted);font-weight:700;padding-bottom:6px;cursor:pointer;border-radius:6px}
+.cal-grid .m.cur{color:var(--plum)}
+.cal-grid .m[aria-pressed="true"]{background:var(--blush);color:var(--plum)}
+.cal-grid .name{font-weight:600;font-size:15px;align-self:center;padding-inline-end:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
+.cal-grid .name:hover{color:var(--plum)}
+.cell{height:24px;margin:0;position:relative}
+.cell.on{background:var(--c);opacity:.9}
+.cell.leaf{background:repeating-linear-gradient(90deg,color-mix(in oklab,var(--sage) 45%,transparent) 0 3px,transparent 3px 7px)}
+.cell.start{border-start-start-radius:999px;border-end-start-radius:999px}
+.cell.end{border-start-end-radius:999px;border-end-end-radius:999px}
+.cell.curcol::after{content:"";position:absolute;inset:-4px 0;border-inline:1.5px dashed var(--plum);opacity:.45;pointer-events:none}
+.cal-legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;font-size:14px;color:var(--muted)}
+.cal-legend i{display:inline-block;width:22px;height:10px;border-radius:9px;vertical-align:middle;margin-inline-end:6px}
+.now-box{margin-top:16px;padding:14px 16px;border-radius:14px;background:var(--blush);display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.now-box strong{font-family:var(--display);font-size:20px;color:var(--plum)}
+
+/* Timeline */
+.tl{position:relative;padding-inline-start:34px}
+.tl::before{content:"";position:absolute;inset-inline-start:11px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--rose),var(--sage))}
+.tl-item{position:relative;display:grid;grid-template-columns:1fr 220px;gap:20px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 20px;margin-bottom:18px;box-shadow:var(--shadow)}
+.tl-item::before{content:"";position:absolute;inset-inline-start:-30px;top:22px;width:16px;height:16px;border-radius:50%;background:var(--card);border:3px solid var(--plum)}
+.tl-date{font-size:14px;font-weight:700;color:var(--sage);letter-spacing:.05em}
+.tl-item h3{font-size:24px;margin:2px 0 6px}
+.tl-item p{margin:0;color:var(--muted)}
+.tl-item .ph-wrap{border-radius:12px;overflow:hidden;aspect-ratio:4/3}
+.draft{display:inline-block;font-size:11px;font-weight:700;color:var(--plum);border:1px dashed var(--rose);border-radius:6px;padding:0 6px;margin-inline-start:8px;vertical-align:middle}
+
+/* Gallery */
+.gallery{columns:3 260px;column-gap:16px}
+.g-item{break-inside:avoid;margin-bottom:16px;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--card);cursor:zoom-in;display:block;width:100%;padding:0;text-align:start;box-shadow:var(--shadow)}
+.g-item .ph{min-height:160px}
+.g-item figcaption{padding:10px 14px;font-size:14px;color:var(--muted)}
+
+/* Wishlist */
+.wish{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.wish div{border:1.5px dashed var(--rose);border-radius:16px;padding:16px;background:color-mix(in oklab,var(--blush) 35%,transparent)}
+.wish h3{font-size:20px}
+.wish .latin{font-size:16px;color:var(--muted)}
+.wish p{margin:6px 0 0;font-size:14.5px;color:var(--muted)}
+
+footer{margin-top:64px;padding:32px 0 48px;border-top:1px solid var(--line);color:var(--muted);font-size:15px}
+
+/* Modal */
+dialog{border:none;border-radius:22px;padding:0;max-width:760px;width:calc(100% - 32px);background:var(--card);color:var(--ink);box-shadow:0 30px 80px rgba(30,10,30,.35)}
+dialog::backdrop{background:rgba(30,15,30,.55);backdrop-filter:blur(3px)}
+.m-grid{display:grid;grid-template-columns:260px 1fr}
+.m-art{background:color-mix(in oklab,var(--blush) 60%,var(--card));display:grid;place-items:center;padding:20px}
+.m-art svg{width:100%;height:auto;max-height:300px}
+.m-body{padding:24px 26px 26px}
+.m-body h3{font-size:32px;color:var(--plum)}
+.m-body .latin{font-size:20px;color:var(--muted)}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0}
+.fact{background:var(--paper);border-radius:12px;padding:8px 12px}
+.fact small{display:block;color:var(--muted);font-size:12.5px}
+.fact b{font-weight:600}
+.fun{border-inline-start:3px solid var(--rose);padding-inline-start:12px;margin-top:12px}
+.x{position:absolute;top:10px;inset-inline-end:10px;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:20px;line-height:1}
+.lb{max-width:900px}
+.lb .ph{aspect-ratio:3/2;height:auto;font-size:16px}
+.lb-cap{padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.lb-nav{display:flex;gap:8px}
+.lb-nav button{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:6px 14px;cursor:pointer}
+
+@media (max-width:820px){
+  .hero-inner{grid-template-columns:1fr;padding-top:36px}
+  .hero-photo{max-width:320px;aspect-ratio:1;border-radius:160px 160px 18px 18px}
+  .tl-item{grid-template-columns:1fr}
+  .m-grid{grid-template-columns:1fr}
+  .m-art svg{max-height:180px}
+  .swatches{margin-inline-start:0}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <canvas id="petals" aria-hidden="true"></canvas>
+  <div class="wrap hero-inner">
+    <div>
+      <div class="eyebrow">גינת קוטג' · חוף הכרמל</div>
+      <h1><span dir="ltr" class="en-title">Ziv's Garden</span></h1>
+      <p class="lead">פרחים גבוהים בסגול וורוד, מטפסים שמשתלטים על כל גדר, וזרעים שנאספים בסוף כל עונה.</p>
+      <div class="stats" id="stats"></div>
+    </div>
+    <div class="hero-photo"><div class="ph" data-ph="תמונה ראשית של הגינה"></div></div>
+  </div>
+</header>
+
+<nav class="top" aria-label="ניווט">
+  <div class="wrap">
+    <a href="#about-garden">על הגינה</a>
+    <a href="#catalog">קטלוג הצמחים</a>
+    <a href="#bloom">לוח פריחה</a>
+    <a href="#timeline">ההתפתחות</a>
+    <a href="#gallery">גלריה</a>
+    <a href="#wishlist">רשימת חלומות</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section id="about-garden">
+    <div class="sec-head">
+      <h2><small>פרק א'</small>על הגינה</h2>
+      <p>גינת קוטג' עם פרחים גבוהים ודרמטיים, הרבה בצלים, וגוונים של סגול וורוד.</p>
+    </div>
+    <div class="about" id="about"></div>
+    <div class="wild-box"><b>צמחי בר שקיבלו אישור להישאר:</b> <span id="wild"></span></div>
+  </section>
+
+  <section id="catalog">
+    <div class="sec-head">
+      <h2><small>פרק ב'</small>מי גר בגינה</h2>
+      <p>לחצו על צמח כדי לראות מתי נשתל, מאיפה הגיע, מה קורה איתו עכשיו ומה מעניין בו.</p>
+    </div>
+    <div class="controls">
+      <input class="search" id="q" type="search" placeholder="חיפוש צמח…" aria-label="חיפוש צמח">
+      <div id="cats" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+      <div class="swatches" id="colors" aria-label="סינון לפי צבע"></div>
+    </div>
+    <div class="controls" style="margin-top:-10px"><div id="statuses" style="display:flex;gap:8px;flex-wrap:wrap"></div><span id="count" class="count"></span></div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section id="bloom">
+    <div class="sec-head">
+      <h2><small>פרק ג'</small>מה פורח מתי</h2>
+      <p>לוח השנה של הגינה. לחצו על חודש כדי לראות מה פורח בו.</p>
+    </div>
+    <div class="cal">
+      <div class="cal-grid" id="cal"></div>
+      <div class="cal-legend">
+        <span><i style="background:var(--rose)"></i>פריחה / פרי</span>
+        <span><i style="background:repeating-linear-gradient(90deg,var(--sage) 0 3px,transparent 3px 7px)"></i>עלווה בלבד</span>
+        <span><i style="border:1.5px dashed var(--plum);height:14px;width:12px;border-radius:2px"></i>החודש הנוכחי</span>
+      </div>
+      <div class="now-box" id="nowbox"></div>
+    </div>
+  </section>
+
+  <section id="timeline">
+    <div class="sec-head">
+      <h2><small>פרק ד'</small>איך הגינה גדלה</h2>
+      <p>יומן ההתפתחות של הגינה, מהבצלים הראשונים של העונה ועד מה שמתוכנן להמשך.</p>
+    </div>
+    <div class="tl" id="tl"></div>
+  </section>
+
+  <section id="gallery">
+    <div class="sec-head">
+      <h2><small>פרק ה'</small>גלריה</h2>
+      <p>רגעים מהגינה. לחצו על תמונה להגדלה.</p>
+    </div>
+    <div class="gallery" id="gal"></div>
+  </section>
+
+  <section id="wishlist">
+    <div class="sec-head">
+      <h2><small>פרק ו'</small>רשימת חלומות</h2>
+      <p>הצמחים שעוד לא בגינה, אבל כבר יש להם מקום בלב.</p>
+    </div>
+    <div class="wish" id="wish"></div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">האתר בבנייה: תמונות, תאריכים וסיפורים נוספים יתווספו בהמשך. · גינת קוטג' על חוף הכרמל</div>
+</footer>
+
+<dialog id="plantDlg" aria-labelledby="pTitle"><div style="position:relative"><button class="x" data-close aria-label="סגירה">×</button><div class="m-grid"><div class="m-art" id="pArt"></div><div class="m-body" id="pBody"></div></div></div></dialog>
+<dialog id="lbDlg" class="lb" aria-label="תצוגת תמונה"><div style="position:relative"><button class="x" data-close aria-label="סגירה">×</button><div id="lbImg"></div><div class="lb-cap"><span id="lbCap"></span><div class="lb-nav"><button id="lbPrev">→ הקודמת</button><button id="lbNext">הבאה ←</button></div></div></div></dialog>
+
+<script>
+/* ======== נתוני הגינה — כאן מעדכנים ======== */
+const MONTHS=["ינו׳","פבר׳","מרץ","אפר׳","מאי","יוני","יולי","אוג׳","ספט׳","אוק׳","נוב׳","דצמ׳"];
+const MONTHS_FULL=["ינואר","פברואר","מרץ","אפריל","מאי","יוני","יולי","אוגוסט","ספטמבר","אוקטובר","נובמבר","דצמבר"];
+const CATS={bulb:"בצלים ופקעות",seed:"נזרעו מזרע",climber:"מטפסים",perennial:"רב-שנתיים",foliage:"עלווה",herb:"תבלינים",veg:"ירקות"};
+const STATUS={ground:"באדמה",fridge:"במקרר",sown:"נזרע",est:"ותיק בגינה",planned:"מתוכנן"};
+const COLORS={purple:"#8e5bb5",pink:"#e48ab0",blue:"#6d8fd6",white:"#f3efe6",yellow:"#f2c94c",orange:"#ec8a3c",red:"#d4553f",green:"#6b8566"};
+
+const PLANTS=[
+ /* ---- בצלים באדמה ---- */
+ {id:"chinese-narcissus",he:"נרקיס סיני",lat:"Narcissus tazetta 'Chinensis'",cat:"bulb",status:"ground",count:25,colors:["white","yellow"],art:"tazetta",c:"#fff8e1",
+  bloom:[12,1,2],planted:"סביב 9 באוקטובר 2026",source:"בצלים שנקנו",where:"פזורים בגינה, גם ליד גדר הקנים",
+  note:"כבר יצאו גושי עלים גדולים. הראשונים שיפרחו, באמצע עד סוף דצמבר.",
+  fun:"קרוב של הנרקיס המצוי שפורח בר בארץ בחורף. בניגוד לצבעונים, הוא לא צריך קירור כדי לפרוח."},
+ {id:"amaryllis",he:"אמריליס ורוד",lat:"Hippeastrum",cat:"bulb",status:"ground",count:"1–2",colors:["pink"],art:"lily",c:"#e98aa8",
+  bloom:[4,5],planted:"אמצע אוקטובר 2026",source:"נקנה (מופיע בקבלה)",where:"חצי צל עם שמש צהריים, ליד הצמח דמוי האגפנתוס",
+  note:"מוציא עלים חדשים. יש נקודות אדומות קטנות שכדאי לעקוב אחריהן.",
+  fun:"מה שנמכר כ'אמריליס' הוא בכלל Hippeastrum מדרום אמריקה. האמריליס האמיתי הוא סוג אחר, מדרום אפריקה."},
+ {id:"scilla",he:"בן-חצב יקינתוני",lat:"Scilla hyacinthoides",cat:"bulb",status:"ground",count:1,colors:["blue","purple"],art:"spike",c:"#8a8fd8",
+  bloom:[3,4],planted:"סוף אוקטובר–תחילת נובמבר 2026",source:"בצל שנקנה",where:"",
+  note:"השושנת כבר בחוץ.",
+  fun:"מוציא עמוד פרחים גבוה עם עשרות כוכבים קטנים בכחול-לילך."},
+ {id:"anemone",he:"כלנית",lat:"Anemone coronaria",cat:"bulb",status:"ground",count:10,colors:["red","pink","purple","white"],art:"anemone",c:"#d64a5b",
+  bloom:[1,2,3],planted:"סוף אוקטובר–תחילת נובמבר 2026",source:"פקעות שנקנו",where:"",
+  note:"העלים הראשונים יצאו בערך שלושה שבועות אחרי השתילה.",
+  fun:"הכלנית נבחרה ב-2013 לפרח הלאומי של ישראל."},
+ {id:"dutch-iris",he:"אירוס הולנדי",lat:"Iris × hollandica",cat:"bulb",status:"ground",count:10,colors:["blue","purple"],art:"iris",c:"#5f6fc9",
+  bloom:[3,4],planted:"סוף אוקטובר–תחילת נובמבר 2026",source:"בצלים שנקנו",where:"",
+  note:"עוד לא יצאו. לבדוק שוב באמצע דצמבר.",
+  fun:"הכלאה שפותחה בהולנד ממיני אירוס ספרדיים. אחד מפרחי הקטיף האהובים בעולם."},
+ {id:"ixia",he:"איקסיה",lat:"Ixia",cat:"bulb",status:"ground",count:25,colors:["pink","white","yellow"],art:"star6",c:"#f09ab8",
+  bloom:[3,4,5],planted:"סוף אוקטובר–תחילת נובמבר 2026",source:"פקעות שנקנו",where:"",
+  note:"איטית. לתת לה זמן עד תחילת ינואר.",
+  fun:"מדרום אפריקה. הפרחים נפתחים רק בשמש ונסגרים בימים מעוננים ובלילה."},
+ /* ---- במקרר ---- */
+ {id:"tulip",he:"צבעוני",lat:"Tulipa",cat:"bulb",status:"fridge",count:12,colors:["pink","red","purple"],art:"tulip",c:"#e46a8e",
+  bloom:[2,3],planted:"במקרר מ-9 באוקטובר 2026",source:"נקנו",where:"עציצים, שתילה סביב 6–9 בדצמבר",
+  note:"",
+  fun:"בהולנד של 1637, בשיא 'מאניית הצבעונים', בצל אחד נמכר במחיר של בית. בארץ צריך לקרר אותו כדי שיפרח."},
+ {id:"hyacinth",he:"יקינתון",lat:"Hyacinthus orientalis",cat:"bulb",status:"fridge",count:3,colors:["blue","pink","white"],art:"spike",c:"#7d7fd6",
+  bloom:[2,3],planted:"במקרר מ-9 באוקטובר 2026",source:"נקנו",where:"עציצים, שתילה סביב 6–9 בדצמבר",
+  note:"",
+  fun:"מגיע במקור מטורקיה ומהלבנון. ריחני מאוד, ועדיף לעבוד עם הבצלים עם כפפות כי הם מגרים את העור."},
+ {id:"muscari",he:"כדן",lat:"Muscari",cat:"bulb",status:"fridge",count:10,colors:["blue"],art:"grape",c:"#4f63c4",
+  bloom:[2,3],planted:"במקרר מ-14 באוקטובר 2026 בערך",source:"נקנו",where:"באדמה, שתילה סביב 6–9 בדצמבר",
+  note:"כנראה לא זן מקומי, אז ייתכן שידעך עם השנים.",
+  fun:"בלועזית Grape hyacinth: הפרחים נראים כמו אשכול ענבים קטן. בארץ גדלים גם מינים מקומיים, כמו הכדן המצוי."},
+ {id:"yellow-daffodil",he:"נרקיס חצוצרה צהוב כפול",lat:"Narcissus",cat:"bulb",status:"fridge",count:5,colors:["yellow"],art:"daffodil",c:"#f2c94c",
+  bloom:[2,3],planted:"במקרר מ-23 באוקטובר 2026",source:"נקנו, גודל 20–22",where:"באדמה, שתילה בין 20 בדצמבר ל-3 בינואר",
+  note:"",
+  fun:"הגודל 20–22 הוא היקף הבצל בסנטימטרים. בצל גדול יותר נותן יותר פרחים."},
+ {id:"white-daffodil",he:"נרקיס חצוצרה לבן-כתום",lat:"Narcissus",cat:"bulb",status:"fridge",count:1,colors:["white","orange"],art:"daffodil",c:"#fbf6ea",trumpet:"#ec8a3c",
+  bloom:[2,3],planted:"במקרר מ-8 בנובמבר 2026",source:"יודפת",where:"באדמה, שתילה בין 20 בדצמבר ל-3 בינואר",
+  note:"",
+  fun:"החצוצרה שבמרכז נקראת קורונה, והצבע שלה יכול להיות שונה לגמרי מעלי הכותרת."},
+ /* ---- נזרעו ---- */
+ {id:"lupine",he:"תורמוס",lat:"Lupinus",cat:"seed",status:"sown",count:"~40 זרעים",colors:["blue","purple","pink"],art:"spike",c:"#6d8fd6",
+  bloom:[2,3,4],planted:"אמצע נובמבר 2026, לפני הגשם",source:"זרעים",where:"זרע אחד בכל נקודה, פזור בגינה",
+  note:"16 כבר נבטו. אחד צמוד לנרקיס.",
+  fun:"בן משפחת הקטניות: מקבע חנקן מהאוויר ומשפר את האדמה לצמחים שיגדלו אחריו."},
+ {id:"sweet-pea",he:"טופח ריחני",lat:"Lathyrus odoratus",cat:"seed",status:"sown",count:"~30 זרעים",colors:["pink","purple","white"],art:"pea",c:"#d983c0",
+  bloom:[3,4,5],planted:"אמצע נובמבר 2026",source:"זרעים (חבילה אחת שמורה לגיבוי)",where:"ליד סולם העץ והגדר",
+  note:"",
+  fun:"ככל שקוטפים יותר פרחים, הוא פורח יותר. הזרעים לא אכילים, בניגוד לאפונה רגילה."},
+ {id:"artichoke",he:"ארטישוק",lat:"Cynara scolymus",cat:"seed",status:"sown",colors:["purple"],art:"artichoke",c:"#9a5fc4",
+  bloom:[4,5,6],planted:"אמצע נובמבר 2026",source:"זרעים",where:"",
+  note:"ייתכן שיפרח רק בשנה השנייה.",
+  fun:"החלק שאוכלים הוא ניצן הפרח. אם לא קוטפים אותו, הוא נפתח לפרח סגול ענק דמוי דרדר."},
+ {id:"statice",he:"עדעד כחול",lat:"Limonium sinuatum",cat:"seed",status:"sown",colors:["blue","purple"],art:"statice",c:"#7a6fd0",
+  bloom:[3,4,5,6],planted:"אמצע נובמבר 2026",source:"זרעים",where:"",
+  note:"",
+  fun:"ה'פרח' הצבעוני הוא בעצם גביע נייר ששומר על הצבע גם אחרי ייבוש. גדל בר גם בחוף הכרמל."},
+ {id:"nigella",he:"ניגלה",lat:"Nigella damascena",cat:"seed",status:"sown",colors:["blue","white","pink"],art:"nigella",c:"#7fa2dd",
+  bloom:[3,4,5],planted:"אמצע נובמבר 2026",source:"זרעים, כולל זרעים שנאספו בעבר",where:"כתמי זריעה כהים",
+  note:"",
+  fun:"בלועזית Love-in-a-mist, בגלל העלווה הדקה שעוטפת את הפרח כמו ערפל. קרובה של הקצח."},
+ {id:"larkspur",he:"דורבנית חד-שנתית",lat:"Consolida ajacis",cat:"seed",status:"sown",colors:["blue","purple","pink"],art:"spike",c:"#5b6fd0",
+  bloom:[3,4,5],planted:"אמצע נובמבר 2026",source:"זרעים, קוררו יותר משלושה שבועות לפני הזריעה",where:"כתמי זריעה כהים",
+  note:"",
+  fun:"הזרעים צריכים קור כדי לנבוט, ולכן הקירור במקרר. כל חלקי הצמח רעילים."},
+ {id:"stock",he:"מנתור",lat:"Matthiola incana",cat:"seed",status:"sown",colors:["pink","purple","white"],art:"spike",c:"#c77fb8",
+  bloom:[2,3,4],planted:"סוף אוקטובר 2026",source:"זרעים",where:"",
+  note:"נזרע עם מעט מים. אם לא יופיע כלום, לזרוע מחדש.",
+  fun:"גדל בר לאורך חופי הים התיכון. הריח המתקתק שלו מתחזק לקראת ערב."},
+ /* ---- מטפסים ---- */
+ {id:"morning-glory",he:"לפופית",lat:"Ipomoea cairica",cat:"climber",status:"est",colors:["purple"],art:"trumpet",c:"#9a6fd0",
+  bloom:[3,4,5,6,7,8,9,10,11,12],where:"על גדר הקנים",
+  note:"מפילה פרחים סגולים על הערוגות.",
+  fun:"כל פרח פתוח יום אחד בלבד. בחוף כמעט לא מפסיקה לפרוח."},
+ {id:"passionflower",he:"שעונית",lat:"Passiflora",cat:"climber",status:"est",colors:["purple","white"],art:"passion",c:"#8e5bb5",
+  bloom:[4,5,6,7,8,9,10],where:"על הגדר",
+  note:"הצמיחה נעצרה והקצוות מקומטים. כנראה אקריות (broad mites).",
+  fun:"השם העברי בא מהפרח שנראה כמו לוח שעון, עם 'מחוגים' באמצע."},
+ {id:"wisteria",he:"ויסטריה אמריקאית",lat:"Wisteria frutescens",cat:"climber",status:"est",colors:["purple"],art:"raceme",c:"#a483d6",
+  bloom:[4,5,6],where:"",
+  note:"נכנסת לתרדמה. ייתכן שיש קרדית אדומה (spider mites).",
+  fun:"פורחת מאוחר יותר מהויסטריה הסינית, על צמיחה חדשה, ולפעמים שוב בקיץ. גם פחות אגרסיבית ממנה."},
+ {id:"thunbergia",he:"תונברגיה",lat:"Thunbergia alata",cat:"climber",status:"est",colors:["orange","yellow"],art:"thunbergia",c:"#f0a03c",
+  bloom:[4,5,6,7,8,9,10,11],where:"על הגדר",
+  note:"",
+  fun:"בלועזית Black-eyed Susan vine. נקראת על שם קרל פטר תונברג, תלמידו של לינאוס."},
+ {id:"jasmine",he:"יסמין מטפס",lat:"Jasminum",cat:"climber",status:"est",colors:["white"],art:"star",c:"#f3efe6",
+  bloom:[3,4,5,6,7,8,9],where:"",
+  note:"",
+  fun:"הריח מתחזק בערב ובלילה, כדי למשוך עשים מאביקים."},
+ /* ---- רב-שנתיים ---- */
+ {id:"angelonia",he:"אנג'לוניה",lat:"Angelonia",cat:"perennial",status:"est",colors:["purple","pink"],art:"spike",c:"#9d6fd0",
+  bloom:[4,5,6,7,8,9,10,11],source:"נקנתה לפני הרבה זמן",where:"ליד הגדר",
+  note:"עדיין פורחת.",
+  fun:"מכונה 'לוע ארי של קיץ': ממשיכה לפרוח גם בחום הכבד."},
+ {id:"echium",he:"עכנאי",lat:"Echium",cat:"perennial",status:"est",colors:["blue","purple"],art:"spike",c:"#5f7fd6",
+  bloom:[3,4,5],where:"בעציץ",
+  note:"מתקשה. יסתדר טוב יותר באדמה, במקום שמשי.",
+  fun:"מגנט לדבורים. בעונת הפריחה הוא כמעט מזמזם."},
+ {id:"agapanthus-like",he:"צמח דמוי אגפנתוס",lat:"?",cat:"perennial",status:"est",colors:["green"],art:"agapanthus",c:"#7f9ae0",
+  bloom:[],leaf:[1,2,3,4,5,6,7,8,9,10,11,12],where:"ליד האמריליס",
+  note:"עוד לא זוהה בוודאות.",
+  fun:""},
+ {id:"alocasia",he:"אלוקסיה",lat:"Alocasia",cat:"foliage",status:"est",colors:["green"],art:"elephant",c:"#4f7a52",
+  bloom:[],leaf:[3,4,5,6,7,8,9,10,11],where:"",
+  note:"",
+  fun:"כשיש לה עודף מים היא 'בוכה': טיפות נוטפות מקצות העלים. זה נקרא גוטציה."},
+ {id:"equisetum",he:"שבטבט",lat:"Equisetum",cat:"foliage",status:"est",colors:["green"],art:"reed",c:"#5c7d4f",
+  bloom:[],leaf:[1,2,3,4,5,6,7,8,9,10,11,12],where:"",
+  note:"",
+  fun:"מאובן חי: לקרובים שלו לפני 300 מיליון שנה היו גבעולים בגודל של עצים."},
+ {id:"herbs",he:"תבלינים ים-תיכוניים",lat:"Salvia, Lavandula…",cat:"herb",status:"est",colors:["purple","blue"],art:"herb",c:"#8c7bc4",
+  bloom:[1,2,3,4,5,6],where:"",
+  note:"",
+  fun:"מתאימים לגינה שלא מושקית כל יום: נבנו בדיוק לקיץ הים-תיכוני היבש."},
+ {id:"tomato",he:"עגבניות שרי",lat:"Solanum lycopersicum",cat:"veg",status:"planned",colors:["red"],art:"tomato",c:"#d4553f",
+  bloom:[5,6,7,8,9,10],planted:"זריעה במגש בפברואר",where:"",
+  note:"בשנה שעברה היו בעיות של אקריות בעגבניות.",
+  fun:"מבחינה בוטנית העגבנייה היא פרי, בת משפחת הסולניים כמו החציל והתפוח אדמה."}
+];
+
+const ABOUT=[
+ ["מיקום","מושב מגן מיכאל, חוף הכרמל"],
+ ["השקיה","בצינור, בביקורים, פעם-פעמיים בשבוע. אף אחד לא גר שם."],
+ ["אדמה","כהה, אבנית ומתנקזת מהר"],
+ ["חורף","רטוב מאוד, והרבה חלזונות"],
+ ["אור","חלק מהגינה מקבל רק שמש צהריים"],
+ ["מבנה","גדר קנים עם רשת ירוקה, משטח בטון באמצע וסולם עץ לטופח הריחני"]
+];
+const WILD=["חמציץ (שמור הרחק מהבצלים)","עשנן","מטפס דמוי מלפפון בר","כנראה חלמית","כף-אווז","כנראה פרגים שזרעו את עצמם"];
+const PLANNED=[
+ ["עם הגשמים הקרירים הבאים","בבונג, פרג איסלנדי"],
+ ["בקרוב","פשתה, פעמונית (Campanula medium) במגש"],
+ ["פברואר","עגבניות שרי במגש"],
+ ["מרץ–אפריל","קוסמוס, אסטר, מלפפון, קישוא"]
+];
+
+const TIMELINE=[
+ {date:"שנה שעברה",title:"פרגים ואקריות",text:"היו בגינה פרגים, וגם מאבק באקריות על העגבניות."},
+ {date:"9 באוקטובר 2026",title:"עונת הבצלים נפתחת",text:"25 נרקיסים סיניים נשתלו בגינה. 12 צבעונים ו-3 יקינתונים נכנסו למקרר לקירור."},
+ {date:"אמצע אוקטובר 2026",title:"אמריליס ורוד וכדנים",text:"האמריליס נשתל בחצי צל. 10 כדנים הצטרפו לצבעונים במקרר."},
+ {date:"23 באוקטובר 2026",title:"נרקיסים צהובים למקרר",text:"5 נרקיסי חצוצרה צהובים כפולים, בגודל 20–22."},
+ {date:"סוף אוקטובר–תחילת נובמבר",title:"גל השתילה הגדול",text:"10 כלניות, 10 אירוסים הולנדיים, 25 איקסיות ובן-חצב יקינתוני אחד נכנסו לאדמה. גם המנתור נזרע."},
+ {date:"8 בנובמבר 2026",title:"נרקיס מיודפת",text:"נרקיס חצוצרה לבן-כתום מיודפת הצטרף למקרר."},
+ {date:"אמצע נובמבר 2026",title:"זריעה לפני הגשם",text:"כ-40 זרעי תורמוס, כ-30 טופח ריחני ליד הסולם, ארטישוק, עדעד כחול, ניגלה ודורבנית. 16 תורמוסים כבר נבטו."},
+ {date:"6–9 בדצמבר",title:"הבצלים יוצאים מהמקרר",text:"צבעונים ויקינתונים לעציצים, כדנים לאדמה.",soon:true},
+ {date:"אמצע–סוף דצמבר",title:"הפריחה הראשונה",text:"הנרקיסים הסיניים אמורים לפתוח את עונת הפריחה.",soon:true},
+ {date:"20 בדצמבר–3 בינואר",title:"שתילת נרקיסי החצוצרה",text:"הצהובים והלבן-כתום יוצאים מהמקרר לאדמה.",soon:true}
+];
+
+const GALLERY=["הגינה ממבט רחב","גדר הקנים והלפופית","נרקיסים סיניים","נבטי תורמוס ראשונים","הטופח הריחני על הסולם","פרח השעונית מקרוב","בצלים במקרר","אנג'לוניה ליד הגדר","עלה אלוקסיה"];
+
+const WISHLIST=[
+ {he:"קלמטיס",lat:"Clematis",text:"צמח החלומות. מטפס עם פרחים ענקיים."},
+ {he:"אצבעונית",lat:"Digitalis",text:"מגדלי פעמונים גבוהים בסגול וורוד."},
+ {he:"דלפיניום",lat:"Delphinium",text:"שרביטים כחולים דרמטיים."},
+ {he:"שום נוי",lat:"Allium",text:"כדורים סגולים על גבעול ארוך."},
+ {he:"קולומבינה",lat:"Aquilegia",text:"פרחים עדינים שנראים כמו כובעים קטנים."},
+ {he:"תורמוס ראסל",lat:"Lupinus 'Russell'",text:"התורמוסים הגדולים והצבעוניים."},
+ {he:"חמנייה ענקית",lat:"Helianthus annuus",text:"גבוהה מכל מי שעובר לידה."}
+];
+
+/* ======== איורים בוטניים ======== */
+function petals(n,cx,cy,rx,ry,dist,fill,rot=0,op=1){let s="";for(let i=0;i<n;i++){const a=rot+i*360/n;s+=`<ellipse cx="${cx}" cy="${cy-dist}" rx="${rx}" ry="${ry}" fill="${fill}" opacity="${op}" transform="rotate(${a} ${cx} ${cy})"/>`;}return s}
+const STEM="#6b8566",LEAF="#86a37c";
+function art(p){
+  const c=p.c;let g="";
+  switch(p.art){
+    case "trumpet":
+      g=`<path d="M100 190 C95 150 120 120 100 80" stroke="${STEM}" stroke-width="3" fill="none"/><path d="M104 140 q30 -20 40 5 q-25 10 -40 -5z" fill="${LEAF}"/>
+      <circle cx="100" cy="70" r="46" fill="${c}"/><circle cx="100" cy="70" r="46" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="2"/>
+      ${[0,72,144,216,288].map(a=>`<line x1="100" y1="70" x2="100" y2="26" stroke="#fff" stroke-opacity=".45" stroke-width="2" transform="rotate(${a} 100 70)"/>`).join("")}
+      <circle cx="100" cy="70" r="14" fill="#fff6d6"/>`;break;
+    case "passion":
+      g=petals(10,100,95,13,36,34,"#f4eefc",0)+petals(48,100,95,1.6,26,26,c,0)+petals(48,100,95,1.2,10,14,"#fff",3.75)+
+      `<circle cx="100" cy="95" r="9" fill="#a6c472"/>${petals(3,100,95,3,12,12,"#5a3b5e",0)}`;break;
+    case "star":
+      g=`<path d="M100 195 V110" stroke="${STEM}" stroke-width="3"/><path d="M100 150 q-30 -10 -35 -30 q25 0 35 30z" fill="${LEAF}"/>
+      ${[[100,80],[62,108],[138,112]].map(([x,y],i)=>petals(5,x,y,9,24-i*3,20-i*2,i?"#fbf6ef":"#fff",18)+`<circle cx="${x}" cy="${y}" r="5" fill="#f2c94c"/>`).join("")}
+      <ellipse cx="80" cy="60" rx="5" ry="10" fill="#f3b8cb"/><ellipse cx="125" cy="70" rx="5" ry="10" fill="#f3b8cb"/>`;break;
+    case "raceme":
+      g=`<path d="M20 30 Q100 10 180 30" stroke="#8a6f5a" stroke-width="5" fill="none"/>`+[55,100,145].map((x,k)=>{let s="";for(let i=0;i<9;i++){const r=13-i*1.1;s+=`<ellipse cx="${x+(i%2?5:-5)}" cy="${40+i*16+k*6}" rx="${r}" ry="${r*.8}" fill="${c}" opacity="${1-i*.06}"/>`}return s}).join("");break;
+    case "spike":
+      g=`<path d="M100 195 V40" stroke="${STEM}" stroke-width="4"/>${petals(7,100,185,5,24,22,LEAF,0)}`;
+      for(let i=0;i<11;i++){const y=50+i*11,w=9+i*1.1;g+=`<ellipse cx="${100-w*.7}" cy="${y}" rx="${w*.55}" ry="5.5" fill="${c}" opacity="${i<3?.5:1}"/><ellipse cx="${100+w*.7}" cy="${y+5}" rx="${w*.55}" ry="5.5" fill="${c}" opacity="${i<3?.5:1}"/>`}
+      break;
+    case "nigella":
+      g=`<path d="M100 195 V110" stroke="${STEM}" stroke-width="3"/>`;for(let i=0;i<26;i++){const a=i*360/26;g+=`<path d="M100 95 q${10+i%3*6} -40 ${4} -62" stroke="${LEAF}" stroke-width="1.4" fill="none" transform="rotate(${a} 100 95)"/>`}
+      g+=petals(5,100,95,15,26,22,c,0,.95)+`<circle cx="100" cy="95" r="10" fill="#4e6b3e"/>`+petals(5,100,95,1.5,14,14,"#4e6b3e",36);break;
+    case "elephant":
+      g=`<path d="M100 195 C100 160 105 130 110 110" stroke="${STEM}" stroke-width="5" fill="none"/><path d="M60 195 C65 170 70 150 80 140" stroke="${STEM}" stroke-width="4" fill="none"/>
+      <path d="M110 110 C40 100 30 30 110 18 C160 40 170 100 110 110z" fill="${c}"/><path d="M110 110 L110 22" stroke="#cfe3c5" stroke-width="2.5"/>
+      ${[30,50,70,90].map(y=>`<path d="M110 ${y+10} q-28 -6 -48 ${-4+y/6}" stroke="#cfe3c5" stroke-width="1.5" fill="none"/><path d="M110 ${y+10} q24 -6 40 ${-4+y/6}" stroke="#cfe3c5" stroke-width="1.5" fill="none"/>`).join("")}
+      <path d="M80 140 C40 145 25 100 55 90 C80 95 90 120 80 140z" fill="#6a9466"/>`;break;
+    case "reed":
+      g=[60,85,110,135,155].map((x,k)=>{const top=30+k%3*20;let s=`<path d="M${x} 195 V${top}" stroke="${c}" stroke-width="7" stroke-linecap="round"/>`;for(let y=185;y>top+8;y-=16)s+=`<line x1="${x-5}" y1="${y}" x2="${x+5}" y2="${y}" stroke="#2f3d2a" stroke-width="2"/>`;s+=`<ellipse cx="${x}" cy="${top-6}" rx="5" ry="10" fill="#8d7a52"/>`;return s}).join("");break;
+    case "herb":
+      g=[70,100,130].map((x,k)=>{let s=`<path d="M${x} 195 V${50+k%2*15}" stroke="${STEM}" stroke-width="3"/>`;for(let y=60+k%2*15;y<110;y+=8)s+=`<ellipse cx="${x-4}" cy="${y}" rx="5" ry="4" fill="${c}"/><ellipse cx="${x+4}" cy="${y+4}" rx="5" ry="4" fill="${c}"/>`;for(let y=120;y<190;y+=14)s+=`<ellipse cx="${x-9}" cy="${y}" rx="10" ry="3" fill="${LEAF}" transform="rotate(-25 ${x-9} ${y})"/><ellipse cx="${x+9}" cy="${y+6}" rx="10" ry="3" fill="${LEAF}" transform="rotate(25 ${x+9} ${y+6})"/>`;return s}).join("");break;
+    case "tazetta":
+      g=`<path d="M100 195 V70" stroke="${STEM}" stroke-width="3"/><path d="M92 195 C88 140 85 110 80 90" stroke="${LEAF}" stroke-width="6" fill="none"/>`+
+      [[100,62],[70,78],[130,80],[86,40],[116,42]].map(([x,y])=>petals(6,x,y,6,11,9,c,0)+`<circle cx="${x}" cy="${y}" r="5" fill="#f2b33c"/>`).join("");break;
+    case "lily":
+      g=`<path d="M100 195 V100" stroke="${STEM}" stroke-width="5"/>`+[[72,80,-30],[128,80,30]].map(([x,y,r])=>`<g transform="rotate(${r} ${x} ${y})">${petals(6,x,y,10,26,22,c,0)}<circle cx="${x}" cy="${y}" r="7" fill="#f6e6a8"/></g>`).join("");break;
+    case "anemone":
+      g=`<path d="M100 195 V100" stroke="${STEM}" stroke-width="3"/>${petals(3,100,150,4,22,18,LEAF,0)}`+petals(6,100,85,22,30,26,c,0)+`<circle cx="100" cy="85" r="16" fill="#2b2233"/>`+petals(16,100,85,1.5,8,20,"#2b2233",0);break;
+    case "iris":
+      g=`<path d="M100 195 V100" stroke="${STEM}" stroke-width="3"/><path d="M90 195 C85 150 82 120 75 100" stroke="${LEAF}" stroke-width="5" fill="none"/>`+
+      petals(3,100,95,14,32,28,c,60)+petals(3,100,90,11,28,26,"#8f9ce0",0)+petals(3,100,95,4,14,22,"#f2c94c",60);break;
+    case "star6":
+      g=`<path d="M100 195 C100 140 98 80 100 25" stroke="${STEM}" stroke-width="2.5" fill="none"/>`+[[100,40],[92,70],[108,98],[94,126]].map(([x,y],i)=>petals(6,x,y,6,13,11,c,0,1-i*.1)+`<circle cx="${x}" cy="${y}" r="4" fill="#7a2d4f"/>`).join("");break;
+    case "tulip":
+      g=`<path d="M100 195 V95" stroke="${STEM}" stroke-width="4"/><path d="M100 170 C70 150 65 120 70 105 C90 120 98 145 100 170z" fill="${LEAF}"/>
+      <path d="M70 60 C70 100 130 100 130 60 L120 70 L112 45 L100 62 L88 45 L80 70z" fill="${c}"/><path d="M88 45 C90 70 110 70 112 45 L100 62z" fill="#fff" opacity=".2"/>`;break;
+    case "grape":
+      g=[80,120].map((x,k)=>{let s=`<path d="M${x} 195 V${70+k*15}" stroke="${STEM}" stroke-width="3"/>`;for(let i=0;i<8;i++)for(let j=-1;j<=1;j++){if(Math.abs(j)*2>8-i)continue;s+=`<ellipse cx="${x+j*8}" cy="${45+k*15+i*9}" rx="4.5" ry="5" fill="${c}" opacity="${.6+i*.05}"/>`}return s}).join("");break;
+    case "daffodil":
+      g=`<path d="M100 195 C100 140 104 110 110 90" stroke="${STEM}" stroke-width="4" fill="none"/>`+petals(6,100,80,14,26,24,c,0)+`<circle cx="100" cy="80" r="17" fill="${p.trumpet||"#e8a92a"}"/><circle cx="100" cy="80" r="11" fill="${p.trumpet||"#f2c94c"}" stroke="#fff" stroke-opacity=".4"/>`;break;
+    case "pea":
+      g=`<path d="M100 195 C70 150 130 120 100 60" stroke="${STEM}" stroke-width="2.5" fill="none"/><path d="M85 140 q-25 -5 -30 -25" stroke="${STEM}" fill="none"/>`+
+      [[100,55,"#d983c0"],[70,95,"#b58ad8"],[125,110,"#f1b9cf"]].map(([x,y,col])=>`<path d="M${x} ${y} c-26 -30 26 -30 0 0z" fill="${col}" transform="scale(1.4) translate(${-x*.29} ${-y*.29})"/><ellipse cx="${x}" cy="${y+6}" rx="7" ry="5" fill="${col}" opacity=".8"/>`).join("");break;
+    case "artichoke":
+      g=`<path d="M100 195 V110" stroke="${STEM}" stroke-width="6"/><path d="M100 170 C60 160 40 140 45 120 C70 135 90 150 100 170z" fill="#8aa591"/>`;
+      for(let r=0;r<4;r++)for(let i=0;i<5-r;i++){const x=100+(i-(4-r)/2)*14,y=125-r*12;g+=`<path d="M${x-8} ${y} Q${x} ${y-20} ${x+8} ${y} z" fill="#7f9a77"/>`}
+      for(let i=0;i<30;i++){const a=-80+i*5.5;g+=`<line x1="100" y1="80" x2="100" y2="40" stroke="${c}" stroke-width="3" stroke-linecap="round" transform="rotate(${a} 100 82)"/>`}break;
+    case "statice":
+      g=[70,100,130].map((x,k)=>{let s=`<path d="M100 195 L${x} ${70+k%2*15}" stroke="${STEM}" stroke-width="2.5"/>`;for(let i=0;i<9;i++)s+=`<circle cx="${x+(i%3-1)*10}" cy="${55+k%2*15+Math.floor(i/3)*10}" r="6" fill="${c}"/><circle cx="${x+(i%3-1)*10}" cy="${55+k%2*15+Math.floor(i/3)*10}" r="2" fill="#fff"/>`;return s}).join("");break;
+    case "thunbergia":
+      g=`<path d="M30 190 C80 150 60 100 120 80 S170 30 180 20" stroke="${STEM}" stroke-width="2.5" fill="none"/>`+[[100,90],[150,45],[55,150]].map(([x,y])=>petals(5,x,y,11,16,13,c,0)+`<circle cx="${x}" cy="${y}" r="7" fill="#2b1d1a"/>`).join("");break;
+    case "agapanthus":
+      g=`<path d="M100 195 V90" stroke="${STEM}" stroke-width="3"/>`+[[70,195,-20],[130,195,20],[85,195,-8],[115,195,8]].map(([x,y,r])=>`<path d="M${x} ${y} Q${x+r*1.5} 150 ${x+r*3} 120" stroke="${LEAF}" stroke-width="7" fill="none" stroke-linecap="round"/>`).join("");
+      for(let i=0;i<22;i++){const a=i*360/22,rr=16+(i%3)*8;g+=`<line x1="100" y1="70" x2="${100+Math.cos(a*Math.PI/180)*rr}" y2="${70+Math.sin(a*Math.PI/180)*rr}" stroke="${STEM}" stroke-width="1"/><circle cx="${100+Math.cos(a*Math.PI/180)*rr}" cy="${70+Math.sin(a*Math.PI/180)*rr}" r="5" fill="${c}" opacity=".85"/>`}break;
+    case "tomato":
+      g=`<path d="M100 20 V60 M100 60 L70 90 M100 60 L135 95" stroke="${STEM}" stroke-width="4" fill="none"/>
+      <circle cx="70" cy="125" r="34" fill="${c}"/><circle cx="138" cy="130" r="28" fill="#e98a48"/><circle cx="105" cy="168" r="22" fill="${c}"/>
+      ${petals(5,70,92,3,10,8,"#5e8a4a",0)}${petals(5,138,104,3,9,7,"#5e8a4a",0)}<ellipse cx="58" cy="112" rx="8" ry="5" fill="#fff" opacity=".35"/>`;break;
+  }
+  return `<svg viewBox="0 0 200 200" role="img" aria-label="איור של ${p.he}">${g}</svg>`;
+}
+const CAM=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="4"/></svg>`;
+function ph(label){return `<div class="ph">${CAM}<span>${label}</span><span style="font-size:12px;opacity:.75">מקום לתמונה</span></div>`}
+document.querySelectorAll("[data-ph]").forEach(el=>{el.outerHTML=ph(el.dataset.ph)});
+
+/* ======== סטטיסטיקות ======== */
+const NOW=new Date().getMonth()+1;
+const bloomingNow=PLANTS.filter(p=>p.bloom.includes(NOW));
+const num=x=>typeof x==="number"?x:(parseInt(x)||0);
+const inGround=PLANTS.filter(p=>p.cat==="bulb"&&p.status==="ground").reduce((a,p)=>a+num(p.count),0);
+const inFridge=PLANTS.filter(p=>p.status==="fridge").reduce((a,p)=>a+num(p.count),0);
+document.getElementById("stats").innerHTML=[
+  [PLANTS.length,"צמחים בקטלוג"],
+  [inGround+"+","בצלים ופקעות באדמה"],
+  [inFridge,"בצלים מחכים במקרר"],
+  ["16/40","תורמוסים נבטו"],
+  [bloomingNow.length,`פורחים ב${MONTHS_FULL[NOW-1]}`]
+].map(([n,t])=>`<div class="stat"><b>${n}</b><span>${t}</span></div>`).join("");
+
+/* ======== על הגינה ======== */
+document.getElementById("about").innerHTML=ABOUT.map(([k,v])=>`<div class="ab"><small>${k}</small><span>${v}</span></div>`).join("");
+document.getElementById("wild").innerHTML=WILD.map(w=>`<span class="tag">${w}</span>`).join("");
+
+/* ======== קטלוג ======== */
+let fCat="all",fColor=null,fQ="",fMonth=null,fStatus="all";
+const catsEl=document.getElementById("cats");
+catsEl.innerHTML=[["all","הכל"],...Object.entries(CATS)].map(([k,v])=>`<button class="chip" data-cat="${k}" aria-pressed="${k==="all"}">${v}</button>`).join("");
+catsEl.addEventListener("click",e=>{const b=e.target.closest("[data-cat]");if(!b)return;fCat=b.dataset.cat;catsEl.querySelectorAll(".chip").forEach(x=>x.setAttribute("aria-pressed",x===b));renderGrid()});
+const stEl=document.getElementById("statuses");
+stEl.innerHTML=[["all","כל המצבים"],...Object.entries(STATUS)].map(([k,v])=>`<button class="chip st-${k}" data-st="${k}" aria-pressed="${k==="all"}">${v}</button>`).join("");
+stEl.addEventListener("click",e=>{const b=e.target.closest("[data-st]");if(!b)return;fStatus=b.dataset.st;stEl.querySelectorAll(".chip").forEach(x=>x.setAttribute("aria-pressed",x===b));renderGrid()});
+const colEl=document.getElementById("colors");
+const COLOR_NAMES={purple:"סגול",pink:"ורוד",blue:"כחול",white:"לבן",yellow:"צהוב",orange:"כתום",red:"אדום",green:"ירוק"};
+colEl.innerHTML=Object.entries(COLORS).map(([k,v])=>`<button class="sw" data-col="${k}" style="background:${v}" aria-pressed="false" aria-label="${COLOR_NAMES[k]}" title="${COLOR_NAMES[k]}"></button>`).join("");
+colEl.addEventListener("click",e=>{const b=e.target.closest("[data-col]");if(!b)return;fColor=fColor===b.dataset.col?null:b.dataset.col;colEl.querySelectorAll(".sw").forEach(x=>x.setAttribute("aria-pressed",x.dataset.col===fColor));renderGrid()});
+document.getElementById("q").addEventListener("input",e=>{fQ=e.target.value.trim().toLowerCase();renderGrid()});
+
+function bloomRange(p){return p.bloom.length?`פריחה: ${MONTHS[p.bloom[0]-1]}–${MONTHS[p.bloom[p.bloom.length-1]-1]}`:"צמח עלווה"}
+function renderGrid(){
+  const list=PLANTS.filter(p=>(fCat==="all"||p.cat===fCat)&&(fStatus==="all"||p.status===fStatus)&&(!fColor||p.colors.includes(fColor))&&(!fQ||(p.he+p.lat).toLowerCase().includes(fQ))&&(!fMonth||p.bloom.includes(fMonth)));
+  document.getElementById("count").textContent=`${list.length} מתוך ${PLANTS.length} צמחים`;
+  document.getElementById("grid").innerHTML=list.length?list.map(p=>{
+    const now=p.bloom.includes(NOW);
+    return `<button class="card" data-id="${p.id}"><div class="art">${now?`<span class="badge now">פורח עכשיו</span>`:`<span class="badge">${CATS[p.cat]}</span>`}<span class="sbadge st-${p.status}">${STATUS[p.status]}</span>${art(p)}</div>
+    <div class="body"><h3>${p.he}</h3><span class="latin">${p.lat}</span><div class="tags">${p.count?`<span class="tag">× ${p.count}</span>`:""}<span class="tag">${bloomRange(p)}</span></div>${p.note?`<p class="cnote">${p.note}</p>`:""}</div></button>`}).join("")
+    :`<div class="empty">לא נמצאו צמחים שמתאימים לסינון.</div>`;
+}
+document.getElementById("grid").addEventListener("click",e=>{const c=e.target.closest(".card");if(c)openPlant(c.dataset.id)});
+
+/* ======== חלון צמח ======== */
+const pDlg=document.getElementById("plantDlg");
+function openPlant(id){
+  const p=PLANTS.find(x=>x.id===id);
+  document.getElementById("pArt").innerHTML=art(p);
+  const bl=p.bloom.length?p.bloom.map(m=>MONTHS_FULL[m-1]).join(", "):"לא פורח, מגדלים בשביל העלים";
+  const F=[["מצב",STATUS[p.status]],["כמות",p.count],["מתי נשתל",p.planted],["מאיפה",p.source],["איפה בגינה",p.where],["סוג",CATS[p.cat]]].filter(([,v])=>v);
+  document.getElementById("pBody").innerHTML=`<h3 id="pTitle">${p.he}</h3><div class="latin">${p.lat}</div>
+   <div class="facts">${F.map(([k,v])=>`<div class="fact"><small>${k}</small><b>${v}</b></div>`).join("")}</div>
+   <div><b>חודשי פריחה:</b> ${bl}</div>
+   ${p.note?`<div class="journal"><small>מהיומן</small>${p.note}</div>`:""}
+   ${p.fun?`<div class="fun"><b>הידעת?</b> ${p.fun}</div>`:""}`;
+  pDlg.showModal();
+}
+document.querySelectorAll("[data-close]").forEach(b=>b.addEventListener("click",()=>b.closest("dialog").close()));
+document.querySelectorAll("dialog").forEach(d=>d.addEventListener("click",e=>{if(e.target===d)d.close()}));
+
+/* ======== לוח פריחה ======== */
+function renderCal(){
+  let h=`<div></div>`+MONTHS.map((m,i)=>`<button class="m${i+1===NOW?" cur":""}" data-m="${i+1}" aria-pressed="${fMonth===i+1}" style="border:none;background:none">${m}</button>`).join("");
+  [...PLANTS].sort((a,b)=>{const f=x=>x.bloom.length?((x.bloom.includes(12)&&x.bloom.includes(1))?0:x.bloom[0]):99;return f(a)-f(b)}).forEach(p=>{
+    h+=`<div class="name" data-id="${p.id}">${p.he}</div>`;
+    const set=p.bloom.length?p.bloom:(p.leaf||[]);const leaf=!p.bloom.length;
+    for(let m=1;m<=12;m++){const on=set.includes(m);let cls="cell";if(on){cls+=leaf?" leaf":" on";if(!set.includes(m-1))cls+=" start";if(!set.includes(m+1))cls+=" end"}if(m===NOW)cls+=" curcol";
+      h+=`<div class="${cls}" style="--c:${p.c==="#f3efe6"?"#e3c9d3":p.c}" title="${p.he} · ${MONTHS_FULL[m-1]}"></div>`}
+  });
+  document.getElementById("cal").innerHTML=h;
+  const m=fMonth||NOW,list=PLANTS.filter(p=>p.bloom.includes(m));
+  document.getElementById("nowbox").innerHTML=`<strong>${fMonth?"פורחים ב":"פורחים עכשיו, ב"}${MONTHS_FULL[m-1]}:</strong> ${list.length?list.map(p=>`<span class="tag" style="background:var(--card)">${p.he}</span>`).join(" "):"אף אחד. זמן לזרוע ולתכנן."}${fMonth?` <button class="chip" id="clearM">חזרה לחודש הנוכחי</button>`:""}`;
+  const cm=document.getElementById("clearM");if(cm)cm.onclick=()=>{fMonth=null;renderCal();renderGrid()};
+}
+document.getElementById("cal").addEventListener("click",e=>{
+  const mb=e.target.closest("[data-m]");if(mb){const v=+mb.dataset.m;fMonth=fMonth===v?null:v;renderCal();renderGrid();return}
+  const n=e.target.closest(".name");if(n)openPlant(n.dataset.id);
+});
+
+/* ======== ציר זמן ======== */
+document.getElementById("tl").innerHTML=TIMELINE.map(t=>`<article class="tl-item"><div><div class="tl-date">${t.date}${t.soon?`<span class="draft">בקרוב</span>`:""}</div><h3>${t.title}</h3><p>${t.text}</p></div><div class="ph-wrap">${ph(t.title)}</div></article>`).join("")+`<article class="tl-item next"><div><div class="tl-date">מה הלאה</div><h3>זריעות מתוכננות</h3><ul class="plan">${PLANNED.map(([w,t])=>`<li><b>${w}:</b> ${t}</li>`).join("")}</ul></div></article>`;
+
+/* ======== גלריה ======== */
+const H=[220,300,180,260,340,200,280,240,190];
+document.getElementById("gal").innerHTML=GALLERY.map((g,i)=>`<button class="g-item" data-i="${i}"><div style="height:${H[i%H.length]}px">${ph(g)}</div><figcaption>${g}</figcaption></button>`).join("");
+const lb=document.getElementById("lbDlg");let li=0;
+function showLb(i){li=(i+GALLERY.length)%GALLERY.length;document.getElementById("lbImg").innerHTML=ph(GALLERY[li]);document.getElementById("lbCap").textContent=`${GALLERY[li]} · ${li+1}/${GALLERY.length}`}
+document.getElementById("gal").addEventListener("click",e=>{const b=e.target.closest(".g-item");if(b){showLb(+b.dataset.i);lb.showModal()}});
+document.getElementById("lbPrev").onclick=()=>showLb(li-1);document.getElementById("lbNext").onclick=()=>showLb(li+1);
+lb.addEventListener("keydown",e=>{if(e.key==="ArrowRight")showLb(li-1);if(e.key==="ArrowLeft")showLb(li+1)});
+
+/* ======== רשימת חלומות ======== */
+document.getElementById("wish").innerHTML=WISHLIST.map(w=>`<div><h3>${w.he}</h3><div class="latin">${w.lat}</div><p>${w.text}</p></div>`).join("");
+
+renderGrid();renderCal();
+
+/* ======== עלי כותרת מרחפים ======== */
+(function(){
+  const cv=document.getElementById("petals"),ctx=cv.getContext("2d");
+  const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const cols=["#e48ab0","#b48ad6","#f3c3d3","#9d7fd0","#f7dbe4"];let W,Hh,P=[];
+  function size(){const r=cv.getBoundingClientRect(),d=devicePixelRatio||1;W=r.width;Hh=r.height;cv.width=W*d;cv.height=Hh*d;ctx.setTransform(d,0,0,d,0,0)}
+  size();addEventListener("resize",size);
+  for(let i=0;i<26;i++)P.push({x:Math.random()*W,y:Math.random()*Hh,s:4+Math.random()*7,vy:.25+Math.random()*.5,vx:-.3+Math.random()*.6,a:Math.random()*6.28,va:-.02+Math.random()*.04,c:cols[i%cols.length],w:Math.random()*6.28});
+  function draw(){ctx.clearRect(0,0,W,Hh);for(const p of P){ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.a);ctx.globalAlpha=.55;ctx.fillStyle=p.c;ctx.beginPath();ctx.ellipse(0,0,p.s,p.s*.55,0,0,6.28);ctx.fill();ctx.restore();
+    if(!reduce){p.w+=.02;p.y+=p.vy;p.x+=p.vx+Math.sin(p.w)*.4;p.a+=p.va;if(p.y>Hh+10){p.y=-10;p.x=Math.random()*W}}}
+    if(!reduce)requestAnimationFrame(draw)}
+  draw();
+})();
+</script>
+</body>
+</html>
